@@ -1,0 +1,59 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #050c16;
+  color: #edf3fc;
+  font:
+    14px/1.7 Sora,
+    system-ui,
+    sans-serif;
+}
+main {
+  max-width: 1360px;
+  margin: auto;
+  padding: 32px;
+}
+a {
+  color: #ebd1a1;
+}
+.eyebrow {
+  font:
+    11px Consolas,
+    monospace;
+  letter-spacing: 2px;
+  color: #ebd1a1;
+}
+h1 {
+  font-size: 30px;
+  font-weight: 500;
+  margin: 12px 0;
+}
+p {
+  color: #b2c1d5;
+  max-width: 900px;
+}
+.canvas {
+  overflow-x: auto;
+}
+svg {
+  display: block;
+  width: 100%;
+  min-width: 800px;
+  height: auto;
+}
+footer {
+  border-top: 1px solid #34465e;
+  padding-top: 16px;
+  color: #899bb3;
+  font-size: 11px;
+}
+@media (max-width: 600px) {
+  main {
+    padding: 20px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+}

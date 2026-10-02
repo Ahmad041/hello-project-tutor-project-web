@@ -1,0 +1,23 @@
+# Python generator cache
+__pycache__/
+*.py[cod]
+
+# Local validation and screenshot output
+diagrams/archify-validation.json
+diagrams/archify-delivery.json
+diagrams/archify-browser.json
+diagrams/*.visual-check.*
+diagrams/verification.md
+
+# Editor and operating-system metadata
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Local HTML generators (not deployed)
+/build.py
+/c_content.py
+/text_storage_content.py
+/make_diagrams.py

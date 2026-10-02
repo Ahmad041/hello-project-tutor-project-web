@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {"title": "Alur pengerjaan KasirKita C", "quality_profile": "showcase", "animation": "none", "legend":{"entries":{"frontend":{"label":"Rancangan"},"backend":{"label":"Implementasi"},"database":{"label":"Model data"},"security":{"label":"Validasi"},"external":{"label":"Hasil project"}}}},
+  "lanes": [{"id":"rancang","label":"Rancang"},{"id":"bangun","label":"Bangun dan buktikan"}],
+  "mainPath": ["scope","probis","model","coding","testing","laporan"],
+  "nodes": [
+    {"id":"scope","lane":"rancang","col":0,"type":"frontend","label":"Tentukan scope","sublabel":"Kasir satu toko"},
+    {"id":"probis","lane":"rancang","col":1,"type":"frontend","label":"Susun Probis","sublabel":"Alur dan fitur"},
+    {"id":"model","lane":"rancang","col":2,"type":"database","label":"Rancang data","sublabel":"ERD ke record TXT"},
+    {"id":"coding","lane":"bangun","col":2,"type":"backend","label":"Implementasi C","sublabel":"Menu dan file I/O"},
+    {"id":"testing","lane":"bangun","col":3,"type":"security","label":"Uji skenario","sublabel":"Uang, stok, restart"},
+    {"id":"laporan","lane":"bangun","col":4,"type":"external","label":"Serahkan project","sublabel":"Source dan laporan","width":180}
+  ],
+  "edges": [
+    {"from":"scope","to":"probis","role":"main"},
+    {"from":"probis","to":"model","role":"main"},
+    {"from":"model","to":"coding","role":"main","label":"desain siap"},
+    {"from":"coding","to":"testing","role":"main"},
+    {"from":"testing","to":"laporan","role":"main","label":"lulus"},
+    {"from":"testing","to":"coding","role":"return","label":"perbaiki bug","variant":"dashed"}
+  ],
+  "cards": [
+    {"dot":"cyan","title":"Bukti rancangan","items":["Scope dan fitur disepakati.","Probis memuat flowchart, ERD, PDM, dan DFD."]},
+    {"dot":"amber","title":"Bukti implementasi","items":["C17 dengan menu terminal dan data.txt.","build.bat dan run.bat menjalankan perintah Windows."]},
+    {"dot":"emerald","title":"Bukti selesai","items":["Kasus gagal simpan dan restart diuji.","Laporan mencatat hasil aktual dan keterbatasan."]}
+  ]
+}
