@@ -1,1 +1,840 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PDM · setelah normalisasi 3NF — KasirKita</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&amp;display=swap"><link rel="stylesheet" href="../assets/css/diagrams.css"></head><body><main><a href="../analisis.html">← Kembali ke tutorial</a><p class="eyebrow">KASIRKITA / C17 / TXT</p><h1>PDM · setelah normalisasi 3NF</h1><p>Lima jenis record dalam data/data.txt; relasi dan batas nilai diperiksa oleh program C.</p><div class="canvas"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" role="img" aria-labelledby="pdm-normalisasi-title pdm-normalisasi-desc"><title id="pdm-normalisasi-title">PDM · setelah normalisasi 3NF</title><desc id="pdm-normalisasi-desc">Lima jenis record dalam data/data.txt; relasi dan batas nilai diperiksa oleh program C.</desc><defs><marker id="pdm-normalisasi-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#b2c1d5"/></marker></defs><path d="M360 144H416Q424 144 424 152V164Q424 172 432 172H480" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M360 504H416Q424 504 424 512V524Q424 532 432 532H480" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M800 144H872Q880 144 880 152V364Q880 372 888 372H920" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M800 504H872Q880 504 880 496V408Q880 400 888 400H920" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><rect x="40" y="64" width="320" height="128" rx="6" fill="#0d1725" stroke="#34465e"/><line x1="40" y1="120" x2="360" y2="120" stroke="#34465e"/><text x="56" y="86" fill="#899bb3" font-size="10" text-anchor="start" font-family="Consolas, monospace">RECORD</text><text x="56" y="108" fill="#edf3fc" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">CATEGORY</text><text x="56" y="144" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace"># id</text><text x="344" y="144" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="56" y="172" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">name</text><text x="344" y="172" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">char[64]</text><rect x="480" y="64" width="320" height="240" rx="6" fill="#0d1725" stroke="#34465e"/><line x1="480" y1="120" x2="800" y2="120" stroke="#34465e"/><text x="496" y="86" fill="#899bb3" font-size="10" text-anchor="start" font-family="Consolas, monospace">RECORD</text><text x="496" y="108" fill="#edf3fc" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">PRODUCT</text><text x="496" y="144" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace"># id</text><text x="784" y="144" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="496" y="172" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">→ category_id</text><text x="784" y="172" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="496" y="200" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">sku [unik]</text><text x="784" y="200" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">char[32]</text><text x="496" y="228" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">name</text><text x="784" y="228" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">char[128]</text><text x="496" y="256" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">price</text><text x="784" y="256" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="496" y="284" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">stock</text><text x="784" y="284" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><rect x="40" y="424" width="320" height="156" rx="6" fill="#0d1725" stroke="#34465e"/><line x1="40" y1="480" x2="360" y2="480" stroke="#34465e"/><text x="56" y="446" fill="#899bb3" font-size="10" text-anchor="start" font-family="Consolas, monospace">RECORD</text><text x="56" y="468" fill="#edf3fc" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">CUSTOMER</text><text x="56" y="504" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace"># id</text><text x="344" y="504" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="56" y="532" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">name</text><text x="344" y="532" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">char[128]</text><text x="56" y="560" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">phone</text><text x="344" y="560" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">char[32]</text><rect x="480" y="424" width="320" height="184" rx="6" fill="#0d1725" stroke="#34465e"/><line x1="480" y1="480" x2="800" y2="480" stroke="#34465e"/><text x="496" y="446" fill="#899bb3" font-size="10" text-anchor="start" font-family="Consolas, monospace">RECORD</text><text x="496" y="468" fill="#edf3fc" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">SALE</text><text x="496" y="504" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace"># id</text><text x="784" y="504" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="496" y="532" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">→ customer_id</text><text x="784" y="532" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t; 0=umum</text><text x="496" y="560" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">created_at</text><text x="784" y="560" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">char[20]</text><text x="496" y="588" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">paid</text><text x="784" y="588" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><rect x="920" y="292" width="320" height="184" rx="6" fill="#0d1725" stroke="#34465e"/><line x1="920" y1="348" x2="1240" y2="348" stroke="#34465e"/><text x="936" y="314" fill="#899bb3" font-size="10" text-anchor="start" font-family="Consolas, monospace">RECORD</text><text x="936" y="336" fill="#edf3fc" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">ITEM</text><text x="936" y="372" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace"># → product_id</text><text x="1224" y="372" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="936" y="400" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace"># → sale_id</text><text x="1224" y="400" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="936" y="428" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">quantity</text><text x="1224" y="428" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="936" y="456" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Consolas, monospace">unit_price</text><text x="1224" y="456" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Consolas, monospace">int64_t</text><text x="40" y="364" fill="#b2c1d5" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">Relasi divalidasi oleh program C.</text><text x="920" y="520" fill="#b2c1d5" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">ITEM: kunci gabungan</text><text x="920" y="548" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Consolas, monospace">sale_id + product_id</text><rect x="368.25" y="116" width="23.5" height="20" fill="#050c16"/><text x="380" y="130" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">1</text><rect x="427.25" y="144" width="53.5" height="20" fill="#050c16"/><text x="454" y="158" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">0...*</text><rect x="359.25" y="476" width="53.5" height="20" fill="#050c16"/><text x="386" y="490" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">0...1</text><rect x="427.25" y="504" width="53.5" height="20" fill="#050c16"/><text x="454" y="518" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">0...*</text><rect x="808.25" y="116" width="23.5" height="20" fill="#050c16"/><text x="820" y="130" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">1</text><rect x="867.25" y="340" width="53.5" height="20" fill="#050c16"/><text x="894" y="354" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">0...*</text><rect x="808.25" y="476" width="23.5" height="20" fill="#050c16"/><text x="820" y="490" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">1</text><rect x="867.25" y="416" width="53.5" height="20" fill="#050c16"/><text x="894" y="430" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">1...*</text><rect x="374.5" y="190" width="91.0" height="20" fill="#050c16"/><text x="420" y="204" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">memiliki &gt;</text><rect x="374.5" y="214" width="91.0" height="20" fill="#050c16"/><text x="420" y="228" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">&lt; dimiliki</text><rect x="374.5" y="550" width="91.0" height="20" fill="#050c16"/><text x="420" y="564" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">memiliki &gt;</text><rect x="374.5" y="574" width="91.0" height="20" fill="#050c16"/><text x="420" y="588" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">&lt; dimiliki</text><rect x="814.5" y="210" width="91.0" height="20" fill="#050c16"/><text x="860" y="224" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">memiliki &gt;</text><rect x="814.5" y="234" width="91.0" height="20" fill="#050c16"/><text x="860" y="248" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">&lt; dimiliki</text><rect x="814.5" y="550" width="91.0" height="20" fill="#050c16"/><text x="860" y="564" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">memiliki &gt;</text><rect x="814.5" y="574" width="91.0" height="20" fill="#050c16"/><text x="860" y="588" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Consolas, monospace">&lt; dimiliki</text><line x1="40" y1="704" x2="1240" y2="704" stroke="#34465e"/><text x="40" y="732" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Consolas, monospace">1: tepat satu | 0...1: opsional | 1...*: satu atau lebih | 0...*: nol atau lebih</text></svg></div><p>Total belum disimpan: dihitung dari ITEM. CATEGORY memiliki 0...* PRODUCT; setiap PRODUCT dimiliki 1 CATEGORY. CUSTOMER memiliki 0...* SALE; setiap SALE dimiliki 0...1 CUSTOMER. SALE memiliki 1...* ITEM; setiap ITEM dimiliki 1 SALE. PRODUCT memiliki 0...* ITEM; setiap ITEM dimiliki 1 PRODUCT. # menandai kunci unik dan → menandai field referensi, bukan kardinalitas. unit_price adalah harga historis, bukan salinan harga master yang terus disinkronkan. Urutan baris di diagram diatur agar relasi jelas; urutan serialisasi tetap mengikuti kamus data.</p><footer>Dirancang dengan panduan Diagram Design · Model contoh tutorial, bukan hasil reverse engineering aplikasi.</footer></main></body></html>
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>PDM · setelah normalisasi 3NF — KasirKita</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&amp;display=swap"
+    />
+    <link rel="stylesheet" href="../assets/css/diagrams.css" />
+  </head>
+  <body>
+    <main>
+      <a href="../analisis.html">← Kembali ke tutorial</a>
+      <p class="eyebrow">KASIRKITA / C17 / TXT</p>
+      <h1>PDM · setelah normalisasi 3NF</h1>
+      <p>
+        Tipe integer berarti bilangan bulat (implementasi C: int64_t). char[n]
+        berarti string dengan kapasitas n byte. Lima jenis record disimpan dalam
+        data/data.txt.
+      </p>
+      <div class="canvas">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1280 760"
+          role="img"
+          aria-labelledby="pdm-normalisasi-title pdm-normalisasi-desc"
+        >
+          <title id="pdm-normalisasi-title">
+            PDM · setelah normalisasi 3NF
+          </title>
+          <desc id="pdm-normalisasi-desc">
+            Tipe integer berarti bilangan bulat (implementasi C: int64_t).
+            char[n] berarti string dengan kapasitas n byte. Lima jenis record
+            disimpan dalam data/data.txt.
+          </desc>
+          <defs>
+            <marker
+              id="pdm-normalisasi-arrow"
+              markerWidth="8"
+              markerHeight="8"
+              refX="7"
+              refY="4"
+              orient="auto"
+            >
+              <path d="M0 1L7 4L0 7" fill="#b2c1d5" />
+            </marker>
+          </defs>
+          <path
+            d="M360 144H416Q424 144 424 152V164Q424 172 432 172H480"
+            fill="none"
+            stroke="#b2c1d5"
+            stroke-width="1.5"
+          />
+          <path
+            d="M360 504H416Q424 504 424 512V524Q424 532 432 532H480"
+            fill="none"
+            stroke="#b2c1d5"
+            stroke-width="1.5"
+          />
+          <path
+            d="M800 144H872Q880 144 880 152V364Q880 372 888 372H920"
+            fill="none"
+            stroke="#b2c1d5"
+            stroke-width="1.5"
+          />
+          <path
+            d="M800 504H872Q880 504 880 496V408Q880 400 888 400H920"
+            fill="none"
+            stroke="#b2c1d5"
+            stroke-width="1.5"
+          />
+          <rect
+            x="40"
+            y="64"
+            width="320"
+            height="128"
+            rx="6"
+            fill="#0d1725"
+            stroke="#34465e"
+          />
+          <line x1="40" y1="120" x2="360" y2="120" stroke="#34465e" />
+          <text
+            x="56"
+            y="86"
+            fill="#899bb3"
+            font-size="10"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            RECORD
+          </text>
+          <text
+            x="56"
+            y="108"
+            fill="#edf3fc"
+            font-size="16"
+            text-anchor="start"
+            font-family="Sora, system-ui, sans-serif"
+          >
+            CATEGORY
+          </text>
+          <text
+            x="56"
+            y="144"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            # id
+          </text>
+          <text
+            x="344"
+            y="144"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="56"
+            y="172"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            name
+          </text>
+          <text
+            x="344"
+            y="172"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            char[64]
+          </text>
+          <rect
+            x="480"
+            y="64"
+            width="320"
+            height="240"
+            rx="6"
+            fill="#0d1725"
+            stroke="#34465e"
+          />
+          <line x1="480" y1="120" x2="800" y2="120" stroke="#34465e" />
+          <text
+            x="496"
+            y="86"
+            fill="#899bb3"
+            font-size="10"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            RECORD
+          </text>
+          <text
+            x="496"
+            y="108"
+            fill="#edf3fc"
+            font-size="16"
+            text-anchor="start"
+            font-family="Sora, system-ui, sans-serif"
+          >
+            PRODUCT
+          </text>
+          <text
+            x="496"
+            y="144"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            # id
+          </text>
+          <text
+            x="784"
+            y="144"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="496"
+            y="172"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            → category_id
+          </text>
+          <text
+            x="784"
+            y="172"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="496"
+            y="200"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            sku [unik]
+          </text>
+          <text
+            x="784"
+            y="200"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            char[32]
+          </text>
+          <text
+            x="496"
+            y="228"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            name
+          </text>
+          <text
+            x="784"
+            y="228"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            char[128]
+          </text>
+          <text
+            x="496"
+            y="256"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            price
+          </text>
+          <text
+            x="784"
+            y="256"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="496"
+            y="284"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            stock
+          </text>
+          <text
+            x="784"
+            y="284"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <rect
+            x="40"
+            y="424"
+            width="320"
+            height="156"
+            rx="6"
+            fill="#0d1725"
+            stroke="#34465e"
+          />
+          <line x1="40" y1="480" x2="360" y2="480" stroke="#34465e" />
+          <text
+            x="56"
+            y="446"
+            fill="#899bb3"
+            font-size="10"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            RECORD
+          </text>
+          <text
+            x="56"
+            y="468"
+            fill="#edf3fc"
+            font-size="16"
+            text-anchor="start"
+            font-family="Sora, system-ui, sans-serif"
+          >
+            CUSTOMER
+          </text>
+          <text
+            x="56"
+            y="504"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            # id
+          </text>
+          <text
+            x="344"
+            y="504"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="56"
+            y="532"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            name
+          </text>
+          <text
+            x="344"
+            y="532"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            char[128]
+          </text>
+          <text
+            x="56"
+            y="560"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            phone
+          </text>
+          <text
+            x="344"
+            y="560"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            char[32]
+          </text>
+          <rect
+            x="480"
+            y="424"
+            width="320"
+            height="184"
+            rx="6"
+            fill="#0d1725"
+            stroke="#34465e"
+          />
+          <line x1="480" y1="480" x2="800" y2="480" stroke="#34465e" />
+          <text
+            x="496"
+            y="446"
+            fill="#899bb3"
+            font-size="10"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            RECORD
+          </text>
+          <text
+            x="496"
+            y="468"
+            fill="#edf3fc"
+            font-size="16"
+            text-anchor="start"
+            font-family="Sora, system-ui, sans-serif"
+          >
+            SALE
+          </text>
+          <text
+            x="496"
+            y="504"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            # id
+          </text>
+          <text
+            x="784"
+            y="504"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="496"
+            y="532"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            → customer_id
+          </text>
+          <text
+            x="784"
+            y="532"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer; 0=umum
+          </text>
+          <text
+            x="496"
+            y="560"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            created_at
+          </text>
+          <text
+            x="784"
+            y="560"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            char[20]
+          </text>
+          <text
+            x="496"
+            y="588"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            paid
+          </text>
+          <text
+            x="784"
+            y="588"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <rect
+            x="920"
+            y="292"
+            width="320"
+            height="184"
+            rx="6"
+            fill="#0d1725"
+            stroke="#34465e"
+          />
+          <line x1="920" y1="348" x2="1240" y2="348" stroke="#34465e" />
+          <text
+            x="936"
+            y="314"
+            fill="#899bb3"
+            font-size="10"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            RECORD
+          </text>
+          <text
+            x="936"
+            y="336"
+            fill="#edf3fc"
+            font-size="16"
+            text-anchor="start"
+            font-family="Sora, system-ui, sans-serif"
+          >
+            ITEM
+          </text>
+          <text
+            x="936"
+            y="372"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            # → product_id
+          </text>
+          <text
+            x="1224"
+            y="372"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="936"
+            y="400"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            # → sale_id
+          </text>
+          <text
+            x="1224"
+            y="400"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="936"
+            y="428"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            quantity
+          </text>
+          <text
+            x="1224"
+            y="428"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="936"
+            y="456"
+            fill="#edf3fc"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            unit_price
+          </text>
+          <text
+            x="1224"
+            y="456"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="end"
+            font-family="Consolas, monospace"
+          >
+            integer
+          </text>
+          <text
+            x="40"
+            y="364"
+            fill="#b2c1d5"
+            font-size="16"
+            text-anchor="start"
+            font-family="Sora, system-ui, sans-serif"
+          >
+            Relasi divalidasi oleh program C.
+          </text>
+          <text
+            x="920"
+            y="520"
+            fill="#b2c1d5"
+            font-size="16"
+            text-anchor="start"
+            font-family="Sora, system-ui, sans-serif"
+          >
+            ITEM: kunci gabungan
+          </text>
+          <text
+            x="920"
+            y="548"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            sale_id + product_id
+          </text>
+          <rect x="368.25" y="116" width="23.5" height="20" fill="#050c16" />
+          <text
+            x="380"
+            y="130"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            1
+          </text>
+          <rect x="427.25" y="144" width="53.5" height="20" fill="#050c16" />
+          <text
+            x="454"
+            y="158"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            0...*
+          </text>
+          <rect x="359.25" y="476" width="53.5" height="20" fill="#050c16" />
+          <text
+            x="386"
+            y="490"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            0...1
+          </text>
+          <rect x="427.25" y="504" width="53.5" height="20" fill="#050c16" />
+          <text
+            x="454"
+            y="518"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            0...*
+          </text>
+          <rect x="808.25" y="116" width="23.5" height="20" fill="#050c16" />
+          <text
+            x="820"
+            y="130"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            1
+          </text>
+          <rect x="867.25" y="340" width="53.5" height="20" fill="#050c16" />
+          <text
+            x="894"
+            y="354"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            0...*
+          </text>
+          <rect x="808.25" y="476" width="23.5" height="20" fill="#050c16" />
+          <text
+            x="820"
+            y="490"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            1
+          </text>
+          <rect x="867.25" y="416" width="53.5" height="20" fill="#050c16" />
+          <text
+            x="894"
+            y="430"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            1...*
+          </text>
+          <rect x="374.5" y="190" width="91.0" height="20" fill="#050c16" />
+          <text
+            x="420"
+            y="204"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            memiliki &gt;
+          </text>
+          <rect x="374.5" y="214" width="91.0" height="20" fill="#050c16" />
+          <text
+            x="420"
+            y="228"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            &lt; dimiliki
+          </text>
+          <rect x="374.5" y="550" width="91.0" height="20" fill="#050c16" />
+          <text
+            x="420"
+            y="564"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            memiliki &gt;
+          </text>
+          <rect x="374.5" y="574" width="91.0" height="20" fill="#050c16" />
+          <text
+            x="420"
+            y="588"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            &lt; dimiliki
+          </text>
+          <rect x="814.5" y="210" width="91.0" height="20" fill="#050c16" />
+          <text
+            x="860"
+            y="224"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            memiliki &gt;
+          </text>
+          <rect x="814.5" y="234" width="91.0" height="20" fill="#050c16" />
+          <text
+            x="860"
+            y="248"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            &lt; dimiliki
+          </text>
+          <rect x="814.5" y="550" width="91.0" height="20" fill="#050c16" />
+          <text
+            x="860"
+            y="564"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            memiliki &gt;
+          </text>
+          <rect x="814.5" y="574" width="91.0" height="20" fill="#050c16" />
+          <text
+            x="860"
+            y="588"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="middle"
+            font-family="Consolas, monospace"
+          >
+            &lt; dimiliki
+          </text>
+          <line x1="40" y1="704" x2="1240" y2="704" stroke="#34465e" />
+          <text
+            x="40"
+            y="732"
+            fill="#b2c1d5"
+            font-size="12"
+            text-anchor="start"
+            font-family="Consolas, monospace"
+          >
+            1: tepat satu | 0...1: opsional | 1...*: satu atau lebih | 0...*:
+            nol atau lebih
+          </text>
+        </svg>
+      </div>
+      <p>
+        Total belum disimpan: dihitung dari ITEM. CATEGORY memiliki 0...*
+        PRODUCT; setiap PRODUCT dimiliki 1 CATEGORY. CUSTOMER memiliki 0...*
+        SALE; setiap SALE dimiliki 0...1 CUSTOMER. SALE memiliki 1...* ITEM;
+        setiap ITEM dimiliki 1 SALE. PRODUCT memiliki 0...* ITEM; setiap ITEM
+        dimiliki 1 PRODUCT. # menandai kunci unik dan → menandai field
+        referensi, bukan kardinalitas. unit_price adalah harga historis, bukan
+        salinan harga master yang terus disinkronkan. Urutan baris di diagram
+        diatur agar relasi jelas; urutan serialisasi tetap mengikuti kamus data.
+      </p>
+      <footer>
+        Dirancang dengan panduan Diagram Design · Model contoh tutorial, bukan
+        hasil reverse engineering aplikasi.
+      </footer>
+    </main>
+  </body>
+</html>
