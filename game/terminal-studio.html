@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>KasirKita Terminal Studio — gotoxy, Border & ASCII Art Builder</title>
+  <link rel="stylesheet" href="../assets/css/terminal-studio.css">
+</head>
+<body>
+  <!-- Background Atmosphere -->
+  <video class="ts-bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" src="../assets/video/daftarModul.mp4"></video>
+  <div class="ts-veil"></div>
+
+  <main class="ts-app" id="app">
+    <!-- Topbar HUD Minimalis -->
+    <header class="ts-topbar">
+      <a class="ts-back-btn" id="tsBackBtn" href="../teknis.html#lib-position" aria-label="Kembali ke Modul">
+        <span>←</span> Kembali ke Modul 03
+      </a>
+
+      <div class="ts-title-badge">
+        <span>KasirKita Terminal Studio</span>
+        <span class="tag">lib.h & ASCII Art</span>
+      </div>
+
+      <!-- Mode Tabs (Modul 03 vs Modul 04) -->
+      <nav class="ts-nav-tabs" aria-label="Pilih Mode Studio">
+        <button type="button" class="ts-tab-btn active" id="tabMod3">
+          <span>🖥️</span> Modul 03: gotoxy & Border
+        </button>
+        <button type="button" class="ts-tab-btn" id="tabMod4">
+          <span>🎨</span> Modul 04: ASCII Art Stager
+        </button>
+      </nav>
+
+      <div>
+        <button class="ts-btn ts-btn-secondary" type="button" id="btnResetGrid" title="Kosongkan grid">Reset ↺</button>
+      </div>
+    </header>
+
+    <!-- Cockpit Dual Column Workspace -->
+    <section class="ts-cockpit">
+      <!-- Left: 80x25 Terminal CRT Screen -->
+      <article class="ts-terminal-card">
+        <div class="ts-terminal-header">
+          <div class="ts-dots">
+            <span class="ts-dot-red"></span>
+            <span class="ts-dot-yellow"></span>
+            <span class="ts-dot-green"></span>
+          </div>
+          <span>KASIRKITA CONSOLE MONITOR (80 × 25 SEL)</span>
+          <span style="color:var(--terminal-green);font-size:10px;">ONLINE</span>
+        </div>
+
+        <div class="ts-terminal-screen">
+          <pre class="ts-terminal-canvas" id="terminalCanvas"></pre>
+        </div>
+
+        <div class="ts-terminal-footer">
+          <span>Arahkan kursor atau klik sel untuk melihat koordinat</span>
+          <div>
+            <span>Koordinat Kursor: </span>
+            <span class="ts-coord-pill" id="coordDisplay">X: 00, Y: 00</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Right: Control Sidebar & Live Code Generator -->
+      <aside class="ts-sidebar">
+        <!-- Panel Modul 03: gotoxy & Border -->
+        <div class="ts-tool-card" id="panelMod3">
+          <h2 class="ts-tool-title"><span>📐</span> Buat Bingkai (Border)</h2>
+          <div class="ts-input-group">
+            <label for="borderStyle">Gaya Garis Tepi:</label>
+            <select class="ts-input" id="borderStyle">
+              <option value="double">Double Line ╔═╗ (borderDoubleLine)</option>
+              <option value="single">Single Line ┌─┐ (borderLine)</option>
+              <option value="block">Block Solid █</option>
+            </select>
+          </div>
+          <div class="ts-input-row">
+            <div class="ts-input-group">
+              <label for="borderX">Posisi X:</label>
+              <input type="number" class="ts-input" id="borderX" value="2" min="0" max="79">
+            </div>
+            <div class="ts-input-group">
+              <label for="borderY">Posisi Y:</label>
+              <input type="number" class="ts-input" id="borderY" value="1" min="0" max="24">
+            </div>
+          </div>
+          <div class="ts-input-row">
+            <div class="ts-input-group">
+              <label for="borderW">Lebar (Kolom):</label>
+              <input type="number" class="ts-input" id="borderW" value="76" min="4" max="80">
+            </div>
+            <div class="ts-input-group">
+              <label for="borderH">Tinggi (Baris):</label>
+              <input type="number" class="ts-input" id="borderH" value="22" min="3" max="25">
+            </div>
+          </div>
+          <button type="button" class="ts-btn" id="btnApplyBorder">Terapkan Bingkai</button>
+
+          <h2 class="ts-tool-title" style="margin-top:10px;"><span>✏️</span> Teks gotoxy(X, Y)</h2>
+          <div class="ts-input-row">
+            <div class="ts-input-group">
+              <label for="textX">X:</label>
+              <input type="number" class="ts-input" id="textX" value="10" min="0" max="79">
+            </div>
+            <div class="ts-input-group">
+              <label for="textY">Y:</label>
+              <input type="number" class="ts-input" id="textY" value="8" min="0" max="24">
+            </div>
+          </div>
+          <div class="ts-input-group">
+            <label for="textVal">Teks yang dicetak:</label>
+            <input type="text" class="ts-input" id="textVal" value="1. Kelola Katalog ATK">
+          </div>
+          <button type="button" class="ts-btn" id="btnApplyText">Cetak Teks ke Grid</button>
+        </div>
+
+        <!-- Panel Modul 04: ASCII Art Stager -->
+        <div class="ts-tool-card" id="panelMod4" style="display:none;">
+          <h2 class="ts-tool-title"><span>🎨</span> Staging ASCII Art</h2>
+          <div class="ts-input-group">
+            <label for="asciiPreset">Pilih Preset Gambar ASCII:</label>
+            <select class="ts-input" id="asciiPreset">
+              <option value="logo">Logo KasirKita</option>
+              <option value="nota">Contoh Struk Belanja</option>
+              <option value="dialog">Kotak Dialog Konfirmasi</option>
+            </select>
+          </div>
+          <div class="ts-input-group">
+            <label for="asciiX">Geser Horizontal X (<span id="valAsciiX">18</span>):</label>
+            <input type="range" class="ts-input" id="asciiX" min="0" max="50" value="18">
+          </div>
+          <div class="ts-input-group">
+            <label for="asciiY">Geser Vertikal Y (<span id="valAsciiY">8</span>):</label>
+            <input type="range" class="ts-input" id="asciiY" min="0" max="18" value="8">
+          </div>
+          <button type="button" class="ts-btn" id="btnApplyAscii">Pasang ke Terminal</button>
+        </div>
+
+        <!-- Live Code C Generator -->
+        <article class="ts-code-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:11px;font-weight:700;color:var(--accent-gold);">KODE C DENGAN LIB.H</span>
+            <button type="button" class="ts-btn ts-btn-secondary" id="btnCopyCode" style="padding:4px 8px;font-size:11px;">Salin Kode 📋</button>
+          </div>
+          <pre class="ts-code-pre" id="codeOutput"></pre>
+        </article>
+      </aside>
+    </section>
+  </main>
+
+  <script src="../assets/js/terminal-studio-engine.js"></script>
+  <script src="../assets/js/terminal-studio-game.js"></script>
+</body>
+</html>

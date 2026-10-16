@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Simulator interaktif User Acceptance Testing (UAT) KasirKita. Praktikkan pengujian kasus negatif dan positif berdasarkan dokumen Lampiran C.">
+  <title>UAT Bug Hunter Simulator — Hello Project</title>
+  <link rel="stylesheet" href="../assets/css/uat-game.css">
+</head>
+<body>
+  <!-- Background Atmosphere -->
+  <video class="uat-bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" src="../assets/video/daftarModul.mp4"></video>
+  <div class="uat-veil"></div>
+
+  <main class="uat-app" id="app">
+    <!-- Top Bar Minimalis (Fullscreen HUD) -->
+    <header class="uat-topbar">
+      <a class="uat-back-btn" href="../analisis.html#user-testing" aria-label="Kembali ke Modul 02">
+        <span>←</span> Kembali ke Modul 02
+      </a>
+
+      <div class="uat-title-badge">
+        <span>KasirKita QA Cockpit</span>
+        <span class="tag">Simulator UAT</span>
+      </div>
+
+      <div class="uat-topbar-controls">
+        <div class="uat-progress-pill" title="Progres pengujian skenario">
+          <div class="uat-progress-bar">
+            <div class="uat-progress-fill" id="progressFill"></div>
+          </div>
+          <span id="progressText">0 / 18 Selesai</span>
+        </div>
+        <button class="uat-btn-reset" type="button" id="btnReset" title="Ulangi pengujian dari awal">Reset ↺</button>
+      </div>
+    </header>
+
+    <!-- Cockpit Dual-Panel Layout -->
+    <section class="uat-cockpit">
+      <!-- Left Panel: Sandbox, Quests & Mock Form -->
+      <div class="uat-panel-left">
+        <!-- Level Tabs -->
+        <nav class="uat-level-tabs" aria-label="Pilih Level Pengujian">
+          <button type="button" class="uat-level-tab active" data-group="login">
+            <span>🔐</span> Level 1: Login
+          </button>
+          <button type="button" class="uat-level-tab" data-group="product_add">
+            <span>📦</span> Level 2: Tambah
+          </button>
+          <button type="button" class="uat-level-tab" data-group="product_view">
+            <span>📋</span> Level 3: Tampil
+          </button>
+          <button type="button" class="uat-level-tab" data-group="product_edit_delete">
+            <span>⚙️</span> Level 4: Edit/Hapus
+          </button>
+        </nav>
+
+        <!-- Active Quest Card -->
+        <article class="uat-quest-card" id="questCard">
+          <div class="uat-quest-header">
+            <span class="uat-quest-badge" id="questBadge">Kasus Negatif (Uji Validasi)</span>
+            <span style="font-size: 11px; color: var(--text-muted);">Misi Aktif</span>
+          </div>
+          <h2 class="uat-quest-title" id="questTitle">MS002 — Data Salah (Password Salah)</h2>
+          <p class="uat-quest-desc" id="questDesc">1) Input Username: admin01 · 2) Input Password: adminSalah · 3) Klik Masuk</p>
+          <div class="uat-quest-actions">
+            <button type="button" class="uat-btn-inject" id="btnInject">
+              <span>⚡</span> Suntik Skenario MS002
+            </button>
+            <span class="uat-quest-hint">Data akan disuntikkan ke form di bawah secara otomatis</span>
+          </div>
+        </article>
+
+        <!-- Mock Application Device Sandbox -->
+        <div class="uat-mock-window">
+          <div class="uat-mock-titlebar">
+            <div class="uat-window-dots">
+              <span class="uat-dot red"></span>
+              <span class="uat-dot yellow"></span>
+              <span class="uat-dot green"></span>
+            </div>
+            <div class="uat-mock-url" id="mockUrl">https://kasirkita.local/admin/login</div>
+          </div>
+
+          <div class="uat-mock-body">
+            <!-- Screen 1: Login Admin -->
+            <div class="uat-screen-login" id="screenLogin">
+              <h2>Login Admin</h2>
+              <p class="sub">Masuk untuk mengelola inventaris KasirKita</p>
+              
+              <div class="uat-alert" id="loginAlert" role="alert"></div>
+
+              <form id="loginForm" autocomplete="off">
+                <div class="uat-form-group">
+                  <label for="inputUsername">Username</label>
+                  <input type="text" id="inputUsername" placeholder="Contoh: admin01" required>
+                </div>
+                <div class="uat-form-group">
+                  <label for="inputPassword">Password</label>
+                  <input type="password" id="inputPassword" placeholder="Masukkan password" required>
+                </div>
+                <button type="submit" class="uat-btn-submit" id="btnLoginSubmit">Masuk ke Sistem</button>
+              </form>
+            </div>
+
+            <!-- Screen 2: Tambah / Edit Produk -->
+            <div class="uat-screen-product" id="screenProduct" style="display: none;">
+              <h2>Formulir Data Produk</h2>
+              
+              <div class="uat-alert" id="productAlert" role="alert"></div>
+
+              <form id="productForm" autocomplete="off">
+                <div class="uat-grid-2">
+                  <div class="uat-form-group">
+                    <label for="prodCode">Kode Produk</label>
+                    <input type="text" id="prodCode" placeholder="PRD-0001">
+                    <div class="field-error" id="errProdCode"></div>
+                  </div>
+                  <div class="uat-form-group">
+                    <label for="prodCat">Kategori</label>
+                    <select id="prodCat">
+                      <option value="Sembako">Sembako</option>
+                      <option value="Minuman">Minuman</option>
+                      <option value="Alat Tulis">Alat Tulis</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="uat-form-group">
+                  <label for="prodName">Nama Produk</label>
+                  <input type="text" id="prodName" placeholder="Contoh: Minyak Goreng 1L">
+                  <div class="field-error" id="errProdName"></div>
+                </div>
+
+                <div class="uat-grid-2">
+                  <div class="uat-form-group">
+                    <label for="prodPrice">Harga Jual (Rp)</label>
+                    <input type="text" id="prodPrice" placeholder="18000">
+                    <div class="field-error" id="errProdPrice"></div>
+                  </div>
+                  <div class="uat-form-group">
+                    <label for="prodStock">Stok Barang</label>
+                    <input type="text" id="prodStock" placeholder="25">
+                    <div class="field-error" id="errProdStock"></div>
+                  </div>
+                </div>
+
+                <div class="uat-grid-2">
+                  <div class="uat-form-group">
+                    <label for="prodUnit">Satuan</label>
+                    <input type="text" id="prodUnit" value="Botol">
+                  </div>
+                  <div class="uat-form-group">
+                    <label for="prodStatus">Status</label>
+                    <select id="prodStatus">
+                      <option value="Aktif">Aktif</option>
+                      <option value="Nonaktif">Nonaktif</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button type="submit" class="uat-btn-submit" id="btnProductSubmit">Simpan Produk</button>
+              </form>
+            </div>
+
+            <!-- Screen 3: Katalog Produk View & Detail -->
+            <div class="uat-screen-catalog" id="screenCatalog" style="display: none;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h2 style="font-size:15px; color:var(--accent-gold);">Katalog Inventaris KasirKita</h2>
+                <div style="display:flex; gap:6px;">
+                  <button type="button" class="uat-btn-inject" id="btnTriggerEmpty" style="font-size:10px; padding:4px 8px;">Uji List Kosong (PRD010)</button>
+                  <button type="button" class="uat-btn-inject" id="btnTriggerDetailFiktif" style="font-size:10px; padding:4px 8px;">Uji Cari PRD-8888 (PRD011)</button>
+                  <button type="button" class="uat-btn-inject btn-positive" id="btnTriggerViewCatalog" style="font-size:10px; padding:4px 8px;">Tampilkan List (PRD012)</button>
+                  <button type="button" class="uat-btn-inject btn-positive" id="btnTriggerViewDetail" style="font-size:10px; padding:4px 8px;">Lihat Detail PRD-0001 (PRD013)</button>
+                </div>
+              </div>
+
+              <div class="uat-alert" id="catalogListAlert" role="alert"></div>
+
+              <table class="uat-catalog-table">
+                <thead>
+                  <tr>
+                    <th>Kode</th>
+                    <th>Nama Produk</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="catalogTableBody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Official Lampiran C Table (Interactive Test Document) -->
+      <div class="uat-panel-right">
+        <header class="uat-sheet-header">
+          <div>
+            <h3>LAMPIRAN C. USER ACCEPTANCE TESTING</h3>
+            <p style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Format Resmi Pengujian Perangkat Lunak (Halaman 95–100 PDF)</p>
+          </div>
+          <div class="uat-sheet-testers">
+            <span>Tim Penguji: <strong>SDA & RPN</strong></span>
+          </div>
+        </header>
+
+        <div class="uat-table-container">
+          <table class="uat-table" id="uatTable">
+            <thead>
+              <tr>
+                <th style="width: 30px;">No</th>
+                <th style="width: 60px;">Kode</th>
+                <th style="width: 130px;">Deskripsi Fungsional</th>
+                <th style="width: 140px;">Kelompok Uji</th>
+                <th>Hasil yang Diharapkan</th>
+                <th style="width: 140px;">Hasil Aktual</th>
+                <th style="width: 75px;">Status</th>
+                <th style="width: 75px;">Tester</th>
+                <th style="width: 75px;">Tgl Uji</th>
+              </tr>
+            </thead>
+            <tbody id="uatTableBody">
+              <!-- Rendered dynamically by assets/js/uat-game.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Game Scripts -->
+  <script src="../assets/js/uat-engine.js"></script>
+  <script src="../assets/js/uat-game.js"></script>
+</body>
+</html>

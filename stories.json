@@ -1,0 +1,164 @@
+{
+  "kenalan": {
+    "title": "Bantu Rani menjaga tokonya",
+    "explanation": "Rani sering lupa mencatat penjualan. Kita akan membuat KasirKita: program C untuk mencatat barang, menghitung belanja, dan menyimpan hasilnya.",
+    "analogy": "Bayangkan buku kas yang bisa menghitung sendiri. Kamu tetap memilih barang; program membantu menghitung dan mencatat.",
+    "action": "Tulis satu masalah toko yang ingin kamu selesaikan."
+  },
+  "alur-project": {
+    "title": "Mulai dari langkah kecil",
+    "explanation": "Kita akan memahami toko, menggambar rencana, menulis program, lalu mencoba hasilnya. Tidak perlu langsung membuat semuanya.",
+    "analogy": "Seperti memasak: pilih menu, siapkan bahan, ikuti resep, lalu cicipi.",
+    "action": "Ikuti alur di bawah dan cari posisi kamu sekarang."
+  },
+  "platform": {
+    "title": "Programnya tinggal di mana?",
+    "explanation": "KasirKita berjalan di terminal komputer. Website ini adalah buku panduannya. Project latihan berdiri sendiri dan tidak perlu terhubung ke sistem lain.",
+    "analogy": "Aplikasi desktop seperti buku di meja sendiri; aplikasi web seperti buku yang dibuka lewat browser.",
+    "action": "Tentukan komputer yang akan dipakai menjalankan program C."
+  },
+  "scope": {
+    "title": "Pilih pekerjaan pertama",
+    "explanation": "Versi pertama cukup mengelola barang, mencatat pembelian, dan membuat nota. Pembayaran online dan banyak kasir sekaligus kita simpan untuk pengembangan berikutnya.",
+    "analogy": "Membuka warung kecil tidak harus langsung punya fasilitas supermarket.",
+    "action": "Tulis tiga fitur wajib dan dua fitur yang belum akan dibuat."
+  },
+  "data": {
+    "title": "Pisahkan master dan transaksi",
+    "explanation": "Master adalah data acuan yang jarang berubah dan bisa masuk antar-master (Kategori ke Barang); transaksi merekam kejadian bisnis yang isi datanya pasti berubah-ubah.",
+    "analogy": "Tiga kotak master (kategori, barang, pelanggan) berisi kartu acuan tetap yang jarang berubah; satu kotak transaksi berisi nota belanja yang isinya pasti berubah-ubah setiap menit.",
+    "action": "Jalankan simulasi 4 kardus di bawah: hubungkan kategori ke barang (master ke master) lalu amati data transaksi yang isi datanya selalu berubah-ubah!"
+  },
+  "langkah": {
+    "title": "Periksa bekalmu",
+    "explanation": "Sebelum menggambar, pastikan kamu tahu siapa pengguna program, masalahnya, dan hasil yang mereka butuhkan.",
+    "analogy": "Seperti mengecek daftar belanja sebelum berangkat ke pasar.",
+    "action": "Ceritakan tujuan KasirKita dalam dua kalimat."
+  },
+  "sdlc": {
+    "title": "Lihat perjalanan lengkapnya",
+    "explanation": "SDLC adalah tahapan membuat aplikasi: memahami kebutuhan, merancang, membuat, menguji, lalu memperbaiki. Tahapan boleh diulang.",
+    "analogy": "Seperti membuat kue: kalau hasilnya kurang pas, perbaiki resep lalu coba lagi.",
+    "action": "Temukan tahap pengujian dan lihat ke mana kita kembali jika ada kesalahan."
+  },
+  "probis": {
+    "title": "Ikuti satu pembelian",
+    "explanation": "Pelanggan membeli dua buku. Kasir memilih barang, memasukkan jumlah, menerima uang, menyimpan transaksi, lalu memberikan nota.",
+    "analogy": "Flowchart adalah petunjuk jalan: setiap pertanyaan menentukan jalan berikutnya.",
+    "action": "Ikuti alur untuk pembeli yang uangnya kurang."
+  },
+  "erd": {
+    "title": "Siapa berhubungan dengan siapa?",
+    "explanation": "ERD adalah peta hubungan data. Pelanggan dapat memiliki banyak nota; satu nota dapat berisi beberapa produk.",
+    "analogy": "Seperti peta keluarga, garis menunjukkan hubungan antaranggota. Di sini anggotanya adalah data.",
+    "action": "Baca 1...* sebagai satu atau lebih, dan 0...* sebagai boleh tidak ada atau banyak."
+  },
+  "normalisasi": {
+    "title": "Rapikan tempat menyimpan data",
+    "explanation": "PDM menunjukkan bentuk record yang akan disimpan. Normalisasi memisahkan data agar informasi yang sama tidak ditulis berulang tanpa perlu.",
+    "analogy": "Simpan nomor teman di buku kontak; cukup rujuk kontak itu ketika membuat daftar undangan.",
+    "action": "Cari tempat menyimpan nama produk dan tempat menyimpan jumlah barang yang dibeli."
+  },
+  "denormalisasi": {
+    "title": "Simpan ringkasan bila berguna",
+    "explanation": "Total nota bisa dihitung dari semua item. Kita boleh menyimpan total juga, asalkan nilainya selalu cocok dengan rincian.",
+    "analogy": "Jumlah belanja di bawah struk adalah ringkasan dari semua baris di atasnya.",
+    "action": "Hitung dua buku seharga Rp12.000: totalnya harus Rp24.000."
+  },
+  "dfd": {
+    "title": "Ikuti perjalanan informasi",
+    "explanation": "DFD menunjukkan data datang dari siapa, diproses di mana, disimpan ke mana, dan menghasilkan apa.",
+    "analogy": "Seperti paket: ada pengirim, tempat pemrosesan, gudang, dan penerima.",
+    "action": "Telusuri input jumlah barang sampai menjadi nota."
+  },
+  "fitur": {
+    "title": "Tentukan arti selesai",
+    "explanation": "Fitur perlu hasil yang bisa diperiksa. Misalnya, menambah barang selesai jika barang baru muncul dan tetap ada setelah program dibuka kembali.",
+    "analogy": "Daftar pesanan lebih jelas jika tertulis jumlah dan hasil yang harus diterima.",
+    "action": "Pilih satu fitur dan tulis tanda bahwa fitur itu bekerja."
+  },
+  "arsitektur": {
+    "title": "Bagi pekerjaan program",
+    "explanation": "Menu menerima input. Fungsi mengolahnya. Bagian penyimpanan membaca dan menulis file TXT. Itulah arsitektur program. Activity Plan (AP) membantu merencanakan kegiatan pengerjaan project.",
+    "analogy": "Seperti toko: meja kasir melayani, petugas menghitung, buku kas menyimpan catatan.",
+    "action": "Sebutkan bagian yang bertugas menyimpan data."
+  },
+  "atribut": {
+    "title": "Isi setiap kolom dengan tepat",
+    "explanation": "Atribut adalah kolom data. Angka bulat memakai tipe integer, satu karakter memakai char, dan teks memakai array char. Pecahan bisa memakai float atau double.",
+    "analogy": "Formulir pendaftaran punya kotak nama, nomor telepon, dan umur; setiap kotak menerima jenis isi berbeda.",
+    "action": "Simpan nomor telepon sebagai teks agar angka nol di depan tidak hilang."
+  },
+  "folder": {
+    "title": "Siapkan laci pekerjaan",
+    "explanation": "Pisahkan kode, deklarasi, data, dan hasil laporan ke folder yang berbeda. Dengan begitu file lebih mudah ditemukan.",
+    "analogy": "Seperti lemari: baju, buku, dan alat tulis punya rak masing-masing.",
+    "action": "Cari folder untuk kode C dan folder untuk file data TXT."
+  },
+  "setup": {
+    "title": "Jalankan program terkecil",
+    "explanation": "Tulis program sederhana yang menampilkan pesan. Compiler mengubah kode C menjadi program yang dapat dijalankan komputer.",
+    "analogy": "Compiler seperti penerjemah yang mengubah instruksi kita menjadi bahasa yang dimengerti komputer.",
+    "action": "Jalankan contoh pertama sebelum menambah fitur lain."
+  },
+  "model": {
+    "title": "Kelompokkan data satu barang",
+    "explanation": "struct menyatukan ID, nama, harga, dan stok milik satu produk. Validasi memeriksa apakah input masuk akal.",
+    "analogy": "Satu kartu barang punya beberapa kotak; petugas memeriksa isinya sebelum menyimpan kartu.",
+    "action": "Coba masukkan jumlah negatif dan pastikan program menolaknya."
+  },
+  "database": {
+    "title": "Tulis data ke buku catatan",
+    "explanation": "Data di memori hilang saat program ditutup. File TXT menyimpan data agar bisa dibaca lagi. Setiap baris mengikuti format yang disepakati.",
+    "analogy": "Memori seperti papan tulis; file seperti buku catatan yang bisa dibuka besok.",
+    "action": "Lihat satu baris produk dan cocokkan setiap bagian dengan atributnya."
+  },
+  "fungsi": {
+    "title": "Beri setiap fungsi satu tugas",
+    "explanation": "Fungsi menerima masukan, mengerjakan tugas, lalu memberi hasil. Tentukan juga apa yang terjadi ketika tugas gagal.",
+    "analogy": "Seperti memberi tugas: hitung belanja ini, lalu beri tahu totalnya atau jelaskan jika datanya salah.",
+    "action": "Pilih satu fungsi; sebutkan input dan hasilnya."
+  },
+  "checkout": {
+    "title": "Selesaikan pembelian dengan aman",
+    "explanation": "Periksa stok dan uang terlebih dahulu. Hitung total, siapkan perubahan, lalu simpan. Tampilkan sukses hanya jika penyimpanan berhasil.",
+    "analogy": "Jangan memberi cap lunas sebelum uang dan catatan pembayaran benar-benar diperiksa.",
+    "action": "Coba skenario stok habis; transaksi harus ditolak."
+  },
+  "output": {
+    "title": "Berikan bukti belanja",
+    "explanation": "Nota menjelaskan barang dan total belanja. Laporan merangkum penjualan. File BAT hanya membantu menjalankan perintah, bukan menyimpan data toko.",
+    "analogy": "Nota seperti tanda terima; laporan seperti rangkuman buku kas di akhir hari.",
+    "action": "Cocokkan total nota dengan jumlah semua item."
+  },
+  "strategi": {
+    "title": "Coba seperti pengguna sungguhan",
+    "explanation": "Pengujian memeriksa apakah program memberi hasil yang benar. Coba input biasa, input salah, dan kondisi penyimpanan gagal.",
+    "analogy": "Seperti mencoba payung sebelum hujan: buka, tutup, dan periksa bagian yang mudah rusak.",
+    "action": "Siapkan satu percobaan berhasil dan satu percobaan gagal."
+  },
+  "kasus": {
+    "title": "Tulis percobaan yang bisa diulang",
+    "explanation": "Setiap kasus uji mencatat kondisi awal, langkah, hasil yang diharapkan, dan hasil yang ditemukan.",
+    "analogy": "Resep percobaan harus cukup jelas agar temanmu bisa mengulanginya.",
+    "action": "Uji pembelian dua buku dan bandingkan hasil dengan hitungan manual."
+  },
+  "bukti": {
+    "title": "Periksa catatan setelah transaksi",
+    "explanation": "Buka kembali data dan pastikan stok, item, serta total masih cocok. Transaksi yang gagal tidak boleh dicatat sebagai berhasil.",
+    "analogy": "Seperti mencocokkan uang di laci dengan nota yang terkumpul.",
+    "action": "Tutup program, buka lagi, lalu periksa transaksi terakhir."
+  },
+  "laporan": {
+    "title": "Ceritakan pekerjaanmu",
+    "explanation": "Laporan menjelaskan masalah, rancangan, cara membuat, hasil pengujian, dan kesimpulan. Sertakan gambar serta bukti yang mendukung.",
+    "analogy": "Seperti jurnal perjalanan: tujuan, rute, kejadian, dan pelajaran yang didapat.",
+    "action": "Mulai dengan satu paragraf latar belakang masalah toko."
+  },
+  "selesai": {
+    "title": "Serahkan agar bisa dicoba orang lain",
+    "explanation": "Project siap diserahkan jika file lengkap, petunjuk jelas, dan orang lain bisa menjalankan serta mencoba fitur utamanya.",
+    "analogy": "Seperti menyerahkan rakitan: sertakan semua bagian dan petunjuk pemakaiannya.",
+    "action": "Minta teman mengikuti petunjuk tanpa bantuanmu, lalu catat bagian yang membingungkan."
+  }
+}

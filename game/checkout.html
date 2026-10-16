@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Game simulasi alur checkout KasirKita: perbaiki simbol flowchart dan sambungan logika transaksi Rani.">
+  <title>Game Checkout Flowchart KasirKita — Hello Project</title>
+  <link rel="stylesheet" href="../assets/css/site.css?v=20261016-clean">
+  <link rel="stylesheet" href="../assets/css/uat-game.css">
+  <style>
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #050c16; color: #edf3fc; font-family: 'Sora', sans-serif; }
+    .checkout-app { display: flex; flex-direction: column; width: 100vw; height: 100vh; padding: 12px 20px; gap: 12px; position: relative; z-index: 2; }
+    .checkout-topbar { display: flex; align-items: center; justify-content: space-between; height: 48px; padding: 0 16px; background: rgba(13, 23, 37, 0.85); backdrop-filter: blur(12px); border: 1px solid #1e314b; border-radius: 12px; flex-shrink: 0; }
+    .checkout-back-btn { display: inline-flex; align-items: center; gap: 8px; color: #ebd1a1; text-decoration: none; font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(235, 209, 161, 0.25); background: rgba(235, 209, 161, 0.06); transition: all 0.2s ease; }
+    .checkout-back-btn:hover { background: rgba(235, 209, 161, 0.15); }
+    .checkout-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #f1f5f9; }
+    .checkout-badge .tag { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 999px; }
+    .checkout-scroll-content { flex: 1; overflow-y: auto; padding-right: 8px; display: flex; flex-direction: column; gap: 14px; }
+    .checkout-scroll-content .checkout-game { margin: 0; }
+  </style>
+</head>
+<body>
+  <video class="uat-bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" src="../assets/video/daftarModul.mp4"></video>
+  <div class="uat-veil"></div>
+
+  <main class="checkout-app" id="main">
+    <header class="checkout-topbar">
+      <a class="checkout-back-btn" href="../probis.html#checkout-reference" aria-label="Kembali ke Modul 01">
+        <span>←</span> Kembali ke Modul 01 (Probis)
+      </a>
+      <div class="checkout-badge">
+        <span>KasirKita Flowchart Cockpit</span>
+        <span class="tag">Simulator Checkout</span>
+      </div>
+      <div>
+        <a class="checkout-back-btn" href="../probis.html#checkout-reference" style="font-size:12px;color:#94a3b8;border-color:rgba(255,255,255,0.1);">Materi Referensi ↗</a>
+      </div>
+    </header>
+
+    <div class="checkout-scroll-content">
+      <section class="checkout-game" id="game-checkout" aria-labelledby="checkout-title">
+<p class="story-kicker">LATIHAN INTERAKTIF · PIPELINE SIMULASI</p>
+<h2 id="checkout-title">Perbaiki alur checkout KasirKita</h2>
+<p class="checkout-intro">Diagram latihan ini memiliki beberapa simbol dan sambungan yang sengaja dibuat salah. Perbaiki bentuk simbol dan tujuan sambungan pipa, lalu jalankan simulasi data untuk melihat aliran transaksi Rani secara nyata.</p>
+<p class="checkout-guide"><strong>Aturan Alur KasirKita:</strong> Input → Hitung total kandidat → Validasi → Simpan data & stok → Cek hasil simpan → Tampilkan nota. Jalur penanganan gagal menampilkan pesan kesalahan lalu kembali meminta perbaikan input.</p>
+
+<noscript><p>Aktifkan JavaScript untuk bermain. Diagram referensi dan source Mermaid di bawah tetap dapat dibaca.</p></noscript>
+
+<div class="checkout-controls">
+  <button type="button" data-checkout="check" class="btn-check">Periksa alur</button>
+  <button type="button" data-checkout="hint" class="btn-hint">Petunjuk berikutnya</button>
+  <button type="button" data-checkout="reset" class="btn-reset">Ulangi tantangan</button>
+  <button type="button" data-checkout="blank" class="btn-blank">Mulai dari kosong</button>
+  <a href="../probis.html#checkout-reference" class="btn-ref">Lihat referensi</a>
+</div>
+
+<p class="checkout-status" role="status" aria-live="polite"></p>
+<ul class="checkout-issues"></ul>
+
+<!-- PIPA ALUR VISUAL CANVAS -->
+<div class="checkout-pipeline-wrap">
+  <div class="pipeline-header">
+    <div class="pipeline-legend">
+      <span class="legend-item"><i class="dot dot-next"></i> Jalur Utama</span>
+      <span class="legend-item"><i class="dot dot-ya"></i> Cabang Ya (Benar)</span>
+      <span class="legend-item"><i class="dot dot-tidak"></i> Cabang Tidak (Salah)</span>
+      <span class="legend-item"><i class="dot dot-retry"></i> Loop Perbaikan</span>
+    </div>
+    <div class="pipeline-zoom-controls" role="group" aria-label="Kontrol Zoom Kanvas Flowchart">
+      <span class="zoom-label">Skala:</span>
+      <button type="button" class="btn-zoom" data-zoom="out" title="Perkecil alur (Zoom Out) min 60%">−</button>
+      <button type="button" class="btn-zoom-val" data-zoom="reset" title="Klik untuk kembalikan ke skala normal 100%">100%</button>
+      <button type="button" class="btn-zoom" data-zoom="in" title="Perbesar alur (Zoom In) maks 130%">+</button>
+      <button type="button" class="btn-zoom-fit" data-zoom="fit" title="Sesuaikan agar muat satu layar">⛶ Fit Layar</button>
+    </div>
+  </div>
+  
+  <div class="checkout-canvas-viewport">
+    <div class="checkout-canvas-container">
+      <svg class="checkout-svg-canvas" aria-hidden="true">
+        <defs>
+          <marker id="arrow-next" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#38bdf8"/>
+          </marker>
+          <marker id="arrow-ya" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#10b981"/>
+          </marker>
+          <marker id="arrow-tidak" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#f43f5e"/>
+          </marker>
+          <marker id="arrow-retry" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#f59e0b"/>
+          </marker>
+          <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#38bdf8" flood-opacity="0.6"/>
+          </filter>
+        </defs>
+        <g class="checkout-wires-group"></g>
+        <g class="checkout-token-group"></g>
+      </svg>
+      <div class="checkout-board"><fieldset class="checkout-node" data-node="start">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">start</span>
+    <strong class="node-title-text">Mulai</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Mulai">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="start" aria-label="Simbol untuk Mulai"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <div class="checkout-edge-field" data-edge-key="start:">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-next">Lanjut</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="start:" aria-label="Mulai — Lanjut"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div>
+</div>
+</fieldset><fieldset class="checkout-node" data-node="input">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">input</span>
+    <strong class="node-title-text">Input barang, jumlah</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  <p class="node-sub-text">dan pembayaran</p>
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Input barang, jumlah">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="input" aria-label="Simbol untuk Input barang, jumlah"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <div class="checkout-edge-field" data-edge-key="input:">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-next">Lanjut</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="input:" aria-label="Input barang, jumlah — Lanjut"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div>
+</div>
+</fieldset><fieldset class="checkout-node" data-node="calculate">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">calculate</span>
+    <strong class="node-title-text">Hitung total</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  <p class="node-sub-text">dari harga produk</p>
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Hitung total">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="calculate" aria-label="Simbol untuk Hitung total"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <div class="checkout-edge-field" data-edge-key="calculate:">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-next">Lanjut</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="calculate:" aria-label="Hitung total — Lanjut"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div>
+</div>
+</fieldset><fieldset class="checkout-node" data-node="valid">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">valid</span>
+    <strong class="node-title-text">Input valid?</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  <p class="node-sub-text">tipe, stok, dan uang</p>
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Input valid?">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="valid" aria-label="Simbol untuk Input valid?"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <div class="checkout-edge-field" data-edge-key="valid:Ya">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-ya">Ya</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="valid:Ya" aria-label="Input valid? — Ya"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div><div class="checkout-edge-field" data-edge-key="valid:Tidak">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-tidak">Tidak</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="valid:Tidak" aria-label="Input valid? — Tidak"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div>
+</div>
+</fieldset><fieldset class="checkout-node" data-node="save">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">save</span>
+    <strong class="node-title-text">Simpan transaksi</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  <p class="node-sub-text">kandidat data dan stok</p>
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Simpan transaksi">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="save" aria-label="Simbol untuk Simpan transaksi"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <div class="checkout-edge-field" data-edge-key="save:">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-next">Lanjut</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="save:" aria-label="Simpan transaksi — Lanjut"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div>
+</div>
+</fieldset><fieldset class="checkout-node" data-node="saved">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">saved</span>
+    <strong class="node-title-text">Simpan berhasil?</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Simpan berhasil?">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="saved" aria-label="Simbol untuk Simpan berhasil?"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <div class="checkout-edge-field" data-edge-key="saved:Ya">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-ya">Ya</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="saved:Ya" aria-label="Simpan berhasil? — Ya"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div><div class="checkout-edge-field" data-edge-key="saved:Tidak">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-tidak">Tidak</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="saved:Tidak" aria-label="Simpan berhasil? — Tidak"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div>
+</div>
+</fieldset><fieldset class="checkout-node" data-node="receipt">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">receipt</span>
+    <strong class="node-title-text">Tampilkan nota</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  <p class="node-sub-text">transaksi tersimpan</p>
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Tampilkan nota">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="receipt" aria-label="Simbol untuk Tampilkan nota"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <div class="checkout-edge-field" data-edge-key="receipt:">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-next">Lanjut</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="receipt:" aria-label="Tampilkan nota — Lanjut"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div>
+</div>
+</fieldset><fieldset class="checkout-node" data-node="finish">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">finish</span>
+    <strong class="node-title-text">Selesai</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Selesai">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="finish" aria-label="Simbol untuk Selesai"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <p class="edge-terminal-note">Langkah akhir (Terminal) — tidak memiliki sambungan keluar.</p>
+</div>
+</fieldset><fieldset class="checkout-node" data-node="error">
+  <legend class="checkout-node-legend">
+    <span class="node-id-tag">error</span>
+    <strong class="node-title-text">Tampilkan kesalahan</strong>
+  </legend>
+  <div class="checkout-symbol" aria-hidden="true"></div>
+  <p class="node-sub-text">data aktif tidak berubah</p>
+  <div class="checkout-shape-picker" role="group" aria-label="Bentuk simbol untuk Tampilkan kesalahan">
+  <span class="checkout-picker-title">Bentuk Simbol:</span>
+  <div class="checkout-shape-buttons">
+    <button type="button" class="btn-shape" data-set-shape="end" title="Oval · Mulai / Selesai">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Oval</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="step" title="Persegi Panjang · Proses">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><rect x="1" y="1" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Kotak</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="decision" title="Diamond · Keputusan">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M16 1L31 9L16 17L1 9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Diamond</span>
+    </button>
+    <button type="button" class="btn-shape" data-set-shape="io" title="Paralelogram · Input / Output">
+      <svg viewBox="0 0 32 18" aria-hidden="true"><path d="M6 1H31L26 17H1Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span>Paralel</span>
+    </button>
+  </div>
+  <select class="checkout-kind-select" data-kind="error" aria-label="Simbol untuk Tampilkan kesalahan"><option value="">Pilih simbol</option><option value="end">Oval · mulai/selesai</option><option value="step">Persegi panjang · proses</option><option value="decision">Diamond · keputusan</option><option value="io">Paralelogram · input/output</option></select>
+</div>
+  <div class="checkout-edges-picker">
+  <span class="checkout-picker-title">Sambungan Keluar:</span>
+  <div class="checkout-edge-field" data-edge-key="error:Perbaiki / coba lagi">
+  <div class="edge-tag-row">
+    <span class="edge-badge badge-retry">Perbaiki / coba lagi</span>
+    <span class="edge-arrow" aria-hidden="true">→</span>
+  </div>
+  <select class="checkout-edge-select" data-edge="error:Perbaiki / coba lagi" aria-label="Tampilkan kesalahan — Perbaiki / coba lagi"><option value="">Pilih tujuan</option><option value="start">Mulai</option><option value="input">Input barang, jumlah</option><option value="calculate">Hitung total</option><option value="valid">Input valid?</option><option value="save">Simpan transaksi</option><option value="saved">Simpan berhasil?</option><option value="receipt">Tampilkan nota</option><option value="finish">Selesai</option><option value="error">Tampilkan kesalahan</option></select>
+</div>
+</div>
+</fieldset></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIMULATOR SKENARIO DATA -->
+<div class="checkout-simulator">
+  <div class="sim-header">
+    <h3>Simulasi Aliran Transaksi KasirKita</h3>
+    <span class="sim-badge">Live Token Flow</span>
+  </div>
+  <p>Pilih salah satu kondisi checkout di bawah, lalu tekan <strong>Jalankan skenario</strong> untuk menyaksikan partikel data melintasi pipa keputusan flowchart-mu.</p>
+  
+  <div class="sim-controls-grid">
+    <div class="sim-input-group">
+      <label for="checkout-scenario">Kondisi / Kasus Transaksi:</label>
+      <select id="checkout-scenario">
+        <option value="normal">Normal · 2 buku @Rp12rb, bayar Rp30.000, simpan berhasil</option>
+        <option value="invalid">Input salah · jumlah "abc" (bukan angka)</option>
+        <option value="money">Uang kurang · total Rp24.000, bayar Rp20.000</option>
+        <option value="failed">Simpan gagal · disk penuh / file data tidak dapat ditulis</option>
+      </select>
+    </div>
+    
+    <div class="sim-action-group">
+      <button type="button" data-checkout="run" class="btn-run-sim">▶ Jalankan skenario</button>
+    </div>
+  </div>
+
+  <div class="sim-live-status" style="display:none;" aria-live="polite">
+    <div class="token-tracker">
+      <span class="tracker-icon">🛒</span>
+      <span class="tracker-text">Menyiapkan transaksi...</span>
+    </div>
+  </div>
+
+  <div class="sim-results-panel">
+    <h4>Jejak Langkah Alur:</h4>
+    <ol class="checkout-trace" aria-label="Jalur simulasi"></ol>
+    <p class="checkout-result" role="status" aria-live="polite"></p>
+  </div>
+</div>
+
+<!-- REFLEKSI DAN KASUS EKSTRIM -->
+<fieldset class="checkout-reflection">
+  <legend>Tantangan Refleksi Kasus: Simpan Gagal</legend>
+  <p>Jumlah dan uang pelanggan valid, tetapi saat menyimpan, file transaksi tidak dapat ditulis. Apa tindakan yang benar dan apa alasannya?</p>
+  <label><input type="radio" name="checkout-answer" value="receipt"> Tampilkan nota karena uang pelanggan cukup dan sudah dibayar.</label>
+  <label><input type="radio" name="checkout-answer" value="retry"> Tampilkan kesalahan dan kembali ke input, karena transaksi belum tersimpan di file.</label>
+  <label><input type="radio" name="checkout-answer" value="finish"> Selesaikan transaksi langsung karena total belanja sudah dihitung kasir.</label>
+  <button type="button" data-checkout="reflect">Periksa alasan</button>
+  <p class="checkout-reflection-result" role="status" aria-live="polite"></p>
+</fieldset>
+
+<p class="checkout-footer-note">Status alur tersimpan di browser (localStorage) secara otomatis. Latihan ini tidak mengunci materi berikutnya dan berfungsi sebagai sarana pemahaman logika sebelum implementasi kode C.</p>
+
+<script type="application/json" id="checkout-spec">{"nodes": [{"id": "start", "kind": "end", "title": "Mulai", "subtitle": ""}, {"id": "input", "kind": "io", "title": "Input barang, jumlah", "subtitle": "dan pembayaran"}, {"id": "calculate", "kind": "step", "title": "Hitung total", "subtitle": "dari harga produk"}, {"id": "valid", "kind": "decision", "title": "Input valid?", "subtitle": "tipe, stok, dan uang"}, {"id": "save", "kind": "step", "title": "Simpan transaksi", "subtitle": "kandidat data dan stok"}, {"id": "saved", "kind": "decision", "title": "Simpan berhasil?", "subtitle": ""}, {"id": "receipt", "kind": "io", "title": "Tampilkan nota", "subtitle": "transaksi tersimpan"}, {"id": "finish", "kind": "end", "title": "Selesai", "subtitle": ""}, {"id": "error", "kind": "io", "title": "Tampilkan kesalahan", "subtitle": "data aktif tidak berubah"}], "edges": [{"from": "start", "to": "input", "label": "", "key": "start:"}, {"from": "input", "to": "calculate", "label": "", "key": "input:"}, {"from": "calculate", "to": "valid", "label": "", "key": "calculate:"}, {"from": "valid", "to": "save", "label": "Ya", "key": "valid:Ya"}, {"from": "valid", "to": "error", "label": "Tidak", "key": "valid:Tidak"}, {"from": "save", "to": "saved", "label": "", "key": "save:"}, {"from": "saved", "to": "receipt", "label": "Ya", "key": "saved:Ya"}, {"from": "saved", "to": "error", "label": "Tidak", "key": "saved:Tidak"}, {"from": "error", "to": "input", "label": "Perbaiki / coba lagi", "key": "error:Perbaiki / coba lagi"}, {"from": "receipt", "to": "finish", "label": "", "key": "receipt:"}]}</script>
+<script src="../assets/js/checkout-engine.js?v=1" defer></script>
+<script src="../assets/js/checkout-game.js?v=2" defer></script>
+</section>
+    </div>
+  </main>
+</body>
+</html>

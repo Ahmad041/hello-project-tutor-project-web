@@ -1,0 +1,1134 @@
+/* ==========================================================================
+   Analogi 3D Kotak Kardus Terbuka & Bola: Master vs Transaksi (KasirKita)
+   Gaya visual sesuai referensi:
+   - Sisi Kiri: Panggung lantai studio terang dengan kotak kardus 3D terbuka,
+     lengkap dengan tutup (flaps) terbuka dan bola warna 3D di dalamnya.
+   - Sisi Kanan: Transisi gradien dari transparan ke gelap (#0b0f19) dengan
+     judul tebal menyala ("Judul") dan teks penjelasan lengkap.
+   ========================================================================== */
+
+/* ==========================================================================
+   Full Width (100%) Layout untuk Halaman 3D & 2D Boxes Analogy
+   ========================================================================== */
+body[data-page="game/boxes-analogy.html"] .layout.module-content,
+body[data-page="game/boxes-analogy.html"] .bar,
+body[data-page="game/boxes-2d.html"] .layout.module-content,
+body[data-page="game/boxes-2d.html"] .bar {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: clamp(20px, 3.5vw, 64px) !important;
+  padding-right: clamp(20px, 3.5vw, 64px) !important;
+  box-sizing: border-box !important;
+}
+
+body[data-page="game/boxes-analogy.html"] .article,
+body[data-page="game/boxes-2d.html"] .article {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+body[data-page="game/boxes-analogy.html"] .boxes-analogy-container,
+body[data-page="game/boxes-2d.html"] .boxes-analogy-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Container Utama Showcase Hero (Split Kiri Terang & Kanan Gradien Gelap) */
+.boxes-analogy-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 36px 0;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: 'Sora', system-ui, -apple-system, sans-serif;
+  color: #edf3fc;
+  /* Lantai dasar: Studio terang dengan pencahayaan halus dari kiri-atas */
+  background:
+    radial-gradient(circle at 18% 22%, #ffffff 0%, #eceff4 45%, #dde2e8 100%);
+}
+
+/* Hero Showcase Grid */
+.boxes-showcase-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1.05fr);
+  min-height: 680px;
+  width: 100%;
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .boxes-showcase-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+}
+
+/* ==========================================================================
+   SISI KIRI: Panggung Lingkungan 3D WebGL (Three.js) & Kotak Kardus 3D
+   ========================================================================== */
+.boxes-stage-open3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 680px;
+  padding: 0;
+  overflow: hidden;
+  z-index: 2;
+}
+
+@media (max-width: 1024px) {
+  .boxes-stage-open3d {
+    height: 520px;
+    min-height: 520px;
+  }
+}
+
+/* ==========================================================================
+   SISI KIRI: Panggung Lingkungan 2D Vektor & Kotak Kardus
+   ========================================================================== */
+.boxes-stage-open2d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 680px;
+  padding: 24px 28px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  background: radial-gradient(circle at 45% 25%, #ffffff 0%, #f1f5f9 45%, #e2e8f0 100%);
+}
+
+@media (max-width: 1024px) {
+  .boxes-stage-open2d {
+    min-height: auto;
+    padding: 18px 14px;
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+.boxes-2d-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.boxes-stage-grid.boxes-2d-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+  align-items: stretch;
+  justify-items: center;
+  width: 100%;
+  margin: auto 0;
+}
+
+@media (max-width: 640px) {
+  .boxes-stage-grid.boxes-2d-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.box-action-hint {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #475569;
+  text-align: center;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Viewport Lingkungan 3D WebGL (Three.js Interactive Canvas) */
+.boxes-3d-scene-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px 0 0 20px;
+  overflow: hidden;
+  background: radial-gradient(circle at 45% 25%, #f8fafc 0%, #e2e8f0 60%, #cbd5e1 100%);
+  user-select: none;
+}
+
+@media (max-width: 1024px) {
+  .boxes-3d-scene-container {
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+.boxes-3d-scene-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  outline: none;
+  cursor: grab;
+}
+
+.boxes-3d-scene-container canvas:active {
+  cursor: grabbing;
+}
+
+/* Overlay Game HUD di Atas Canvas 3D */
+.boxes-3d-hud {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+  gap: 10px;
+}
+
+.hud-top-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(10px);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  color: #f8fafc;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.hud-tag {
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.hud-help {
+  color: #cbd5e1;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .hud-help {
+    display: none;
+  }
+}
+
+.hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  pointer-events: auto;
+}
+
+/* Deck Sinkronisasi Aksesibilitas (Di Bawah Canvas 3D) */
+.boxes-accessible-deck {
+  border: 1px dashed rgba(148, 163, 184, 0.4);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 6px 12px;
+}
+
+.boxes-accessible-deck summary {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.boxes-accessible-deck summary:hover {
+  color: #0284c7;
+}
+
+.boxes-accessible-deck[open] .boxes-stage-grid {
+  margin-top: 12px;
+}
+
+.hud-btn {
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f1f5f9;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 6px 11px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hud-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(56, 189, 248, 0.35);
+}
+
+.hud-btn.active {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #38bdf8;
+}
+
+/* Floating 3D Tooltip HUD */
+.hud-tooltip {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+  padding: 7px 14px;
+  border-radius: 9px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 12px rgba(56, 189, 248, 0.3);
+  z-index: 25;
+  transform: translate(-50%, -135%);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.hud-tooltip .tt-pill {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+.hud-tooltip .tt-hint {
+  display: block;
+  font-size: 0.65rem;
+  color: #94a3b8;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.boxes-stage-hint {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 999px;
+  align-self: flex-start;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+/* Grid Penataan 4 Kotak Kardus Sinkronisasi (Dua Arah dengan 3D Engine) */
+.boxes-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: end;
+  justify-items: center;
+}
+
+@media (max-width: 640px) {
+  .boxes-stage-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Wrapper Komponen Kotak Kardus 3D Terbuka */
+.cardboard-box-open3d {
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+.cardboard-box-open3d:hover {
+  transform: translateY(-6px);
+}
+
+/* Header & Badge di Atas Kotak */
+.box-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 4px;
+  margin-bottom: 6px;
+  gap: 6px;
+}
+
+.box-stamp-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #a86e34;
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.box-master-category .box-stamp-tag {
+  background: #9333ea;
+  color: #ffffff;
+}
+
+.box-master-product .box-stamp-tag {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.box-master-customer .box-stamp-tag {
+  background: #059669;
+  color: #ffffff;
+}
+
+.box-transaction .box-stamp-tag {
+  background: #d97706;
+  color: #ffffff;
+}
+
+/* Badge Sifat Data (Jarang Berubah vs Pasti Berubah-Ubah) */
+.box-nature-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nature-static {
+  background: rgba(14, 116, 144, 0.15);
+  color: #0369a1;
+  border: 1px solid rgba(14, 116, 144, 0.35);
+}
+
+.nature-dynamic {
+  background: rgba(217, 119, 6, 0.2);
+  color: #b45309;
+  border: 1px solid rgba(217, 119, 6, 0.5);
+  animation: dynamicPulse 2s infinite ease-in-out;
+}
+
+@keyframes dynamicPulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.box-title-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 6px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   Visualisasi Kardus 3D Terbuka (SVG + Rongga Bola)
+   ========================================================================== */
+.box-3d-visual {
+  position: relative;
+  width: 220px;
+  height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 12px rgba(40, 25, 10, 0.15));
+  transition: filter 0.3s ease;
+}
+
+.cardboard-box-open3d:hover .box-svg {
+  filter: drop-shadow(0 14px 20px rgba(40, 25, 10, 0.25));
+}
+
+/* Rongga Dalam Kardus Tempat Bola Bersarang */
+.box-cavity-balls {
+  position: absolute;
+  top: 52px;
+  left: 36px;
+  width: 148px;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 5;
+  perspective: 500px;
+}
+
+.box-cavity-balls.empty-zone {
+  border: 1px dashed rgba(160, 110, 60, 0.4);
+  border-radius: 8px;
+  background: rgba(60, 35, 15, 0.08);
+}
+
+.box-empty-hint {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #78350f;
+  text-align: center;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+/* Denyut Animasi saat Data Transaksi Berubah */
+.cardboard-box-open3d.box-transaction.pulse-update {
+  animation: boxTransactionPulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes boxTransactionPulse {
+  0% { transform: scale(0.98); }
+  50% { transform: scale(1.06); filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.8)); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   Bola 3D Mengilap (Spheres) di Dalam Kardus
+   ========================================================================== */
+.ball-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+  user-select: none;
+}
+
+.ball-item:hover {
+  transform: translateY(-8px) scale(1.18);
+  z-index: 20;
+}
+
+.ball-item:active {
+  transform: translateY(-2px) scale(0.96);
+}
+
+/* Bola Kategori (Ungu Mengilap) */
+.ball-item.ball-category {
+  background: radial-gradient(circle at 35% 28%, #ffffff 0%, #d8b4fe 25%, #a855f7 60%, #6b21a8 100%);
+  box-shadow: 0 6px 14px rgba(107, 33, 168, 0.45), inset -2px -2px 6px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+
+/* Bola Produk (Cyan Mengilap) */
+.ball-item.ball-product {
+  background: radial-gradient(circle at 35% 28%, #ffffff 0%, #7dd3fc 25%, #0284c7 60%, #034870 100%);
+  box-shadow: 0 6px 14px rgba(2, 132, 199, 0.45), inset -2px -2px 6px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+
+/* Bola Pelanggan (Hijau Mengilap) */
+.ball-item.ball-customer {
+  background: radial-gradient(circle at 35% 28%, #ffffff 0%, #86efac 25%, #10b981 60%, #064e3b 100%);
+  box-shadow: 0 6px 14px rgba(5, 150, 105, 0.45), inset -2px -2px 6px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+
+/* Bola Transaksi Belanja (Golden Amber) */
+.ball-item.ball-transaction,
+.ball-item.ball-transaction-item {
+  background: radial-gradient(circle at 35% 28%, #ffffff 0%, #fde68a 25%, #f59e0b 60%, #78350f 100%);
+  box-shadow: 0 6px 14px rgba(217, 119, 6, 0.45), inset -2px -2px 6px rgba(0, 0, 0, 0.5);
+  color: #1a0f02;
+}
+
+@keyframes ballJump {
+  0% { transform: translateY(0) scale(1); }
+  35% { transform: translateY(-16px) scale(1.22); }
+  70% { transform: translateY(2px) scale(0.95); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.ball-item.anim-jump {
+  animation: ballJump 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ball-code {
+  font-size: 0.64rem;
+  font-weight: 800;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  line-height: 1;
+}
+
+/* Tag Kategori di dalam Bola Produk (Relasi Master ke Master) */
+.ball-category-pill {
+  font-size: 0.5rem;
+  font-weight: 800;
+  background: rgba(147, 51, 234, 0.95);
+  color: #ffffff;
+  border-radius: 3px;
+  padding: 1px 3px;
+  margin-top: 1px;
+  line-height: 1;
+  text-shadow: none;
+}
+
+.ball-qty-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 0.58rem;
+  font-weight: 800;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   SISI KANAN: Transisi Gradien Dark to Transparent & Penjelasan
+   ========================================================================== */
+.boxes-hero-content-panel {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(15, 23, 42, 0.42) 14%,
+    rgba(15, 23, 42, 0.88) 32%,
+    #0f172a 52%,
+    #090d16 100%
+  );
+  padding: 44px 40px 44px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+}
+
+@media (max-width: 1024px) {
+  .boxes-hero-content-panel {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(15, 23, 42, 0.8) 40px,
+      #0f172a 100px,
+      #090d16 100%
+    );
+    padding: 32px 24px;
+  }
+}
+
+.hero-box-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-box-eyebrow::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+/* Judul Tebal Putih Menyala Sesuai Mockup UI */
+.hero-box-title {
+  margin: 0 0 16px 0;
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.35), 0 0 40px rgba(56, 189, 248, 0.2);
+}
+
+@media (max-width: 640px) {
+  .hero-box-title {
+    font-size: 2rem;
+  }
+}
+
+.hero-box-desc-block {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 640px;
+}
+
+.hero-box-paragraph {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #cbd5e1;
+  max-width: 620px;
+}
+
+.hero-box-paragraph strong {
+  color: #f8fafc;
+}
+
+.hero-box-paragraph.master-highlight {
+  border-left: 3px solid #38bdf8;
+  padding-left: 12px;
+  background: rgba(56, 189, 248, 0.06);
+  border-radius: 0 8px 8px 0;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.hero-box-paragraph.trans-highlight {
+  border-left: 3px solid #f59e0b;
+  padding-left: 12px;
+  background: rgba(245, 158, 11, 0.06);
+  border-radius: 0 8px 8px 0;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* Struk Digital Kasir di Dalam Panel Gelap */
+.digital-receipt {
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  position: relative;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+.digital-receipt::before,
+.digital-receipt::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: radial-gradient(circle, transparent, transparent 50%, #ffffff 50%, #ffffff 100%);
+  background-size: 8px 8px;
+}
+.digital-receipt::before { top: -5px; }
+.digital-receipt::after { bottom: -5px; }
+
+.receipt-header {
+  text-align: center;
+  border-bottom: 1px dashed #94a3b8;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.receipt-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.receipt-meta {
+  font-size: 0.7rem;
+  color: #475569;
+  margin-top: 2px;
+}
+
+.receipt-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px 0;
+  font-size: 0.75rem;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.receipt-empty {
+  color: #94a3b8;
+  font-style: italic;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.receipt-total-row {
+  border-top: 1px dashed #94a3b8;
+  padding-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0f172a !important;
+}
+
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  color: #0f172a !important;
+  margin-bottom: 8px;
+}
+
+.receipt-table th {
+  color: #475569 !important;
+  font-weight: 700;
+  border-bottom: 1px solid #cbd5e1;
+  padding: 4px 6px;
+  text-align: left;
+  background: transparent !important;
+}
+
+.receipt-table td {
+  color: #0f172a !important;
+  padding: 4px 6px;
+  border-bottom: 1px solid #f1f5f9;
+  background: transparent !important;
+}
+
+.receipt-table td strong {
+  color: #0284c7 !important;
+}
+
+.digital-receipt .receipt-title {
+  color: #0f172a !important;
+}
+
+.digital-receipt .receipt-meta {
+  color: #334155 !important;
+}
+
+.digital-receipt .receipt-meta strong {
+  color: #0f172a !important;
+}
+
+/* Feedback Log Realtime */
+.boxes-feedback-log {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: #e2e8f0;
+}
+
+.boxes-feedback-log.status-ok {
+  border-left: 4px solid #10b981;
+}
+
+/* Action Button Bar */
+.boxes-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.boxes-action-bar button {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 9px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #1e293b;
+  color: #f8fafc;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.boxes-action-bar button:hover {
+  background: #334155;
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+.boxes-action-bar button.primary {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border-color: #38bdf8;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+}
+
+.boxes-action-bar button.primary:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.6);
+}
+
+/* Modal Karakteristik Data */
+.box-nature-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.box-nature-dialog {
+  background: #0f172a;
+  border: 2px solid #38bdf8;
+  border-radius: 16px;
+  max-width: 520px;
+  width: 100%;
+  padding: 26px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 25px rgba(56, 189, 248, 0.25);
+  animation: modalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   Switcher Representasi Mode 2D vs Mode 3D di Probis & Boxes Lab
+   ========================================================================== */
+.representation-mode-bar {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin: 24px 0 32px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 20px rgba(56, 189, 248, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mode-bar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mode-bar-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #38bdf8;
+  text-transform: uppercase;
+}
+
+.mode-bar-tag .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+
+.mode-bar-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.mode-bar-header p {
+  margin: 2px 0 0 0;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.mode-switch-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 680px) {
+  .mode-switch-actions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.mode-switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-switch-btn:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+}
+
+.mode-switch-btn.active {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.22) 0%, rgba(14, 116, 144, 0.18) 100%);
+  border-color: #0284c7;
+  box-shadow: inset 0 0 12px rgba(2, 132, 199, 0.2), 0 4px 14px rgba(2, 132, 199, 0.25);
+}
+
+.mode-switch-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.mode-switch-btn .btn-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mode-switch-btn .btn-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.mode-switch-btn .btn-body strong {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.mode-switch-btn .btn-body small {
+  font-size: 0.76rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.mode-switch-btn .btn-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mode-switch-btn.active .btn-badge {
+  background: rgba(2, 132, 199, 0.35);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.mode-switch-btn .btn-badge.highlight {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.5);
+}
+
+.mode-switch-btn:hover .btn-badge.highlight {
+  background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+}

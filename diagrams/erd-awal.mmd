@@ -1,0 +1,21 @@
+erDiagram
+    PELANGGAN {
+        id_pelanggan PK
+        nama
+        telepon
+    }
+    NOTA_AWAL {
+        id_nota PK
+        waktu
+        items
+        dibayar
+    }
+    PRODUK {
+        id_produk PK
+        nama_produk
+        nama_kategori
+        harga
+        stok
+    }
+    PELANGGAN |o--o{ NOTA_AWAL : "memiliki / dimiliki (0...1 : 0...*)"
+    NOTA_AWAL }o--|{ PRODUK : "memiliki / dimiliki (0...* : 1...*)"

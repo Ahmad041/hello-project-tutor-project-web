@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Simulasi interaktif analogi 3D kotak kardus untuk memahami perbedaan Entitas Master dan Entitas Transaksi pada aplikasi kasir KasirKita C.">
+  <title>Analogi Kotak Kardus: Master vs Transaksi — Hello Project</title>
+  <link rel="stylesheet" href="../assets/css/site.css?v=checkout-game-1">
+  <link rel="stylesheet" href="../assets/css/boxes-analogy.css">
+  <script src="../assets/js/vendor/three.min.js"></script>
+  <script src="../assets/js/vendor/OrbitControls.js"></script>
+  <script src="../assets/js/boxes-analogy.js" defer></script>
+</head>
+<body class="docs" data-page="game/boxes-analogy.html">
+  <video class="art" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/130837c4-0244-4f37-9c61-8d801d93fd29.jpg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260514_135830_bb6491d1-9b66-4aec-9722-13b4dfe3fb46.mp4"></video>
+  <div class="veil"></div>
+  <a class="skip" href="#main">Lewati navigasi</a>
+
+  <header class="bar">
+    <a class="brand" href="../index.html" aria-label="Hello Project beranda">
+      <svg viewBox="0 0 23 17" aria-hidden="true">
+        <path d="M8.15 .9H4.55L.5 9.3h3.6Z"/>
+        <path d="M17 0h-3.6L6.15 16.4h3.6Z"/>
+        <path d="M22.9 0h-3.6L15 7.6h3.6Z"/>
+        <path d="M22.6 6.9H19l-4.95 9.5h3.6Z"/>
+      </svg>
+      Hello Project
+    </a>
+  </header>
+
+  <div class="layout module-content">
+    <main class="article lesson-article" id="main">
+      <div class="breadcrumb">
+        <a href="../project.html#data">← Kembali ke Dokumen Persiapan (Master &amp; Transaksi 2D)</a>
+      </div>
+
+      <div class="eyebrow"><span class="dot"></span> MODUL 01 · VISUALISASI INTERAKTIF</div>
+      <h1>Master & Transaksi: Analogi Kotak Kardus</h1>
+      <p class="lead">
+        Pahami perbedaan mendasar antara data acuan (<strong>Master</strong>) dan data pencatatan kejadian (<strong>Transaksi</strong>) menggunakan simulasi kotak kardus fisik dan bola warna di bawah ini.
+      </p>
+
+      <!-- Switcher Mode 2D vs 3D -->
+      <div class="representation-mode-bar" role="region" aria-label="Pilihan Representasi Master & Transaksi 2D / 3D">
+        <div class="mode-bar-header">
+          <div class="mode-bar-tag"><span class="dot"></span> REPRESENTASI DATA KASIRKITA</div>
+          <h3>Pilih Mode Simulasi: Mode 2D vs Mode 3D</h3>
+          <p>Pelajari konsep pemisahan Master (acuan) dan Transaksi (kejadian) melalui simulasi interaktif:</p>
+        </div>
+        <div class="mode-switch-actions">
+          <a href="boxes-2d.html" class="mode-switch-btn" title="Buka mode 2D simulasi kotak kardus interaktif">
+            <span class="btn-icon">📦🎨</span>
+            <div class="btn-body">
+              <strong>Mode 2D</strong>
+              <small>Simulasi Interaktif Vektor 2D · Ringan &amp; Cepat</small>
+            </div>
+            <span class="btn-badge highlight">Buka mode 2D ↗</span>
+          </a>
+          <button type="button" class="mode-switch-btn mode-switch-3d active" aria-current="page" title="Sedang aktif di Mode 3D">
+            <span class="btn-icon">📦✨</span>
+            <div class="btn-body">
+              <strong>Mode 3D</strong>
+              <small>Simulasi Tiga Dimensi WebGL · Orbit Kamera &amp; Fisika</small>
+            </div>
+            <span class="btn-badge highlight">Aktif di sini ✓</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Container Interaktif Analogi Kotak Kardus & Bola: Showcase UI Sesuai Mockup -->
+      <section class="boxes-analogy-container" aria-label="Simulasi Kotak Kardus 3D Master dan Transaksi">
+        <div class="boxes-showcase-hero">
+          <!-- SISI KIRI: Panggung Lantai Studio Terang & 4 Kotak Kardus 3D Terbuka -->
+          <div class="boxes-stage-open3d">
+            <div class="boxes-3d-scene-container" id="boxes-3d-viewport" aria-label="Lingkungan 3D Interaktif WebGL Three.js">
+              <div class="boxes-3d-hud">
+                <div class="hud-top-left"><span class="hud-tag">🎮 3D WebGL</span><span class="hud-help">Drag putar · Scroll zoom · Klik bola</span></div>
+                <div class="hud-controls">
+                  <button type="button" class="hud-btn" data-action="3d-reset-cam" title="Reset Posisi Kamera">🔄 Reset</button>
+                  <button type="button" class="hud-btn" data-action="3d-autorotate" title="Putar Kamera Otomatis">✨ Putar</button>
+                  <button type="button" class="hud-btn" data-action="3d-focus-trx" title="Fokus ke Kotak Transaksi">🎯 Transaksi</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SISI KANAN: Gradien Dark to Transparent & Teks Penjelasan Sesuai Mockup UI -->
+          <div class="boxes-hero-content-panel">
+            <div class="hero-box-eyebrow">PANDUAN VISUAL KASIRKITA</div>
+            <h2 class="hero-box-title">Judul: Master &amp; Transaksi</h2>
+
+            <div class="hero-box-desc-block">
+              <p class="hero-box-paragraph master-highlight">
+                <strong>1. Kotak Master (Kategori, Barang, Pelanggan):</strong><br>
+                Fungsinya adalah menyimpan kartu acuan paten toko. Sifatnya <strong>datanya jarang berubah</strong> dan menjadi sumber kebenaran utama. Barang dari kotak master <strong>bisa dimasukkan ke dalam kotak master juga</strong> (relasi master ke master, seperti bola Kategori yang dimasukkan ke Kotak Barang untuk memberi label kategori).
+              </p>
+              <p class="hero-box-paragraph trans-highlight">
+                <strong>2. Kotak Transaksi (Penjualan / Nota Kasir):</strong><br>
+                Fungsinya adalah menampung struk/nota belanja. Sifatnya <strong>isi datanya pasti berubah-ubah dan bertambah terus</strong> (<em>append-only</em>). Setiap detik kasir melayani pembeli, keranjang belanja berganti, jam transaksi bergerak, dan nominal belanja dihitung ulang dengan mencocokkan kode barang ke master.
+              </p>
+            </div>
+
+            <!-- Struk Digital Kasir -->
+            <div class="digital-receipt" aria-live="polite"></div>
+
+            <!-- Feedback Log Realtime -->
+            <div class="boxes-feedback-log status-ok" aria-live="polite">
+              <span>⚡</span>
+              <div>Siap! Klik bola kategori untuk menghubungkan antar-master, atau klik bola produk untuk mulai transaksi.</div>
+            </div>
+
+            <!-- Tombol Aksi & Uji Coba -->
+            <div class="boxes-action-bar">
+              <button type="button" class="primary" data-action="boxes-next-trx">
+                <span>⚡</span> Transaksi Baru (Data Berubah-Ubah!)
+              </button>
+              <button type="button" data-action="boxes-link-master">
+                <span>🏷️</span> Masukkan Kategori ➔ Barang
+              </button>
+              <button type="button" data-action="boxes-reset">
+                <span>✕</span> Kosongkan Transaksi
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pembahasan Konsep Mendalam Sesuai Referensi -->
+      <section class="lesson-content">
+        <h2>Penjelasan Konsep: Empat Kotak di Meja Kasir</h2>
+        <p>
+          Bayangkan kamu sedang menjaga meja kasir toko Rani. Di mejamu terdapat dua kelompok kotak penyimpanan: <strong>Kotak-Kotak Master (Kategori, Barang, Pelanggan)</strong> dan <strong>Kotak Transaksi (Penjualan / Nota Belanja)</strong>.
+        </p>
+
+        <div class="cards">
+          <div class="card">
+            <h3>1. Kotak-Kotak Master (Entitas Master)</h3>
+            <p>
+              <strong>Fungsi:</strong> Kotak ini berisi tumpukan kartu katalog paten. Setiap kartu menyimpan informasi acuan tetap: Kode Kategori, Kode Barang, Nama Barang, Harga Satuan, dan Profil Pelanggan.<br><br>
+              <strong>Sifat Data:</strong> Kotak master ini <strong>datanya jarang berubah</strong>. Kamu hanya memasukkan kartu baru ketika ada barang baru dari distributor, atau mengganti kartu jika ada kenaikan harga resmi. Kartu di kotak ini adalah <strong>sumber kebenaran utama</strong> (<em>single source of truth</em>).<br><br>
+              <strong>Bisa Masuk Antar-Master:</strong> Barang dari kotak master <strong>bisa dimasukkan ke dalam kotak master juga</strong>! Contohnya, kartu Kategori <code>Alat Tulis (K01)</code> dimasukkan ke dalam Kotak Barang untuk mengelompokkan <code>Buku Tulis A5 (P001)</code>. Hubungan master-ke-master ini sah dan sering diterapkan di database relasional.<br><br>
+              <strong>Penerapan di Bahasa C:</strong> File master seperti <code>data/kategori.txt</code> dan <code>data/produk.txt</code>. Kartu-kartunya adalah struct seperti <code>CategoryMaster</code> dan <code>ProductMaster</code> yang dibaca saat program pertama kali dibuka.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>2. Kotak Pemesanan / Penjualan (Entitas Transaksi)</h3>
+            <p>
+              <strong>Fungsi:</strong> Kotak ini adalah tempat penampungan lembaran nota atau struk belanja dari pelanggan setiap kali terjadi aktivitas transaksi.<br><br>
+              <strong>Sifat Data:</strong> Kotak ini <strong>isi datanya PASTI BERUBAH-UBAH dan bertambah terus</strong> (<em>high volatility & append-only</em>). Setiap detik kasir melayani pembeli, isi kotak langsung berubah: nomor struk berganti, item belanjaan berbeda, jumlah kuantiti berbeda, jam transaksi berbeda, dan total bayar berubah.<br><br>
+              <strong>Cara Kerja Relasi:</strong> Di lembar nota pesanan, kamu <strong>tidak perlu menulis ulang seluruh nama barang atau harga secara panjang lebar</strong>. Cukup mencatat kode referensi: <code>id_product: P001, qty: 2</code>. Ketika menghitung total bayar, kasir mencocokkan kode <code>P001</code> ke Kotak Barang untuk mengambil harganya.<br><br>
+              <strong>Penerapan di Bahasa C:</strong> File <code>transaksi.dat</code> atau <code>data/penjualan.txt</code>. Isinya tumpukan <code>SaleTransaction</code> yang disimpan dengan mode append (<code>fopen("transaksi.dat", "ab")</code> atau <code>"a"</code>), di mana baris baru terus bertambah tanpa henti.
+            </p>
+          </div>
+        </div>
+
+        <h3>Tabel Perbandingan Karakteristik: Master vs Transaksi</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Aspek Pembeda</th>
+                <th>Entitas Master (Kategori, Barang, Pelanggan)</th>
+                <th>Entitas Transaksi (Penjualan & Nota Belanja)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Definisi</strong></td>
+                <td>Data acuan dasar yang dipakai berulang kali sebagai patokan.</td>
+                <td>Catatan histori peristiwa/kejadian bisnis pada waktu tertentu.</td>
+              </tr>
+              <tr>
+                <td><strong>Sifat Perubahan Isi</strong></td>
+                <td><strong>Jarang Berubah</strong> (statis, hanya saat ada update resmi katalog).</td>
+                <td><strong>Pasti Berubah-Ubah</strong> (sangat dinamis, setiap pembeli datang).</td>
+              </tr>
+              <tr>
+                <td><strong>Hubungan Antar-Kotak</strong></td>
+                <td><strong>Bisa masuk ke sesama master</strong> (misal Kategori ➔ Barang).</td>
+                <td>Meminjam referensi ID dari kotak master untuk nota.</td>
+              </tr>
+              <tr>
+                <td><strong>Contoh di KasirKita</strong></td>
+                <td><code>CATEGORY</code>, <code>PRODUCT</code>, <code>CUSTOMER</code></td>
+                <td><code>SALE</code> (Header Nota), <code>ITEM</code> (Baris Belanja)</td>
+              </tr>
+              <tr>
+                <td><strong>Siapa yang Mengubah</strong></td>
+                <td>Pemilik toko / admin katalog barang.</td>
+                <td>Kasir saat melayani pembeli di meja checkout.</td>
+              </tr>
+              <tr>
+                <td><strong>Peran Kunci (Key)</strong></td>
+                <td>Menyediakan <strong>Primary Key (PK)</strong> (misal <code>id_category</code>, <code>id_product</code>).</td>
+                <td>Menyimpan <strong>Foreign Key (FK)</strong> yang merujuk ke PK Master.</td>
+              </tr>
+              <tr>
+                <td><strong>Operasi File di C</strong></td>
+                <td>Dibaca berulang kali (<code>"r"</code> / <code>"rb"</code>); diperbarui jika stok diubah.</td>
+                <td>Ditambah di akhir file secara terus menerus (<code>"a"</code> / <code>"ab"</code>).</td>
+              </tr>
+              <tr>
+                <td><strong>Konsekuensi File Kosong</strong></td>
+                <td>Aplikasi macet/tidak bisa jualan karena katalog barang belum ada.</td>
+                <td>Aplikasi tetap normal, artinya belum ada penjualan hari ini.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <strong>Inti Pemahaman:</strong><br>
+          Perbedaan utama bukan semata larangan fisik, melainkan <strong>dinamika data</strong>: Data Master disiapkan di awal sebagai fondasi paten yang jarang berubah (bahkan sesama master bisa saling terhubung seperti Kategori ke Barang), sedangkan Data Transaksi isinya selalu bergerak, berubah, dan bertambah seiring transaksi kasir berlangsung.
+        </div>
+
+        <h3>Contoh Implementasi Representasi Data di Bahasa C</h3>
+        <div class="codebar">
+          <span>Struktur Data Master (Termasuk Relasi Antar-Master) vs Transaksi di C</span>
+          <button class="copy" type="button">Salin kode</button>
+        </div>
+        <pre><code>// 1. DATA MASTER: Disimpan di file teks/binary (Jarang Berubah)
+typedef struct {
+    char id_category[21];  // K01 (Primary Key Kategori)
+    char name[64];         // Alat Tulis
+} CategoryMaster;
+
+typedef struct {
+    char id_product[21];   // P001 (Primary Key Produk)
+    char id_category[21];  // K01 (Foreign Key merujuk Master Kategori: Master ke Master!)
+    char name[128];        // Buku Tulis A5
+    int price;             // 12000
+    int stock;             // 20
+} ProductMaster;
+
+typedef struct {
+    char id_customer[21];  // C001 (Primary Key Pelanggan)
+    char name[128];        // Rani
+    char phone[32];        // 0812345678
+} CustomerMaster;
+
+// 2. DATA TRANSAKSI: Disimpan di data/penjualan.txt (Mode Append "a" - Pasti Berubah-Ubah)
+typedef struct {
+    char id_sale[21];      // N001 (Nomor Struk - berganti setiap transaksi)
+    char id_customer[21];  // C001 (FK merujuk Master Pelanggan)
+    char id_product[21];   // P001 (FK merujuk Master Produk)
+    int quantity;          // Berubah sesuai belanjaan pembeli
+    int unit_price;        // Harga snapshot saat transaksi terjadi
+    char timestamp[25];    // Waktu transaksi yang selalu berubah
+} SaleTransaction;
+
+// Program C mencocokkan kode transaksi dengan master untuk menghitung total:
+int hitungSubtotal(SaleTransaction trx, ProductMaster katalog[], int jumlahProduk) {
+    for (int i = 0; i < jumlahProduk; i++) {
+        if (strcmp(trx.id_product, katalog[i].id_product) == 0) {
+            return trx.quantity * katalog[i].price; // Cocokkan harga acuan master!
+        }
+    }
+    return 0; // Produk tidak ditemukan di master
+}</code></pre>
+      </section>
+
+      <p><a class="pill" href="../project.html#data">← Kembali ke Dokumen Persiapan</a></p>
+    </main>
+  </div>
+
+  <button class="video-toggle" aria-label="Jeda latar video">Ⅱ</button>
+  <footer class="foot">
+    <span>Hello Project <span class="footer-tagline">/ Belajar dengan membangun.</span></span>
+    <span>PROJECT GUIDE · VOL. 01 &nbsp; © 2026</span>
+  </footer>
+</body>
+</html>

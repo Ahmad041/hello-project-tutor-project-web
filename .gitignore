@@ -1,13 +1,19 @@
-# Python generator cache
+# Python generator cache & local generators (not deployed)
 __pycache__/
 *.py[cod]
+/*.py
 
-# Local validation and screenshot output
+# Local validation, temporary scripts, and test screenshots
 diagrams/archify-validation.json
 diagrams/archify-delivery.json
 diagrams/archify-browser.json
 diagrams/*.visual-check.*
 diagrams/verification.md
+test_chrome.png
+test_box.svg
+probe.js
+record_animation.mjs
+postman_collection*.json
 
 # Editor and operating-system metadata
 .vscode/
@@ -16,8 +22,5 @@ diagrams/verification.md
 Thumbs.db
 *.log
 
-# Local HTML generators (not deployed)
-/build.py
-/c_content.py
-/text_storage_content.py
-/make_diagrams.py
+diagrams/mermaid-check.html
+diagrams/sdlc-delivery.json

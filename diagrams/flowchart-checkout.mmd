@@ -1,0 +1,20 @@
+flowchart TD
+    start(["Mulai"])
+    input[/"Input barang, jumlah<br/>dan pembayaran"/]
+    calculate["Hitung total<br/>dari harga produk"]
+    valid{"Input valid?<br/>tipe, stok, dan uang"}
+    save["Simpan transaksi<br/>kandidat data dan stok"]
+    saved{"Simpan berhasil?"}
+    receipt[/"Tampilkan nota<br/>transaksi tersimpan"/]
+    finish(["Selesai"])
+    error[/"Tampilkan kesalahan<br/>data aktif tidak berubah"/]
+    start --> input
+    input --> calculate
+    calculate --> valid
+    valid -->|"Ya"| save
+    valid -->|"Tidak"| error
+    save --> saved
+    saved -->|"Ya"| receipt
+    saved -->|"Tidak"| error
+    error -->|"Perbaiki / coba lagi"| input
+    receipt --> finish

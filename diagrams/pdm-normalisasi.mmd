@@ -1,0 +1,34 @@
+erDiagram
+    CATEGORY {
+        VARCHAR(20) id_category PK
+        VARCHAR(64) name
+    }
+    PRODUCT {
+        VARCHAR(20) id_product PK
+        VARCHAR(20) id_category FK
+        VARCHAR(32) sku UK
+        VARCHAR(128) name
+        INTEGER price
+        INTEGER stock
+    }
+    CUSTOMER {
+        VARCHAR(20) id_customer PK
+        VARCHAR(128) name
+        VARCHAR(32) phone
+    }
+    SALE {
+        VARCHAR(20) id_sale PK
+        VARCHAR(20) id_customer FK
+        VARCHAR(20) created_at
+        INTEGER paid
+    }
+    ITEM {
+        VARCHAR(20) id_product PK, FK
+        VARCHAR(20) id_sale PK, FK
+        INTEGER quantity
+        INTEGER unit_price
+    }
+    CATEGORY ||--o{ PRODUCT : "memiliki / dimiliki (1...1 : 0...*)"
+    CUSTOMER |o--o{ SALE : "memiliki / dimiliki (0...1 : 0...*)"
+    PRODUCT ||--o{ ITEM : "memiliki / dimiliki (1...1 : 0...*)"
+    SALE ||--|{ ITEM : "memiliki / dimiliki (1...1 : 1...*)"

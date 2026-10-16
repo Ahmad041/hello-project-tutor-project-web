@@ -1,0 +1,618 @@
+/* ==========================================================================
+   ERD/PDM Wires Interactive Game Styles — KasirKita
+   ========================================================================== */
+
+.erd-game-wrapper {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Level Navigation Selector */
+.erd-level-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+}
+
+.erd-level-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--sub);
+  letter-spacing: 0.05em;
+  margin-right: 0.4rem;
+}
+
+.erd-level-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--sub);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.erd-level-btn:hover {
+  background: rgba(51, 65, 85, 0.85);
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.erd-level-btn.active {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  border-color: #38bdf8;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+}
+
+.erd-level-btn.completed {
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #34d399;
+}
+
+.erd-level-btn.completed::after {
+  content: '✓';
+  font-size: 0.75rem;
+}
+
+/* Mission Briefing Box */
+.erd-mission-box {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-left: 5px solid #38bdf8;
+  border-radius: 12px;
+  padding: 1.1rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.erd-mission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.erd-mission-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.erd-mission-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+}
+
+.erd-mission-text {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+/* Control Toolbar */
+.erd-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.erd-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(30, 41, 59, 0.8);
+  color: var(--ink);
+  transition: all 0.2s ease;
+}
+
+.erd-toolbar button:hover {
+  background: rgba(51, 65, 85, 0.9);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.erd-toolbar button.primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-color: #3b82f6;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.erd-toolbar button.primary:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+}
+
+.erd-toolbar button.accent {
+  background: linear-gradient(135deg, #059669, #10b981);
+  border-color: #34d399;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.erd-toolbar button.accent:hover {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.erd-status-pill {
+  margin-left: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.erd-status-pill.all-connected {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #34d399;
+}
+
+/* Arena / Board Container */
+.erd-arena {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.85) 100%),
+              repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(255, 255, 255, 0.03) 24px),
+              repeating-linear-gradient(90deg, transparent, transparent 23px, rgba(255, 255, 255, 0.03) 24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  min-height: 620px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* SVG Overlay for Wires */
+.erd-wires-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.erd-cable {
+  pointer-events: stroke;
+  cursor: pointer;
+  stroke-linecap: round;
+  transition: stroke 0.2s, stroke-width 0.2s;
+}
+
+.erd-cable:hover {
+  stroke-width: 6px !important;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.erd-cable.active-drag {
+  pointer-events: none;
+  stroke-dasharray: 6 4;
+  animation: cableDash 0.8s linear infinite;
+}
+
+@keyframes cableDash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.erd-pulse {
+  pointer-events: none;
+  fill: #fff;
+  filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 12px var(--pulse-color, #38bdf8));
+}
+
+/* Entity Cards Grid (3 Columns) */
+.erd-grid {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 960px) {
+  .erd-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.erd-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Entity Card */
+.erd-card {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.erd-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Dimmed / Inactive Card for Level Focus */
+.erd-card.dimmed {
+  opacity: 0.22;
+  filter: grayscale(0.8);
+  pointer-events: none;
+  transform: scale(0.96);
+  border-style: dashed;
+}
+
+.erd-card.highlight-pulse {
+  border-color: #38bdf8;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
+  transform: scale(1.02);
+}
+
+.erd-card-header {
+  padding: 0.75rem 1rem;
+  background: rgba(30, 41, 59, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.erd-card-header h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.erd-card-tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--sub);
+}
+
+/* Fields List */
+.erd-fields {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.erd-field-row {
+  display: flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  position: relative;
+  transition: background 0.15s;
+}
+
+.erd-field-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.erd-field-key {
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 46px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.erd-field-key.pk {
+  color: #fbbf24;
+}
+
+.erd-field-key.fk {
+  color: #94a3b8;
+}
+
+.erd-field-key.uk {
+  color: #38bdf8;
+}
+
+.erd-field-key.pk-fk {
+  color: #fbbf24;
+}
+
+.erd-field-key.empty {
+  min-width: 46px;
+  display: inline-block;
+}
+
+.erd-key-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.erd-field-name {
+  flex: 1;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.erd-field-type {
+  font-size: 0.7rem;
+  color: var(--sub);
+  margin-right: 0.5rem;
+}
+
+/* Sockets / Pin Jacks */
+.erd-socket {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: #0f172a;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.erd-socket::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.erd-socket:hover {
+  transform: scale(1.3);
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+.erd-socket:hover::after {
+  background: #38bdf8;
+  transform: scale(1.4);
+}
+
+.erd-socket.active-origin {
+  border-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.2);
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.8);
+  animation: pulseSocket 1s infinite alternate;
+}
+
+.erd-socket.active-origin::after {
+  background: #fbbf24;
+}
+
+.erd-socket.connected {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.25);
+}
+
+.erd-socket.connected::after {
+  background: #10b981;
+}
+
+@keyframes pulseSocket {
+  from {
+    box-shadow: 0 0 4px rgba(251, 191, 36, 0.6);
+  }
+  to {
+    box-shadow: 0 0 14px rgba(251, 191, 36, 1);
+  }
+}
+
+.erd-socket.out {
+  margin-left: 0.5rem;
+}
+.erd-socket.in {
+  margin-right: 0.5rem;
+}
+
+.erd-socket.hint-target {
+  border-color: #ec4899;
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.9);
+  animation: pulseSocket 0.8s infinite alternate;
+}
+
+/* Simulation Output Console */
+.erd-sim-panel {
+  background: rgba(10, 15, 29, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.erd-sim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.5rem;
+}
+
+.erd-sim-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.erd-trace-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.erd-trace-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid #64748b;
+  line-height: 1.5;
+}
+
+.erd-trace-item.success {
+  border-left-color: #10b981;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.erd-trace-item.failed {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  color: #fca5a5;
+}
+
+.erd-trace-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* Next Level Banner */
+.erd-next-level-box {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.15));
+  border: 1px solid #10b981;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  animation: levelPop 0.4s ease;
+}
+
+.erd-next-level-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+  transition: transform 0.2s;
+}
+
+.erd-next-level-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+}
+
+@keyframes levelPop {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Mini Receipt Output Box */
+.erd-receipt-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #020617;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.erd-receipt-box h4 {
+  margin: 0 0 0.5rem 0;
+  color: #38bdf8;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.erd-receipt-line {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.25rem 0;
+}
+
+.erd-receipt-total {
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  font-weight: 700;
+  color: #34d399;
+}

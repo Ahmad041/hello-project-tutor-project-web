@@ -1,8 +1,7 @@
 {
-  "probis": "files/document .txt",
-  "ap": "files/document .txt",
-  "atribut": "files/document .txt",
-  "struktur": "files/document .txt",
-  "testing": "files/document .txt",
-  "laporan": "files/document .txt"
+  "ap": "files/PRO-INT-TK2-001 - AP.xlsx",
+  "testing": "files/CONTOH USER TESTING-95-100.pdf",
+  "product_documentation": "files/Product Documentation.docx",
+  "user_guide": "files/[Template] User Manual.docx",
+  "lib": "files/lib.h"
 }
