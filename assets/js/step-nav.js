@@ -78,21 +78,33 @@
     if (idx < 0 || idx >= totalSteps) return;
     const target = steps[idx];
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      updateActive(idx);
       closeMenu();
+      updateActive(idx);
+
+      // Hitung koordinat elemen dengan offset nyaman
+      const rect = target.getBoundingClientRect();
+      const absoluteTop = window.pageYOffset + rect.top;
+      const targetTop = Math.max(0, absoluteTop - 70);
+
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'smooth'
+      });
+
+      try {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) {}
+
+      if (history.pushState && target.id) {
+        history.pushState(null, '', '#' + target.id);
+      }
     }
   }
 
-  function toggleMenu() {
-    const isHidden = flyout.hasAttribute('hidden');
-    if (isHidden) {
-      flyout.removeAttribute('hidden');
-      triggerBtn.setAttribute('aria-expanded', 'true');
-      hud.classList.add('is-open');
-    } else {
-      closeMenu();
-    }
+  function openMenu() {
+    flyout.removeAttribute('hidden');
+    triggerBtn.setAttribute('aria-expanded', 'true');
+    hud.classList.add('is-open');
   }
 
   function closeMenu() {
@@ -101,24 +113,60 @@
     hud.classList.remove('is-open');
   }
 
-  triggerBtn.addEventListener('click', toggleMenu);
-  closeBtn.addEventListener('click', closeMenu);
+  function toggleMenu() {
+    if (hud.classList.contains('is-open') && !flyout.hasAttribute('hidden')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }
 
-  prevBtn.addEventListener('click', () => {
+  triggerBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  closeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMenu();
+  });
+
+  prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     scrollToStep(activeIndex - 1);
   });
 
-  nextBtn.addEventListener('click', () => {
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     scrollToStep(activeIndex + 1);
   });
 
   flyoutItems.forEach(item => {
     item.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       const idx = parseInt(item.dataset.index, 10);
       scrollToStep(idx);
     });
   });
+
+  const backToTop = hud.querySelector('.step-back-top');
+  if (backToTop) {
+    backToTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      updateActive(0);
+      closeMenu();
+      if (history.pushState) {
+        history.pushState(null, '', '#main');
+      }
+    });
+  }
 
   // Tutup menu jika klik di luar
   document.addEventListener('click', (e) => {

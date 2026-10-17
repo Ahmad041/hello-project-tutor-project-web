@@ -1182,6 +1182,14 @@ body.opening-playing { overflow: hidden; }
   flex-direction: column;
   overflow: hidden;
   animation: flyoutSlideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+.step-flyout-menu[hidden],
+.floating-step-hud:not(.is-open) .step-flyout-menu {
+  display: none !important;
+}
+.floating-step-hud.is-open .step-flyout-menu:not([hidden]) {
+  display: flex !important;
 }
 @keyframes flyoutSlideUp {
   from { opacity: 0; transform: translateY(10px) scale(0.96); }
@@ -1201,15 +1209,18 @@ body.opening-playing { overflow: hidden; }
 .step-flyout-close {
   background: transparent;
   border: none;
-  color: #64748b;
-  font-size: 12px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
-  padding: 2px 6px;
+  padding: 4px 8px;
   border-radius: 4px;
+  line-height: 1;
+  transition: all 0.15s ease;
 }
 .step-flyout-close:hover {
   color: #fff;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
 }
 .step-flyout-list {
   list-style: none;
