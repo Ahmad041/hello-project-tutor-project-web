@@ -101,3 +101,52 @@ test('UatEngine supports session reset and restoration from localStorage array',
   assert.equal(session.isScenarioPassed('MS002'), false);
   assert.equal(session.isPositiveUnlocked('login'), false);
 });
+
+test('game/uat.html and uat-game.js conform to Dokumen User Testing (UT) specification and Image 2 columns', () => {
+  const fs = require('fs');
+  const htmlPath = path.join(__dirname, '..', 'game', 'uat.html');
+  const jsPath = path.join(__dirname, '..', 'assets', 'js', 'uat-game.js');
+  const cssPath = path.join(__dirname, '..', 'assets', 'css', 'uat-game.css');
+
+  const html = fs.readFileSync(htmlPath, 'utf8');
+  const js = fs.readFileSync(jsPath, 'utf8');
+  const css = fs.readFileSync(cssPath, 'utf8');
+
+  // Assert Title & Headers reflect User Testing (UT)
+  assert.match(html, /<title>User Testing \(UT\) Bug Hunter Simulator/i);
+  assert.match(html, /<h3>DOKUMEN USER TESTING \(UT\)<\/h3>/i);
+  assert.match(html, /<span class="tag">Simulator UT<\/span>/i);
+
+  // Assert the 9 table columns matching Image 2
+  const requiredColumns = [
+    'NO',
+    'NO FUNGSI',
+    'DESKRIPSI FUNGSIONAL',
+    'KASUS UJI',
+    'PROSEDUR &amp; KASUS UJI',
+    'HASIL YANG DIHARAPKAN',
+    'HASIL TESTER',
+    'TANGGAL TESTING',
+    'KETERANGAN'
+  ];
+  requiredColumns.forEach(col => {
+    assert.ok(html.includes(col), `uat.html table head must include column "${col}"`);
+  });
+
+  // Assert category banners present in js
+  const requiredBanners = [
+    'LOGIN ADMIN (LG / MS)',
+    'TAMBAH DATA PRODUK (PRD)',
+    'LIHAT DATA PRODUK (PRD)',
+    'EDIT & HAPUS DATA PRODUK (PRD)'
+  ];
+  requiredBanners.forEach(b => {
+    assert.ok(js.includes(b), `uat-game.js must include category banner "${b}"`);
+  });
+
+  // Assert CSS includes styling for category banner and badges
+  assert.match(css, /\.ut-category-banner td/);
+  assert.match(css, /\.ut-badge-case\.normal/);
+  assert.match(css, /\.ut-badge-case\.error/);
+});
+

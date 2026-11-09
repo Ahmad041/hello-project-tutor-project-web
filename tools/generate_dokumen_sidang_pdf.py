@@ -1,0 +1,552 @@
+# -*- coding: utf-8 -*-
+import os
+import subprocess
+import fitz  # PyMuPDF
+
+html_content = """<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Lembar Soal & Materi: Dokumen Before & After Sidang</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 8.5mm 10.5mm 8.5mm 10.5mm;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 7.6pt;
+      line-height: 1.25;
+      color: #0f172a;
+      background: #ffffff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Header styling */
+    .header {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 4px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-left {
+      flex: 1;
+    }
+    .inst-title {
+      font-size: 7pt;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #0284c7;
+      margin-bottom: 1px;
+    }
+    .main-title {
+      font-size: 13pt;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.2px;
+      line-height: 1.15;
+    }
+    .sub-title {
+      font-size: 7.2pt;
+      color: #475569;
+    }
+    .badge {
+      display: inline-block;
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 6.8pt;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Identity Grid */
+    .id-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1.1fr 1.3fr 1fr 90px;
+      gap: 6px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 4px 8px;
+      margin-bottom: 5px;
+      font-size: 7.2pt;
+    }
+    .id-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .id-label {
+      font-size: 6.2pt;
+      text-transform: uppercase;
+      color: #64748b;
+      font-weight: 700;
+    }
+    .id-val {
+      font-weight: 600;
+      color: #1e293b;
+      border-bottom: 1px dotted #94a3b8;
+      min-height: 12px;
+    }
+    .score-box {
+      border-left: 1.5px dashed #cbd5e1;
+      padding-left: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .score-val {
+      font-size: 9.5pt;
+      font-weight: 900;
+      color: #0284c7;
+    }
+
+    /* Section Header */
+    .section-title {
+      font-size: 8pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 3px;
+    }
+    .section-title span.tag {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 6.2pt;
+      font-weight: 700;
+    }
+
+    /* Table Matrix */
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 5px;
+      font-size: 6.7pt;
+    }
+    .matrix-table th, .matrix-table td {
+      border: 1px solid #cbd5e1;
+      padding: 3px 5px;
+      vertical-align: top;
+    }
+    .matrix-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 800;
+      text-align: left;
+    }
+    .matrix-table td.col-before {
+      background: #f0fdf4;
+      width: 48%;
+    }
+    .matrix-table td.col-after {
+      background: #eff6ff;
+      width: 48%;
+    }
+    .matrix-table strong {
+      color: #0f172a;
+    }
+    .matrix-table ul {
+      margin-left: 11px;
+      margin-top: 1px;
+    }
+    .matrix-table li {
+      margin-bottom: 1px;
+    }
+
+    /* Two column questions layout */
+    .cols-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-bottom: 4px;
+    }
+    .col-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 5px 6px;
+      background: #ffffff;
+    }
+    .col-box.before-theme {
+      border-top: 3px solid #16a34a;
+    }
+    .col-box.after-theme {
+      border-top: 3px solid #2563eb;
+    }
+
+    .q-item {
+      margin-bottom: 4px;
+      padding-bottom: 3px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    .q-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .q-text {
+      font-size: 7pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+      line-height: 1.18;
+    }
+    .opt-list {
+      margin-left: 2px;
+      font-size: 6.6pt;
+      line-height: 1.25;
+      color: #334155;
+    }
+    .opt-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1.5px;
+    }
+    .opt-bubble {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 1px solid #94a3b8;
+      border-radius: 50%;
+      margin-right: 4px;
+      margin-top: 1px;
+      flex-shrink: 0;
+      background: #fff;
+    }
+    .opt-txt {
+      flex: 1;
+    }
+    .answer-line {
+      display: block;
+      margin-top: 2px;
+      border-bottom: 1px dotted #94a3b8;
+      height: 12px;
+      font-size: 6.2pt;
+      color: #64748b;
+    }
+
+    /* Bottom Case & Checklist */
+    .bottom-container {
+      display: grid;
+      grid-template-columns: 1.45fr 1.05fr;
+      gap: 7px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 5px 7px;
+      margin-bottom: 4px;
+    }
+    .case-title {
+      font-size: 7.2pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .case-desc {
+      font-size: 6.6pt;
+      color: #334155;
+      line-height: 1.22;
+      margin-bottom: 2px;
+    }
+    .checklist-title {
+      font-size: 7.2pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .checklist-items {
+      font-size: 6.5pt;
+      color: #334155;
+      line-height: 1.35;
+    }
+    .check-sq {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border: 1px solid #475569;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 4px;
+      background: #ffffff;
+    }
+
+    /* Footer validation */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #cbd5e1;
+      padding-top: 3px;
+      font-size: 6.2pt;
+      color: #64748b;
+    }
+    .signatures {
+      display: flex;
+      gap: 35px;
+    }
+    .sig-block {
+      text-align: center;
+      width: 95px;
+    }
+    .sig-line {
+      margin-top: 15px;
+      border-top: 1px solid #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="inst-title">Standard Operating Procedure & Laboratorium Rekayasa Perangkat Lunak</div>
+      <div class="main-title">LEMBAR UJI MATERI: DOKUMEN BEFORE & AFTER SIDANG</div>
+      <div class="sub-title">Standar Validasi Berkas Persiapan (Pra-Sidang) vs Bukti Pengujian & Serah Terima (Pasca-Sidang)</div>
+    </div>
+    <div>
+      <span class="badge">Edisi Ujian 1 Halaman</span>
+    </div>
+  </div>
+
+  <!-- Identitas Peserta -->
+  <div class="id-grid">
+    <div class="id-item"><span class="id-label">Nama Mahasiswa</span><span class="id-val"></span></div>
+    <div class="id-item"><span class="id-label">NIM / Kelompok</span><span class="id-val"></span></div>
+    <div class="id-item"><span class="id-label">Mata Kuliah / Prodi</span><span class="id-val">Proyek Rekayasa Perangkat Lunak</span></div>
+    <div class="id-item"><span class="id-label">Tanggal Ujian</span><span class="id-val"></span></div>
+    <div class="score-box">
+      <span class="id-label">Nilai Akhir</span>
+      <span class="score-val">/ 100</span>
+    </div>
+  </div>
+
+  <!-- Ringkasan Matriks Inti Materi -->
+  <div class="section-title">
+    1. Matriks Intisari Materi: Dokumen Before vs After Sidang
+    <span class="tag">Komparasi Acuan</span>
+  </div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th style="width: 17%;">Aspek Evaluasi</th>
+        <th style="width: 41.5%;">DOKUMEN BEFORE SIDANG (Tahap Persiapan / Proposal)</th>
+        <th style="width: 41.5%;">DOKUMEN AFTER SIDANG (Tahap Pengujian & Serah Terima)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Fokus & Tujuan</strong></td>
+        <td class="col-before"><strong>Problem Framing & Perancangan Kebutuhan:</strong> Mengidentifikasi masalah riil, mengunci batasan lingkup, model proses bisnis, dan skema data awal.</td>
+        <td class="col-after"><strong>Quality Assurance & Bukti Operasional:</strong> Membuktikan integritas sistem lewat UAT, penuntasan cacat (defect), serta buku panduan pengguna.</td>
+      </tr>
+      <tr>
+        <td><strong>Daftar Dokumen Wajib</strong></td>
+        <td class="col-before">
+          <ul>
+            <li><strong>Dokumen Proposal & Scope:</strong> Batasan <em>In-Scope</em> vs <em>Out-of-Scope</em>.</li>
+            <li><strong>Perancangan Data:</strong> Pemisahan Master vs Transaksi, ERD, & PDM.</li>
+            <li><strong>Pemodelan Probis:</strong> Flowchart logika sistem atomik & DFD level 0/1.</li>
+            <li><strong>Activity Plan (WBS):</strong> Pembagian tugas anggota & jadwal mingguan.</li>
+          </ul>
+        </td>
+        <td class="col-after">
+          <ul>
+            <li><strong>Matriks Skenario UAT:</strong> 12 kasus uji (Positif, Negatif, Batas/Boundary).</li>
+            <li><strong>Defect Log (Bug Tracker):</strong> Rekaman bug, tingkat keparahan, & bukti perbaikan.</li>
+            <li><strong>Product Documentation:</strong> Spesifikasi teknis arsitektur, API, & kamus data.</li>
+            <li><strong>User Guide (Manual):</strong> Panduan langkah operasional bagi pengguna awam.</li>
+            <li><strong>Berita Acara Revisi:</strong> Lembar pengesahan tanda tangan dewan penguji.</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Kriteria Kunci Penguji</strong></td>
+        <td class="col-before"><em>"Apakah solusi realistis dan rancangan data konsisten tanpa anomali?"</em></td>
+        <td class="col-after"><em>"Apakah data finansial/stok terbukti presisi dan aplikasi siap serah terima?"</em></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Dua Kolom Soal Ujian -->
+  <div class="cols-container">
+    <!-- Kolom Kiri: Before Sidang -->
+    <div class="col-box before-theme">
+      <div class="section-title" style="color: #15803d;">
+        2. Soal Dokumen Before Sidang (Persiapan)
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">1. Mengapa pemisahan antara Data Master (produk) dan Data Transaksi (penjualan) wajib dimodelkan pada dokumen persiapan?</div>
+        <div class="opt-list">
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">A. Supaya kasir tidak perlu mengetikkan kata sandi saat membuka program.</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Mencegah manipulasi harga historis & menjaga integritas relasi entitas data.</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">C. Memperkecil ukuran memori binary file berekstensi .exe.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">2. Apa dampak fatal jika dokumen ruang lingkup (Scope) tidak memuat batasan tegas "Out-of-Scope" sebelum sidang proposal?</div>
+        <div class="opt-list">
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">A. Penguji berhak meminta fitur tak terbatas yang memicu kegagalan proyek (scope creep).</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Berkas database teks lokal (.txt) tidak dapat dibuka di editor teks.</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">C. Fungsi perulangan (loop) pada flowchart otomatis mengalami deadlock.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">3. Dokumen Activity Plan (WBS) dalam berkas pra-sidang berfungsi membuktikan kepada dosen penguji bahwa...</div>
+        <div class="opt-list">
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">A. Tim memiliki alokasi tugas adil, linimasa terukur, dan bukti serah terima terdefinisi.</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Seluruh baris kode program sudah selesai ditulis sebelum sidang dimulai.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">4. Analisis Singkat: Mengapa skenario nominal konkret (contoh: Rani beli 2 Buku A5 Rp24.000) wajib dicantumkan pada proposal?</div>
+        <div class="answer-line">Jawab: .........................................................................................................................................................</div>
+      </div>
+    </div>
+
+    <!-- Kolom Kanan: After Sidang -->
+    <div class="col-box after-theme">
+      <div class="section-title" style="color: #1d4ed8;">
+        3. Soal Dokumen After Sidang (Serah Terima)
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">5. Dalam dokumen UAT, apa perbedaan mendasar antara Kasus Uji Positif dan Kasus Uji Batas (Boundary Testing)?</div>
+        <div class="opt-list">
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">A. Uji positif dijalankan pemilik toko; uji batas dijalankan oleh kasir.</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Uji positif menguji alur wajar; uji batas menguji nilai kritis (stok habis 0, bayar kurang, input minus).</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">C. Uji batas hanya memeriksa tampilan tata letak tanpa menguji logika simpan berkas.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">6. Mengapa Product Documentation dan User Guide wajib dipisahkan menjadi dua berkas berbeda pada dokumen After Sidang?</div>
+        <div class="opt-list">
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">A. Sasaran pembaca berbeda: Product Doc untuk tim teknis/developer, User Guide untuk operator awam.</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Product Doc berisi daftar pustaka, sedangkan User Guide berisi tabel harga barang.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">7. Saat penguji menemukan bug stok minus saat sidang, dokumen apa yang wajib mencatat langkah reproduksi dan bukti fix-nya?</div>
+        <div class="opt-list">
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">A. Berkas Defect Log (Bug Tracker) berstatus CLOSED/RESOLVED pasca perbaikan.</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Berkas Activity Plan yang disusun pada saat proposal awal.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">8. Kapan Berita Acara Serah Terima & Form Revisi Sidang sah ditandatangani oleh Dewan Penguji?</div>
+        <div class="answer-line">Jawab: .........................................................................................................................................................</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bagian Bawah: Studi Kasus & Checklist Kesiapan -->
+  <div class="bottom-container">
+    <div>
+      <div class="case-title">4. Studi Kasus Integrasi Before & After Sidang (Bobot: 20%)</div>
+      <div class="case-desc">
+        <em>"Sebuah kelompok mengubah mekanisme transaksi saat coding tanpa memperbarui Flowchart di Dokumen Before, serta tidak menyertakan uji rollback transaksi pada berkas UAT di Dokumen After Sidang."</em>
+      </div>
+      <div class="q-text" style="font-size: 6.9pt;">
+        Pertanyaan: Jelaskan dua dampak fatal terhadap integritas proyek saat diverifikasi oleh Dewan Penguji!
+      </div>
+      <div class="answer-line" style="height: 11px;">1. ..................................................................................................................................................................................</div>
+      <div class="answer-line" style="height: 11px;">2. ..................................................................................................................................................................................</div>
+    </div>
+
+    <div>
+      <div class="checklist-title">Checklist Mandiri Kesiapan Berkas Sidang</div>
+      <div class="checklist-items">
+        <div><span class="check-sq"></span> Proposal & Batasan Ruang Lingkup Disahkan</div>
+        <div><span class="check-sq"></span> Probis, Flowchart, DFD, & Kamus Data Konsisten</div>
+        <div><span class="check-sq"></span> Matriks 12 Kasus UAT Berstatus PASSED</div>
+        <div><span class="check-sq"></span> Defect Log Bebas Cacat Kritis (Closed)</div>
+        <div><span class="check-sq"></span> Product Doc & User Guide Siap Cetak</div>
+        <div><span class="check-sq"></span> Form Revisi & Berita Acara Siap TTD Penguji</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Validasi & Tanda Tangan -->
+  <div class="footer">
+    <div>Dokumen Standar Laboratorium Rekayasa Perangkat Lunak · Dicetak Resmi untuk Evaluasi Akademik</div>
+    <div class="signatures">
+      <div class="sig-block">
+        <div>Mahasiswa / Peserta</div>
+        <div class="sig-line">( ........................................ )</div>
+      </div>
+      <div class="sig-block">
+        <div>Dosen Penguji / Penilai</div>
+        <div class="sig-line">( ........................................ )</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
+"""
+
+with open("soal_dokumen_before_after_sidang.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("HTML written to soal_dokumen_before_after_sidang.html")
+
+chrome_paths = [
+    r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+    r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+]
+
+browser_exe = None
+for p in chrome_paths:
+    if os.path.exists(p):
+        browser_exe = p
+        break
+
+html_abs_path = os.path.abspath("soal_dokumen_before_after_sidang.html")
+pdf_output_path = os.path.abspath("soal_dokumen_before_after_sidang.pdf")
+
+cmd = [
+    browser_exe,
+    "--headless",
+    "--disable-gpu",
+    "--no-pdf-header-footer",
+    f"--print-to-pdf={pdf_output_path}",
+    f"file:///{html_abs_path.replace(os.sep, '/')}"
+]
+
+subprocess.run(cmd, check=True)
+
+doc = fitz.open(pdf_output_path)
+page_count = len(doc)
+print(f"GENERATED PDF PAGE COUNT: {page_count}")
+
+if page_count == 1:
+    print("PERFECT! Exactly 1 page!")
+    page = doc[0]
+    pix = page.get_pixmap(dpi=150)
+    pix.save("soal_dokumen_before_after_sidang.png")
+    print("Preview image saved to soal_dokumen_before_after_sidang.png")
+else:
+    print(f"WARNING: Expected 1 page, got {page_count} pages! Adjustment needed.")

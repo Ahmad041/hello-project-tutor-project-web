@@ -1,0 +1,546 @@
+/**
+ * KasirKita - Module Shared Stylesheet (UI/UX Pro Max Edition)
+ * Provides comprehensive Dual-Theme (Light/Dark) styling for:
+ * - Technical Anatomy Blueprint Cards (.story-anatomy)
+ * - Anatomy Header, Badges, Canvas, and Callout Cards (.anatomy-*)
+ * - Step Stepper Controls Bar (.anatomy-stepper-bar)
+ * - Details Drawers (.arch-details, .story-details)
+ * - Data Tables & Wrappers (.table-wrap, table, th, td)
+ * - Action Callouts, Download Cards, and Badges (.download-card, .callout, .pill)
+ * - Code & Terminal blocks (pre, code)
+ */
+
+/* ==========================================================================
+   GLOBAL SCROLL OFFSET (UI/UX PRO MAX COMPLIANCE)
+   ========================================================================== */
+html {
+  scroll-padding-top: 6rem;
+}
+
+.story-step,
+section[id],
+div[id] {
+  scroll-margin-top: 6rem;
+}
+
+/* ==========================================================================
+   1. TECHNICAL ANATOMY BLUEPRINT CARD (.story-anatomy)
+   ========================================================================== */
+.story-anatomy {
+  margin: 28px 0;
+  border-radius: 14px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-left: 4px solid #0284c7;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.dark .story-anatomy {
+  background: radial-gradient(circle at 10% 20%, #0c1829 0%, #070d17 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-left: 4px solid #38bdf8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.story-anatomy::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.dark .story-anatomy::before {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
+}
+
+/* ==========================================================================
+   2. ANATOMY HEADER, BADGE, & TITLE
+   ========================================================================== */
+.anatomy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e4e4e7;
+  flex-wrap: wrap;
+}
+
+.dark .anatomy-header {
+  border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+}
+
+.anatomy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.dark .anatomy-badge {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+}
+
+.anatomy-fig {
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  color: #71717a;
+}
+
+.dark .anatomy-fig {
+  color: #94a3b8;
+}
+
+.anatomy-title {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "Space Grotesk", sans-serif;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+  color: #18181b;
+}
+
+.dark .anatomy-title {
+  color: #f1f5f9;
+}
+
+/* ==========================================================================
+   3. ANATOMY CANVAS (SVG CONTAINER)
+   ========================================================================== */
+.anatomy-canvas {
+  background: #040914;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.anatomy-canvas svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 580px;
+  max-width: 100%;
+}
+
+/* ==========================================================================
+   4. STEPPER CONTROLS BAR
+   ========================================================================== */
+.anatomy-stepper-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 12px;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  color: #27272a;
+}
+
+.dark .anatomy-stepper-bar {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+}
+
+/* ==========================================================================
+   5. ANATOMY CALLOUTS GRID & CALLOUT CARDS
+   ========================================================================== */
+.anatomy-callouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.anatomy-callout-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  transition: all 0.25s ease;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.dark .anatomy-callout-item {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+.anatomy-callout-item strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: #0f172a;
+}
+
+.dark .anatomy-callout-item strong {
+  color: #f1f5f9;
+}
+
+.anatomy-callout-item.is-active {
+  border-color: #0284c7;
+  background: #f0f9ff;
+  box-shadow: 0 0 14px rgba(2, 132, 199, 0.22);
+  transform: translateY(-1px);
+}
+
+.dark .anatomy-callout-item.is-active {
+  border-color: #38bdf8;
+  background: rgba(14, 30, 52, 0.9);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.3);
+}
+
+/* Pin Badges */
+.anatomy-pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.anatomy-pin.pin-danger {
+  background: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+/* Footer Caption */
+.anatomy-footer-caption {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed #cbd5e1;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.dark .anatomy-footer-caption {
+  border-top-color: rgba(56, 189, 248, 0.2);
+  color: #94a3b8;
+}
+
+.anatomy-footer-caption strong {
+  color: #0369a1;
+}
+
+.dark .anatomy-footer-caption strong {
+  color: #38bdf8;
+}
+
+/* ==========================================================================
+   6. TABLES & TABLE WRAPPERS
+   ========================================================================== */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 18px 0;
+  border-radius: 10px;
+  border: 1px solid #e4e4e7;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dark .table-wrap {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+thead th {
+  padding: 12px 16px;
+  font-weight: 600;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: #f4f4f5;
+  color: #18181b;
+  border-bottom: 1px solid #e4e4e7;
+  white-space: nowrap;
+}
+
+.dark thead th {
+  background: rgba(30, 41, 59, 0.7);
+  color: #38bdf8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+tbody td {
+  padding: 12px 16px;
+  vertical-align: top;
+  border-bottom: 1px solid #f4f4f5;
+  color: #3f3f46;
+  line-height: 1.5;
+}
+
+.dark tbody td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.dark tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ==========================================================================
+   7. DOWNLOAD CARDS & PILLS
+   ========================================================================== */
+.download-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  margin: 18px 0;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dark .download-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(2, 132, 199, 0.08));
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.download-card:hover {
+  border-color: #0284c7;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.dark .download-card:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15);
+}
+
+.uat-sim-card {
+  background: linear-gradient(135deg, #0b1728 0%, #032b4f 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.45) !important;
+  color: #f1f5f9;
+}
+
+.uat-sim-card h3 {
+  color: #fde047 !important;
+}
+
+.uat-sim-card p {
+  color: #cbd5e1 !important;
+}
+
+.download-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "Space Grotesk", sans-serif;
+  margin: 4px 0 6px;
+  color: #0f172a;
+}
+
+.dark .download-card h3 {
+  color: #f1f5f9;
+}
+
+.download-card p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.dark .download-card p {
+  color: #94a3b8;
+}
+
+.download-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  color: #0284c7;
+  text-transform: uppercase;
+}
+
+.dark .download-label {
+  color: #38bdf8;
+}
+
+.download-button,
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #18181b;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.dark .download-button,
+.dark .pill {
+  background: #38bdf8;
+  color: #09090b;
+}
+
+.download-button:hover,
+.pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   8. CALLOUT & QUOTE BOXES
+   ========================================================================== */
+.callout {
+  margin: 18px 0;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border-left: 4px solid #f59e0b;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.dark .callout {
+  background: rgba(245, 158, 11, 0.08);
+  border-left-color: #fbbf24;
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-left-width: 4px;
+}
+
+/* ==========================================================================
+   9. DETAILS DRAWER REFERENCE CONTENT
+   ========================================================================== */
+.story-reference {
+  padding: 24px;
+  background: #ffffff;
+}
+
+.dark .story-reference {
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.story-reference h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 14px;
+  color: #18181b;
+}
+
+.dark .story-reference h3 {
+  color: #f4f4f5;
+}
+
+.story-reference p {
+  margin-bottom: 14px;
+  line-height: 1.7;
+  color: #52525b;
+}
+
+.dark .story-reference p {
+  color: #a1a1aa;
+}
+
+/* ==========================================================================
+   10. CODE BLOCKS & SYNTAX
+   ========================================================================== */
+pre {
+  background: #09090b;
+  color: #f4f4f5;
+  padding: 16px 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 16px 0;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #f4f4f5;
+  color: #0284c7;
+}
+
+.dark code {
+  background: rgba(255, 255, 255, 0.08);
+  color: #38bdf8;
+}
+
+pre code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+}

@@ -17,11 +17,11 @@ Buka http://127.0.0.1:8000. Server lokal direkomendasikan untuk clipboard dan pr
 Beranda (`index.html`) → video opening → daftar modul (`daftarModul.html`) → daftar isi modul → isi modul.
 
 - Modul 1 — Dokumen Persiapan: `daftarisi.html` → `project.html`, SDLC, tema, desktop/website, standalone, scope, master/transaksi, atribut, Probis, dan Activity Plan.
-- Modul 2 — Dokumen After: `daftarisi-2.html` → `analisis.html`, user testing, proposal, Product Documentation, dan User Guide.
+- Modul 2 — Pengujian & Dokumentasi: `daftarisi-2.html` → `analisis.html`, user testing (dokumen before sidang), proposal, Product Documentation, dan User Guide.
 - Modul 3 — Penggunaan lib.h: `daftarisi-3.html` → `teknis.html`, struktur folder, pemasangan, fungsi posisi/border/input, dan pemeriksaan library.
 - Modul 4 — UI/UX menggunakan lib.h: `daftarisi-4.html` → `testing.html`, konversi gambar melalui ASCIIArt.eu, ekspor TXT, dan penempatan ASCII art di C.
 
-Nama `testing.html` dipertahankan untuk kompatibilitas path; isinya kini modul UI ASCII art. Dokumen testing dan laporan berada di modul 2.
+Nama `testing.html` dipertahankan untuk kompatibilitas path; isinya kini modul UI ASCII art. Dokumen testing fungsional (User Testing / Before Sidang) dan laporan berada di modul 2.
 
 `dokumentasi-lib.html` adalah referensi terpisah untuk seluruh fungsi `files/lib.h`, konstanta keyboard, instalasi, contoh menu, dan catatan perbaikan file asli. Sidebar dapat dicari; setiap fungsi memiliki deep link, parameter, perilaku, contoh kode yang bisa disalin, dan daftar isi artikel. Layout dokumentasi mengutamakan keterbacaan dengan pola navigasi referensi seperti Tailwind CSS. CSS dan JavaScript terpisah di `assets/css/lib-docs.css` dan `assets/js/lib-docs.js`. Sumber konten ada di `make_lib_docs.py`, yang juga dipanggil oleh `build.py`. Halaman tetap menyediakan semua konten saat JavaScript tidak tersedia.
 

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kunci Jawaban & Rubrik: Dokumen Before & After Sidang</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 8.5mm 10.5mm 8.5mm 10.5mm;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 7.6pt;
+      line-height: 1.25;
+      color: #0f172a;
+      background: #ffffff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .header {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 4px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-left {
+      flex: 1;
+    }
+    .inst-title {
+      font-size: 7pt;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #b91c1c;
+      margin-bottom: 1px;
+    }
+    .main-title {
+      font-size: 13pt;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.2px;
+      line-height: 1.15;
+    }
+    .sub-title {
+      font-size: 7.2pt;
+      color: #475569;
+    }
+    .badge {
+      display: inline-block;
+      background: #b91c1c;
+      color: #ffffff;
+      font-size: 6.8pt;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .id-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1.1fr 1.3fr 1fr 90px;
+      gap: 6px;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 4px;
+      padding: 4px 8px;
+      margin-bottom: 5px;
+      font-size: 7.2pt;
+    }
+    .id-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .id-label {
+      font-size: 6.2pt;
+      text-transform: uppercase;
+      color: #991b1b;
+      font-weight: 700;
+    }
+    .id-val {
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 1px solid #f87171;
+      min-height: 12px;
+    }
+    .score-box {
+      border-left: 1.5px dashed #fca5a5;
+      padding-left: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .score-val {
+      font-size: 9.5pt;
+      font-weight: 900;
+      color: #b91c1c;
+    }
+
+    .section-title {
+      font-size: 8pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 3px;
+    }
+    .section-title span.tag {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 6.2pt;
+      font-weight: 700;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 5px;
+      font-size: 6.7pt;
+    }
+    .matrix-table th, .matrix-table td {
+      border: 1px solid #cbd5e1;
+      padding: 3px 5px;
+      vertical-align: top;
+    }
+    .matrix-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 800;
+      text-align: left;
+    }
+    .matrix-table td.col-before {
+      background: #f0fdf4;
+      width: 48%;
+    }
+    .matrix-table td.col-after {
+      background: #eff6ff;
+      width: 48%;
+    }
+    .matrix-table strong {
+      color: #0f172a;
+    }
+    .matrix-table ul {
+      margin-left: 11px;
+      margin-top: 1px;
+    }
+    .matrix-table li {
+      margin-bottom: 1px;
+    }
+
+    .cols-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-bottom: 4px;
+    }
+    .col-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 5px 6px;
+      background: #ffffff;
+    }
+    .col-box.before-theme {
+      border-top: 3px solid #16a34a;
+    }
+    .col-box.after-theme {
+      border-top: 3px solid #2563eb;
+    }
+
+    .q-item {
+      margin-bottom: 4px;
+      padding-bottom: 3px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+    .q-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .q-text {
+      font-size: 7pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+      line-height: 1.18;
+    }
+    .opt-list {
+      margin-left: 2px;
+      font-size: 6.6pt;
+      line-height: 1.25;
+      color: #334155;
+    }
+    .opt-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1.5px;
+    }
+    .opt-bubble {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 1px solid #94a3b8;
+      border-radius: 50%;
+      margin-right: 4px;
+      margin-top: 1px;
+      flex-shrink: 0;
+      background: #fff;
+    }
+    .opt-item.is-correct .opt-bubble {
+      background: #16a34a;
+      border-color: #15803d;
+      position: relative;
+    }
+    .opt-item.is-correct .opt-bubble::after {
+      content: '✓';
+      color: #fff;
+      font-size: 7pt;
+      display: block;
+      text-align: center;
+      line-height: 9px;
+      font-weight: 900;
+    }
+    .opt-item.is-correct .opt-txt {
+      font-weight: 700;
+      color: #15803d;
+    }
+    .opt-txt {
+      flex: 1;
+    }
+    .answer-box {
+      margin-top: 2px;
+      background: #f1f5f9;
+      border-left: 2px solid #0284c7;
+      padding: 2px 5px;
+      font-size: 6.3pt;
+      color: #0f172a;
+      border-radius: 2px;
+    }
+
+    .bottom-container {
+      display: grid;
+      grid-template-columns: 1.45fr 1.05fr;
+      gap: 7px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 5px 7px;
+      margin-bottom: 4px;
+    }
+    .case-title {
+      font-size: 7.2pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .case-desc {
+      font-size: 6.6pt;
+      color: #334155;
+      line-height: 1.22;
+      margin-bottom: 2px;
+    }
+    .checklist-title {
+      font-size: 7.2pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .checklist-items {
+      font-size: 6.5pt;
+      color: #334155;
+      line-height: 1.35;
+    }
+    .check-sq {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border: 1px solid #16a34a;
+      background: #22c55e;
+      color: #fff;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-right: 4px;
+      font-size: 6pt;
+      font-weight: 900;
+      text-align: center;
+      line-height: 8px;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #cbd5e1;
+      padding-top: 3px;
+      font-size: 6.2pt;
+      color: #64748b;
+    }
+    .signatures {
+      display: flex;
+      gap: 35px;
+    }
+    .sig-block {
+      text-align: center;
+      width: 95px;
+    }
+    .sig-line {
+      margin-top: 15px;
+      border-top: 1px solid #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="inst-title">Panduan Dosen & Dewan Penguji · Laboratorium Rekayasa Perangkat Lunak</div>
+      <div class="main-title">KUNCI JAWABAN & RUBRIK EVALUASI: DOKUMEN BEFORE & AFTER SIDANG</div>
+      <div class="sub-title">Standar Validasi Berkas Persiapan (Pra-Sidang) vs Bukti Pengujian & Serah Terima (Pasca-Sidang)</div>
+    </div>
+    <div>
+      <span class="badge">Kunci Jawaban Resmi</span>
+    </div>
+  </div>
+
+  <!-- Identitas -->
+  <div class="id-grid">
+    <div class="id-item"><span class="id-label">Status Dokumen</span><span class="id-val">Kunci Jawaban & Rubrik Penguji</span></div>
+    <div class="id-item"><span class="id-label">Target Kelulusan</span><span class="id-val">Nilai Minimum: 75 (Grade B)</span></div>
+    <div class="id-item"><span class="id-label">Mata Kuliah / Prodi</span><span class="id-val">Proyek Rekayasa Perangkat Lunak</span></div>
+    <div class="id-item"><span class="id-label">Tahun Akademik</span><span class="id-val">2026 / Genap</span></div>
+    <div class="score-box">
+      <span class="id-label">Bobot Total</span>
+      <span class="score-val">100 Poin</span>
+    </div>
+  </div>
+
+  <!-- Ringkasan Matriks Inti Materi -->
+  <div class="section-title">
+    1. Matriks Intisari Materi: Dokumen Before vs After Sidang
+    <span class="tag">Komparasi Acuan</span>
+  </div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th style="width: 17%;">Aspek Evaluasi</th>
+        <th style="width: 41.5%;">DOKUMEN BEFORE SIDANG (Tahap Persiapan / Proposal)</th>
+        <th style="width: 41.5%;">DOKUMEN AFTER SIDANG (Tahap Pengujian & Serah Terima)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Fokus & Tujuan</strong></td>
+        <td class="col-before"><strong>Problem Framing & Perancangan Kebutuhan:</strong> Mengidentifikasi masalah riil, mengunci batasan lingkup, model proses bisnis, dan skema data awal.</td>
+        <td class="col-after"><strong>Quality Assurance & Bukti Operasional:</strong> Membuktikan integritas sistem lewat UAT, penuntasan cacat (defect), serta buku panduan pengguna.</td>
+      </tr>
+      <tr>
+        <td><strong>Daftar Dokumen Wajib</strong></td>
+        <td class="col-before">
+          <ul>
+            <li><strong>Dokumen Proposal & Scope:</strong> Batasan <em>In-Scope</em> vs <em>Out-of-Scope</em>.</li>
+            <li><strong>Perancangan Data:</strong> Pemisahan Master vs Transaksi, ERD, & PDM.</li>
+            <li><strong>Pemodelan Probis:</strong> Flowchart logika sistem atomik & DFD level 0/1.</li>
+            <li><strong>Activity Plan (WBS):</strong> Pembagian tugas anggota & jadwal mingguan.</li>
+            <li><strong>Dokumen User Testing (UT):</strong> Matriks 12–18 skenario pengujian empiris (Positif, Negatif, Batas) beserta hasil aktual & bukti screenshot nyata yang disiapkan dan diuji <em>sebelum</em> maju sidang.</li>
+          </ul>
+        </td>
+        <td class="col-after">
+          <ul>
+            <li><strong>Defect Log Revisi Sidang:</strong> Rekaman bug temuan dewan penguji saat sidang, tingkat keparahan, & bukti perbaikannya.</li>
+            <li><strong>Product Documentation:</strong> Spesifikasi teknis arsitektur, API, & kamus data.</li>
+            <li><strong>User Guide (Manual):</strong> Panduan langkah operasional bagi pengguna awam.</li>
+            <li><strong>Berita Acara Revisi:</strong> Lembar pengesahan tanda tangan dewan penguji.</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Kriteria Kunci Penguji</strong></td>
+        <td class="col-before"><em>"Apakah solusi realistis dan rancangan data konsisten tanpa anomali?"</em></td>
+        <td class="col-after"><em>"Apakah data finansial/stok terbukti presisi dan aplikasi siap serah terima?"</em></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Dua Kolom Soal + Kunci Jawaban -->
+  <div class="cols-container">
+    <!-- Kolom Kiri: Before Sidang -->
+    <div class="col-box before-theme">
+      <div class="section-title" style="color: #15803d;">
+        2. Kunci Soal Dokumen Before Sidang [Bobot: 40%]
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">1. Mengapa pemisahan antara Data Master dan Transaksi wajib dimodelkan?</div>
+        <div class="opt-list">
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">A. Supaya kasir tidak perlu mengetikkan kata sandi saat membuka program.</span></div>
+          <div class="opt-item is-correct"><span class="opt-bubble"></span><span class="opt-txt">B. Mencegah manipulasi harga historis & menjaga integritas relasi entitas data. [KUNCI]</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">C. Memperkecil ukuran memori binary file berekstensi .exe.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">2. Apa dampak fatal jika dokumen ruang lingkup tidak memuat batasan tegas "Out-of-Scope"?</div>
+        <div class="opt-list">
+          <div class="opt-item is-correct"><span class="opt-bubble"></span><span class="opt-txt">A. Penguji menuntut fitur tak terbatas yang memicu scope creep & gagal rilis. [KUNCI]</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Berkas database teks lokal (.txt) tidak dapat dibuka di editor teks.</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">C. Fungsi perulangan (loop) pada flowchart otomatis mengalami deadlock.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">3. Dokumen Activity Plan (WBS) dalam berkas pra-sidang berfungsi membuktikan...</div>
+        <div class="opt-list">
+          <div class="opt-item is-correct"><span class="opt-bubble"></span><span class="opt-txt">A. Tim memiliki alokasi tugas adil, linimasa terukur, & deliverable terdefinisi. [KUNCI]</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Seluruh baris kode program sudah selesai ditulis sebelum sidang dimulai.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">4. Mengapa skenario nominal konkret (misal: Rani beli 2 Buku Rp24.000) wajib di proposal?</div>
+        <div class="answer-box"><strong>Kunci:</strong> Menjadi tolok ukur acuan verifikasi numerik logika sistem (stok berkurang 2, kas masuk pas) dari tahap perancangan hingga pengkodean.</div>
+      </div>
+    </div>
+
+    <!-- Kolom Kanan: After Sidang -->
+    <div class="col-box after-theme">
+      <div class="section-title" style="color: #1d4ed8;">
+        3. Kunci Soal Dokumen After Sidang [Bobot: 40%]
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">5. Dalam dokumen UAT, apa perbedaan mendasar antara Kasus Uji Positif dan Uji Batas?</div>
+        <div class="opt-list">
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">A. Uji positif dijalankan pemilik toko; uji batas dijalankan oleh kasir.</span></div>
+          <div class="opt-item is-correct"><span class="opt-bubble"></span><span class="opt-txt">B. Positif menguji alur wajar; Batas menguji nilai kritis (stok 0, minus, desimal). [KUNCI]</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">C. Uji batas hanya memeriksa tampilan tata letak tanpa menguji logika simpan berkas.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">6. Mengapa Product Documentation dan User Guide wajib dipisahkan?</div>
+        <div class="opt-list">
+          <div class="opt-item is-correct"><span class="opt-bubble"></span><span class="opt-txt">A. Sasaran beda: Product Doc untuk developer teknis, User Guide untuk operator awam. [KUNCI]</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Product Doc berisi daftar pustaka, sedangkan User Guide berisi tabel harga barang.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">7. Saat penguji menemukan bug stok minus saat sidang, dokumen apa yang mencatatnya?</div>
+        <div class="opt-list">
+          <div class="opt-item is-correct"><span class="opt-bubble"></span><span class="opt-txt">A. Defect Log (Bug Tracker) berstatus CLOSED/RESOLVED pasca perbaikan. [KUNCI]</span></div>
+          <div class="opt-item"><span class="opt-bubble"></span><span class="opt-txt">B. Berkas Activity Plan yang disusun pada saat proposal awal.</span></div>
+        </div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-text">8. Kapan Berita Acara Serah Terima & Form Revisi Sidang sah ditandatangani?</div>
+        <div class="answer-box"><strong>Kunci:</strong> Hanya setelah seluruh catatan revisi penguji tuntas diperbaiki dan 12 skenario pengujian UAT diverifikasi 100% PASSED.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom: Studi Kasus & Checklist Kesiapan -->
+  <div class="bottom-container">
+    <div>
+      <div class="case-title">4. Kunci & Rubrik Studi Kasus Integrasi (Bobot: 20%)</div>
+      <div class="case-desc">
+        <em>Kasus: Tim mengubah logika tanpa update Flowchart Before, dan abai uji rollback pada berkas UAT After.</em>
+      </div>
+      <div class="answer-box" style="margin-bottom: 2px;">
+        <strong>Dampak 1:</strong> <em>Inkonsistensi Spesifikasi:</em> Dokumen Before menjadi artefak usang (obsolete), menyebabkan penguji menilai tim tidak menguasai metode SDLC.
+      </div>
+      <div class="answer-box">
+        <strong>Dampak 2:</strong> <em>Risiko Korupsi Data Riil:</em> Tanpa uji rollback, sistem rawan menghasilkan nota palsu saat disket gagal tulis (ketiadaan jaminan atomisitas ACID).
+      </div>
+    </div>
+
+    <div>
+      <div class="checklist-title">Rubrik Penilaian Berkas Penguji</div>
+      <div class="checklist-items">
+        <div><span class="check-sq">✓</span> Proposal & Scope Terkunci (Bobot: 15%)</div>
+        <div><span class="check-sq">✓</span> Diagram Flowchart/ERD Sinkron (Bobot: 20%)</div>
+        <div><span class="check-sq">✓</span> Matriks UAT 12 Kasus Lengkap (Bobot: 25%)</div>
+        <div><span class="check-sq">✓</span> Defect Log Tuntas Tertutup (Bobot: 15%)</div>
+        <div><span class="check-sq">✓</span> Product Doc & User Manual Rapi (Bobot: 15%)</div>
+        <div><span class="check-sq">✓</span> Tanda Tangan Berita Acara Sah (Bobot: 10%)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div>Kunci Jawaban Resmi & Standar Audit Laboratorium Rekayasa Perangkat Lunak · 2026</div>
+    <div class="signatures">
+      <div class="sig-block">
+        <div>Koordinator Lab</div>
+        <div class="sig-line">( Tim Dosen Penguji )</div>
+      </div>
+      <div class="sig-block">
+        <div>Ketua Dewan Penguji</div>
+        <div class="sig-line">( Kepala Program Studi )</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,3030 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Emergency: KasirKita DevOps Challenge — Interactive Motion Simulator</title>
+  
+  <!-- Exact Favicon Data URI -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cg transform='rotate(-30 12 12)'%3E%3Ccircle cx='7.3' cy='3.2' r='1.45'/%3E%3Crect x='5.5' y='4.7' width='3.6' height='14.6' rx='1.8'/%3E%3Crect x='14.9' y='4.7' width='3.6' height='14.6' rx='1.8'/%3E%3Ccircle cx='16.7' cy='20.8' r='1.45'/%3E%3C/g%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Inter + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Force black immediately */
+    html, body {
+      background: #000000 !important;
+      color: #fafafa;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Shadcn UI Design Tokens (Zinc Dark) */
+    :root {
+      --background: #09090b;
+      --foreground: #fafafa;
+      --card: #0c0c0e;
+      --card-foreground: #fafafa;
+      --popover: #09090b;
+      --popover-foreground: #fafafa;
+      --primary: #fafafa;
+      --primary-foreground: #18181b;
+      --secondary: #27272a;
+      --secondary-foreground: #fafafa;
+      --muted: #18181b;
+      --muted-foreground: #a1a1aa;
+      --accent: #27272a;
+      --accent-foreground: #fafafa;
+      --destructive: #7f1d1d;
+      --destructive-foreground: #fef2f2;
+      --border: #27272a;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(255, 255, 255, 0.25);
+      --input: #27272a;
+      --ring: #d4d4d8;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+
+      /* Game specific status tokens */
+      --green: #30d158;
+      --amber: #ffd60a;
+      --red: #ff453a;
+      --blue: #0a84ff;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    /* Subtle Film Grain */
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Subtle Ambient Backdrop */
+    .ambient-glow {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.035) 0%, rgba(0, 0, 0, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Main Container Shell */
+    .app-shell {
+      position: relative;
+      z-index: 10;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 16px 24px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* SHADCN NAVBAR / TOP HUD (FIXED & UNBREAKABLE FLEX) */
+    .top-hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 18px;
+      background: rgba(12, 12, 14, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      min-height: 56px;
+    }
+
+    /* Left Group */
+    .hud-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .shadcn-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted-foreground);
+      background: #18181b;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .shadcn-back-btn:hover {
+      color: #ffffff;
+      background: #27272a;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .hud-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .hud-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .brand-mark-square {
+      width: 26px;
+      height: 26px;
+      background: #fafafa;
+      color: #09090b;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .brand-text-block {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-title-main {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #fafafa;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .shadcn-tag {
+      font-size: 10.5px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+      background: #18181b;
+      color: var(--muted-foreground);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    /* Center Group: Shadcn Segmented Tabs Control with Locking */
+    .hud-center {
+      display: flex;
+      justify-content: center;
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .shadcn-tabs-list {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      background: #18181b;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .level-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--muted-foreground);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      text-align: center;
+      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .level-btn:hover:not(.is-locked) {
+      color: #fafafa;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .level-btn.active {
+      background: #27272a;
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .level-btn.is-locked {
+      opacity: 0.45;
+      cursor: not-allowed;
+      color: #71717a;
+    }
+
+    .level-btn.is-locked:hover {
+      background: rgba(255, 69, 58, 0.06);
+      color: #a1a1aa;
+    }
+
+    .lock-icon-pill {
+      font-size: 10px;
+    }
+
+    /* Right Group: Telemetry & Controls */
+    .hud-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .telemetry-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      background: #18181b;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      white-space: nowrap;
+    }
+
+    .telemetry-pill-label {
+      font-size: 10px;
+      color: var(--muted-foreground);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .telemetry-pill-val {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .hud-btn {
+      background: #18181b;
+      border: 1px solid var(--border);
+      color: var(--muted-foreground);
+      border-radius: var(--radius-sm);
+      padding: 6px 11px;
+      cursor: pointer;
+      font-size: 11.5px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .hud-btn:hover {
+      color: #ffffff;
+      background: #27272a;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ========================================================
+       INTERACTIVE MISSION BRIEFING & CLUE PANEL (NEW)
+       ======================================================== */
+    .mission-briefing-card {
+      background: #0c0c0e;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .briefing-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .briefing-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge-level {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      background: #18181b;
+      color: #d4d4d8;
+      border: 1px solid var(--border);
+      letter-spacing: 0.06em;
+    }
+
+    .briefing-title-row h2 {
+      font-size: 14.5px;
+      font-weight: 600;
+      margin: 0;
+      color: #fafafa;
+    }
+
+    .briefing-status-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      background: rgba(48, 209, 88, 0.1);
+      color: var(--green);
+      border: 1px solid rgba(48, 209, 88, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .briefing-status-pill.warn {
+      background: rgba(255, 69, 58, 0.1);
+      color: var(--red);
+      border-color: rgba(255, 69, 58, 0.25);
+    }
+
+    /* Narrative Story Box */
+    .briefing-narrative-box {
+      display: flex;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      align-items: flex-start;
+    }
+
+    .narrative-avatar {
+      font-size: 22px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .narrative-bubble {
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: #d4d4d8;
+    }
+
+    .narrative-bubble strong {
+      color: #ffffff;
+    }
+
+    .narrative-bubble code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #18181b;
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: #fafafa;
+      font-size: 11.5px;
+    }
+
+    /* Tasks & Clues Grid */
+    .briefing-tasks-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 14px;
+    }
+
+    .tasks-column, .clue-column {
+      background: #09090b;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tasks-header, .clue-header {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #fafafa;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted-foreground);
+      transition: all 0.2s ease;
+    }
+
+    .task-item.is-completed {
+      color: var(--green);
+    }
+
+    .task-item.is-completed .task-checkbox {
+      color: var(--green);
+    }
+
+    .task-checkbox {
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .clue-body {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #a1a1aa;
+    }
+
+    .clue-body strong {
+      color: #ffffff;
+    }
+
+    .clue-body code {
+      font-family: 'JetBrains Mono', monospace;
+      background: #18181b;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: var(--amber);
+    }
+
+    /* MAIN STAGE: THE DAG GRAPH VISUALIZER */
+    .dag-stage {
+      background: #0c0c0e;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .dag-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dag-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dag-heading {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #fafafa;
+    }
+
+    .dag-caption {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--muted-foreground);
+    }
+
+    .dag-legend {
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--muted-foreground);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .dot-main { background: #ffffff; box-shadow: 0 0 6px rgba(255, 255, 255, 0.6); }
+    .dot-feat { background: #ffd60a; box-shadow: 0 0 6px rgba(255, 214, 10, 0.6); }
+    .dot-remote { background: #0a84ff; box-shadow: 0 0 6px rgba(10, 132, 255, 0.6); }
+
+    /* SVG DAG Canvas */
+    .dag-canvas-wrap {
+      width: 100%;
+      height: 220px;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0.5) 100%), #050505;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #dagSvg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* SVG DAG Motion Elements (Stationary coordinates, radius scales) */
+    .commit-node {
+      cursor: pointer;
+    }
+
+    .commit-node circle.node-core {
+      transition: r 0.2s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .commit-node:hover circle.node-core {
+      r: 13.5 !important;
+      stroke: #ffffff !important;
+      stroke-width: 3px !important;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+
+    .commit-node text {
+      transition: fill 0.15s ease, font-weight 0.15s ease;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .commit-node:hover text.node-title {
+      fill: #ffffff !important;
+      font-weight: 700;
+    }
+
+    .commit-node:hover text.node-hash {
+      fill: #d4d4d8 !important;
+    }
+
+    .laser-link {
+      stroke-dasharray: 6 3;
+      animation: laserFlow 1.2s linear infinite;
+    }
+
+    @keyframes laserFlow {
+      from { stroke-dashoffset: 18; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .head-badge {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* LOWER SECTION: SPLIT WORKBENCH */
+    .cockpit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 16px;
+    }
+
+    /* LEFT WORKBENCH: FILE DISPATCHER & STAGING */
+    .workbench-card {
+      background: #0c0c0e;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card-title-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .card-title-bar h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fafafa;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .card-title-bar span.subtitle {
+      font-size: 11px;
+      color: var(--muted-foreground);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Working Tree File List */
+    .file-deck {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      background: #121215;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .file-item:hover {
+      background: #18181b;
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .file-item.is-staged {
+      background: rgba(48, 209, 88, 0.05);
+      border-color: rgba(48, 209, 88, 0.3);
+    }
+
+    .file-item.is-danger {
+      border-color: rgba(255, 69, 58, 0.25);
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .file-icon {
+      font-size: 14px;
+    }
+
+    .file-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: #fafafa;
+    }
+
+    .file-diff-stat {
+      font-size: 10.5px;
+      color: var(--green);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .file-diff-stat.trap {
+      color: var(--red);
+    }
+
+    .btn-action-file {
+      background: #18181b;
+      border: 1px solid var(--border);
+      color: #fafafa;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-action-file:hover {
+      background: #27272a;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-action-file.staged-btn {
+      background: rgba(48, 209, 88, 0.12);
+      border-color: rgba(48, 209, 88, 0.3);
+      color: var(--green);
+    }
+
+    /* Staging Area Box (Kardus Staging) */
+    .staging-bay {
+      background: #09090b;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .staging-bay-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      color: var(--muted-foreground);
+    }
+
+    .staged-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 28px;
+      align-items: center;
+    }
+
+    .chip-empty {
+      font-size: 11px;
+      color: #52525b;
+      font-style: italic;
+    }
+
+    .staged-chip {
+      background: rgba(48, 209, 88, 0.1);
+      border: 1px solid rgba(48, 209, 88, 0.3);
+      color: var(--green);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Commit Form */
+    .commit-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .commit-input-wrap {
+      display: flex;
+      gap: 8px;
+    }
+
+    .commit-input {
+      flex: 1;
+      background: #09090b;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: #fafafa;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .commit-input:focus {
+      border-color: var(--primary);
+    }
+
+    .commit-presets {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .preset-chip {
+      background: #18181b;
+      border: 1px solid var(--border);
+      color: var(--muted-foreground);
+      font-size: 10.5px;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .preset-chip:hover {
+      color: #fafafa;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-commit-seal {
+      background: #fafafa;
+      color: #09090b;
+      border: none;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-commit-seal:hover {
+      background: #e4e4e7;
+    }
+
+    .btn-commit-seal:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* RIGHT WORKBENCH: TERMINAL & COMMAND DECK */
+    .terminal-card {
+      background: #0c0c0e;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .terminal-mockup {
+      background: #050505;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 250px;
+    }
+
+    .terminal-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 12px;
+      background: #0e0e11;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mac-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mac-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .mac-dot.red { background: #ff5f56; }
+    .mac-dot.yellow { background: #ffbd2e; }
+    .mac-dot.green { background: #27c93f; }
+
+    .terminal-tab-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted-foreground);
+    }
+
+    .terminal-console-body {
+      padding: 12px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #d4d4d8;
+      overflow-y: auto;
+      max-height: 240px;
+      flex: 1;
+    }
+
+    .terminal-line {
+      margin-bottom: 4px;
+      word-break: break-all;
+    }
+
+    .t-prompt {
+      color: #71717a;
+      user-select: none;
+    }
+
+    .t-cmd {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .t-success {
+      color: var(--green);
+    }
+
+    .t-warn {
+      color: var(--amber);
+    }
+
+    .t-err {
+      color: var(--red);
+    }
+
+    .t-dim {
+      color: #52525b;
+    }
+
+    /* INTERACTIVE TERMINAL CLI INPUT BAR */
+    .terminal-input-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      background: #09090b;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+
+    .terminal-input-bar:focus-within {
+      background: #0c0c0f;
+      border-top-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .cli-prompt-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--green);
+      white-space: nowrap;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cli-input-field {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      caret-color: #ffffff;
+      padding: 2px 0;
+      width: 100%;
+    }
+
+    .cli-input-field::placeholder {
+      color: #52525b;
+      font-size: 11px;
+    }
+
+    .cli-submit-btn {
+      background: #18181b;
+      border: 1px solid var(--border);
+      color: var(--muted-foreground);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .cli-submit-btn:hover {
+      background: #27272a;
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .cli-kbd {
+      background: #27272a;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 10px;
+      color: #d4d4d8;
+    }
+
+    .deck-helper-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted-foreground);
+      padding: 2px 2px 0;
+    }
+
+    .file-cli-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      color: var(--amber);
+      background: rgba(255, 214, 10, 0.08);
+      border: 1px solid rgba(255, 214, 10, 0.2);
+      padding: 1px 5px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-block;
+      margin-top: 3px;
+    }
+
+    .file-cli-chip:hover {
+      background: rgba(255, 214, 10, 0.2);
+      color: #ffffff;
+      border-color: var(--amber);
+    }
+
+    /* TACTICAL COMMAND DECK WITH LEVEL BADGES */
+    .command-deck-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .deck-btn {
+      background: #121215;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 11px;
+      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .deck-btn:hover {
+      background: #18181b;
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .deck-btn.btn-muted-deck {
+      opacity: 0.55;
+    }
+
+    .deck-btn.btn-muted-deck:hover {
+      border-color: rgba(255, 214, 10, 0.3);
+    }
+
+    .deck-btn-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .deck-btn-title {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .deck-btn-badge {
+      font-size: 8.5px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: #27272a;
+      color: var(--muted-foreground);
+    }
+
+    .deck-btn-badge.active-lvl {
+      background: rgba(48, 209, 88, 0.15);
+      color: var(--green);
+    }
+
+    .deck-btn-sub {
+      font-size: 9.5px;
+      color: var(--muted-foreground);
+    }
+
+    .deck-btn.emergency {
+      border-color: rgba(255, 69, 58, 0.3);
+      background: rgba(255, 69, 58, 0.05);
+    }
+
+    .deck-btn.emergency:hover {
+      background: rgba(255, 69, 58, 0.12);
+      border-color: var(--red);
+    }
+
+    /* LEVEL-UP VICTORY CELEBRATION MODAL (SHADCN DIALOG) */
+    .levelup-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .levelup-modal-overlay.active {
+      display: flex;
+    }
+
+    .levelup-card {
+      background: #0c0c0e;
+      border: 1px solid rgba(48, 209, 88, 0.4);
+      border-radius: var(--radius-xl);
+      max-width: 520px;
+      width: 100%;
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+      text-align: center;
+      align-items: center;
+    }
+
+    .levelup-icon {
+      font-size: 40px;
+      margin-bottom: -4px;
+    }
+
+    .levelup-card h2 {
+      font-size: 18px;
+      margin: 0;
+      color: #fafafa;
+    }
+
+    .levelup-desc {
+      font-size: 12.5px;
+      color: #d4d4d8;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .levelup-actions {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    .btn-next-level {
+      flex: 1;
+      background: #fafafa;
+      color: #09090b;
+      border: none;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-next-level:hover {
+      background: #e4e4e7;
+    }
+
+    /* LEVEL 4 CONFLICT DEFUSER MODAL (SHADCN DIALOG PATTERN) */
+    .conflict-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .conflict-modal-overlay.active {
+      display: flex;
+    }
+
+    .conflict-card {
+      background: #0c0c0e;
+      border: 1px solid rgba(255, 69, 58, 0.35);
+      border-radius: var(--radius-xl);
+      max-width: 820px;
+      width: 100%;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .conflict-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .conflict-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .conflict-badge {
+      background: rgba(255, 69, 58, 0.15);
+      color: var(--red);
+      border: 1px solid var(--red);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .conflict-card h2 {
+      font-size: 16px;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    .conflict-body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .conflict-diff-viewer {
+      background: #050505;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      line-height: 1.6;
+    }
+
+    .marker-head {
+      color: var(--blue);
+      background: rgba(10, 132, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .marker-sep {
+      color: #71717a;
+      border-top: 1px dashed var(--border);
+      margin: 6px 0;
+      padding-top: 6px;
+    }
+
+    .marker-remote {
+      color: var(--amber);
+      background: rgba(255, 214, 10, 0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .diff-choice-deck {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .diff-btn {
+      background: #121215;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      color: #ffffff;
+      font-size: 11.5px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      text-align: left;
+      transition: all 0.15s;
+    }
+
+    .diff-btn:hover {
+      background: #18181b;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .diff-btn.recommended {
+      border-color: rgba(48, 209, 88, 0.35);
+      background: rgba(48, 209, 88, 0.05);
+    }
+
+    .diff-btn.recommended:hover {
+      border-color: var(--green);
+      background: rgba(48, 209, 88, 0.1);
+    }
+
+    .diff-btn-tag {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    /* TOAST ALARM */
+    .toast-alarm {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+      background: #18181b;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .toast-alarm.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toast-alarm.danger {
+      border-color: var(--red);
+      background: #240a0a;
+    }
+
+    .toast-alarm.success {
+      border-color: var(--green);
+      background: #081d0f;
+    }
+
+    .toast-msg {
+      font-size: 12px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="ambient-glow"></div>
+
+  <div class="app-shell">
+    <!-- SHADCN CLEAN NAVBAR / TOP HUD WITH LEVEL LOCKS & RESET -->
+    <header class="top-hud">
+      <!-- Left: Back Button & Project Identity -->
+      <div class="hud-left">
+        <a href="../tutorial-github.html" class="shadcn-back-btn" title="Kembali ke Modul Tutorial">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          <span>Panduan Git</span>
+        </a>
+        <div class="hud-divider"></div>
+        <div class="hud-brand">
+          <div class="brand-mark-square">git</div>
+          <div class="brand-text-block">
+            <span class="brand-title-main">KasirKita DevOps</span>
+            <span class="shadcn-tag">v2.4</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Shadcn Segmented Level Picker (Progressively Locked) -->
+      <nav class="hud-center" aria-label="Level Seleksi">
+        <div class="shadcn-tabs-list">
+          <button type="button" class="level-btn active" onclick="switchLevel(1)" id="btnLvl1">
+            <span>01 Staging</span>
+          </button>
+          <button type="button" class="level-btn is-locked" onclick="switchLevel(2)" id="btnLvl2">
+            <span>02 Branching</span>
+            <span class="lock-icon-pill" id="lockLvl2">🔒</span>
+          </button>
+          <button type="button" class="level-btn is-locked" onclick="switchLevel(3)" id="btnLvl3">
+            <span>03 Remote Sync</span>
+            <span class="lock-icon-pill" id="lockLvl3">🔒</span>
+          </button>
+          <button type="button" class="level-btn is-locked" onclick="switchLevel(4)" id="btnLvl4">
+            <span>04 Defuse Conflict</span>
+            <span class="lock-icon-pill" id="lockLvl4">🔒</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Right: Telemetry Badges, Reset & Audio Toggle -->
+      <div class="hud-right">
+        <div class="telemetry-pill" title="Ranting repositori aktif saat ini">
+          <span class="telemetry-pill-label">BRANCH:</span>
+          <span class="telemetry-pill-val" id="hudBranch" style="display:inline-flex;align-items:center;gap:4px;">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
+              <path fill-rule="evenodd" d="M11.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122V6A2.5 2.5 0 0110 8.5H6a1 1 0 00-1 1v1.128a2.251 2.251 0 11-1.5 0V5.372a2.25 2.25 0 111.5 0v1.836A2.492 2.492 0 016 7h4a1 1 0 001-1v-.628A2.25 2.25 0 019.5 3.25zM4.25 12a.75.75 0 100 1.5.75.75 0 000-1.5zM3.5 3.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0z"></path>
+            </svg>
+            <span id="branchName">main</span>
+          </span>
+        </div>
+        <div class="telemetry-pill" title="Target commit penunjuk HEAD">
+          <span class="telemetry-pill-label">HEAD:</span>
+          <span class="telemetry-pill-val" id="hudHead">c2-4a19</span>
+        </div>
+        <button type="button" class="hud-btn" id="btnResetProgress" onclick="resetAllProgress()" title="Ulangi simulasi dari Level 1">↺ Reset</button>
+        <button type="button" class="hud-btn" id="btnAudioToggle" onclick="toggleAudio()">🔊 SFX: ON</button>
+      </div>
+    </header>
+
+    <!-- INTERACTIVE MISSION BRIEFING, STORY NARRATIVE & CLUE CARD -->
+    <section class="mission-briefing-card" id="missionClueBox">
+      <div class="briefing-header">
+        <div class="briefing-title-row">
+          <span class="badge-level" id="badgeLevelNum">LEVEL 01 / 04</span>
+          <h2 id="missionTitle">Misi 01: Pemilahan Kardus Staging & Penyelamatan Repositori</h2>
+        </div>
+        <div class="briefing-status-pill" id="missionStatusPill">
+          <span>●</span>
+          <span id="missionStatusText">Misi Sedang Berjalan</span>
+        </div>
+      </div>
+
+      <!-- Narrative Backstory -->
+      <div class="briefing-narrative-box">
+        <div class="narrative-avatar" id="narrativeAvatar">👨‍💻</div>
+        <div class="narrative-bubble" id="missionStory">
+          <strong>Konteks KasirKita:</strong> "Malam sebelum demo tugas besar, kamu baru saja menambahkan fitur hitung diskon di <code>src/kasir.c</code> dan prototype nota di <code>include/struk.h</code>. Namun, compiler gcc menghasilkan file <code>build/kasir.exe</code> dan log. <em>Ingat aturan emas Git: Jangan kotori riwayat Git kelompok dengan file binary atau log!</em>"
+        </div>
+      </div>
+
+      <!-- Real-time Checklist & Clues -->
+      <div class="briefing-tasks-grid">
+        <div class="tasks-column">
+          <div class="tasks-header">📋 Checklist Sasaran Misi:</div>
+          <div class="task-item" id="task1Item">
+            <span class="task-checkbox" id="task1Check">⭕</span>
+            <span class="task-desc" id="task1Text">Pindahkan <code>src/kasir.c</code> dan <code>include/struk.h</code> ke Kardus Staging</span>
+          </div>
+          <div class="task-item" id="task2Item">
+            <span class="task-checkbox" id="task2Check">⭕</span>
+            <span class="task-desc" id="task2Text">Lindungi tim: JANGAN pernah men-stage <code>build/kasir.exe</code> atau log</span>
+          </div>
+          <div class="task-item" id="task3Item">
+            <span class="task-checkbox" id="task3Check">⭕</span>
+            <span class="task-desc" id="task3Text">Segel kardus dengan pesan commit yang jelas (git commit -m)</span>
+          </div>
+        </div>
+
+        <!-- Clue / Hint Box -->
+        <div class="clue-column">
+          <div class="clue-header">💡 Clue & Petunjuk Eksekusi:</div>
+          <div class="clue-body" id="missionClueText">
+            Gunakan tombol <strong>Stage (Add)</strong> pada masing-masing file kode, atau klik tombol cepat <code>git add src/*</code> di Terminal Deck sebelah kanan. Setelah kardus terisi 2 file, tombol <strong>🔒 Segel Kardus (git commit)</strong> akan aktif untuk mencetak commit pertama.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Visual Stage: DAG Visualizer with Dynamic Motion Graphics -->
+    <section class="dag-stage">
+      <div class="dag-header">
+        <div class="dag-title-group">
+          <span class="dag-heading">Visual Git DAG Commit Tree</span>
+          <span class="dag-caption">"Directed Acyclic Graph of Commits & Branches"</span>
+        </div>
+        <div class="dag-legend">
+          <div class="legend-item"><span class="legend-dot dot-main"></span> main track</div>
+          <div class="legend-item"><span class="legend-dot dot-feat"></span> feature branch</div>
+          <div class="legend-item"><span class="legend-dot dot-remote"></span> origin/main (GitHub Cloud)</div>
+        </div>
+      </div>
+
+      <!-- SVG Graph Canvas -->
+      <div class="dag-canvas-wrap">
+        <svg id="dagSvg" viewBox="0 0 1000 220" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <!-- Glow Filters -->
+            <filter id="glowWhite" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+            <filter id="glowYellow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+            <!-- Arrow markers -->
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="rgba(255,255,255,0.4)" />
+            </marker>
+          </defs>
+
+          <!-- Branch Rails (Background Lines) -->
+          <!-- Main Rail -->
+          <line x1="80" y1="80" x2="880" y2="80" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+          <text x="30" y="84" fill="rgba(255,255,255,0.4)" font-size="11" font-family="'JetBrains Mono', monospace">main</text>
+
+          <!-- Feature Branch Rail -->
+          <path id="featRail" d="M 380 80 Q 420 150 480 150 L 780 150" fill="none" stroke="rgba(255,214,10,0.2)" stroke-width="2" stroke-dasharray="4" />
+          <text x="360" y="154" fill="rgba(255,214,10,0.5)" font-size="11" font-family="'JetBrains Mono', monospace">feat/diskon</text>
+
+          <!-- Remote Cloud Node on Top Right -->
+          <g transform="translate(850, 25)" id="remoteCloudNode">
+            <rect x="0" y="0" width="110" height="30" rx="6" fill="rgba(10,132,255,0.12)" stroke="rgba(10,132,255,0.4)" stroke-width="1.2"/>
+            <text x="55" y="19" fill="#0a84ff" font-size="10.5" font-family="'JetBrains Mono', monospace" font-weight="600" text-anchor="middle">☁️ origin/main</text>
+          </g>
+
+          <!-- Commit Connection Lines Dynamic Group -->
+          <g id="commitLinksGroup">
+            <!-- C0 to C1 -->
+            <line x1="120" y1="80" x2="250" y2="80" stroke="#ffffff" stroke-width="2.5" />
+            <!-- C1 to C2 -->
+            <line x1="250" y1="80" x2="380" y2="80" stroke="#ffffff" stroke-width="2.5" />
+            <!-- C2 to C3 (Feature Branch) -->
+            <path id="linkC2C3" d="M 380 80 Q 420 150 480 150" fill="none" stroke="#ffd60a" stroke-width="2.5" class="laser-link" style="display:none;" />
+            <!-- C3 to C4 (Feature Commit) -->
+            <line id="linkC3C4" x1="480" y1="150" x2="620" y2="150" stroke="#ffd60a" stroke-width="2.5" class="laser-link" style="display:none;" />
+            <!-- C4 to Merge (C5 on main) -->
+            <path id="linkMerge" d="M 620 150 Q 680 80 740 80" fill="none" stroke="#30d158" stroke-width="2.5" stroke-dasharray="4" style="display:none;" />
+            <!-- Remote Sync Beam -->
+            <line id="remoteSyncBeam" x1="740" y1="80" x2="880" y2="40" stroke="#0a84ff" stroke-width="2.5" stroke-dasharray="6" class="laser-link" style="display:none;" />
+          </g>
+
+          <!-- Commit Nodes Group (Hover expands circle radius smoothly, zero displacement) -->
+          <g id="commitNodesGroup">
+            <!-- Node C0: init -->
+            <g class="commit-node" transform="translate(120, 80)" onclick="inspectCommit('C0')">
+              <circle class="node-core" cx="0" cy="0" r="10" fill="#ffffff" stroke="#000000" stroke-width="2.5"/>
+              <text class="node-hash" x="0" y="24" fill="#a1a1aa" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle">c0-9f12</text>
+              <text class="node-title" x="0" y="-16" fill="#ffffff" font-size="10.5" font-weight="600" text-anchor="middle">Initial</text>
+            </g>
+
+            <!-- Node C1: struct data kasir -->
+            <g class="commit-node" transform="translate(250, 80)" onclick="inspectCommit('C1')">
+              <circle class="node-core" cx="0" cy="0" r="10" fill="#ffffff" stroke="#000000" stroke-width="2.5"/>
+              <text class="node-hash" x="0" y="24" fill="#a1a1aa" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle">c1-3d8b</text>
+              <text class="node-title" x="0" y="-16" fill="#ffffff" font-size="10.5" font-weight="600" text-anchor="middle">struct kasir</text>
+            </g>
+
+            <!-- Node C2: border crt gotoxy -->
+            <g class="commit-node" id="nodeC2" transform="translate(380, 80)" onclick="inspectCommit('C2')">
+              <circle class="node-core" cx="0" cy="0" r="11" fill="#ffffff" stroke="#000000" stroke-width="2.5" filter="url(#glowWhite)"/>
+              <text class="node-hash" x="0" y="24" fill="#a1a1aa" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle">c2-4a19</text>
+              <text class="node-title" x="0" y="-16" fill="#ffffff" font-size="10.5" font-weight="600" text-anchor="middle">border crt</text>
+            </g>
+
+            <!-- Node C3: Feature Branch Init (Hidden initially) -->
+            <g class="commit-node" id="nodeC3" transform="translate(480, 150)" style="display:none;" onclick="inspectCommit('C3')">
+              <circle class="node-core" cx="0" cy="0" r="10" fill="#ffd60a" stroke="#000000" stroke-width="2.5" filter="url(#glowYellow)"/>
+              <text class="node-hash" x="0" y="24" fill="#ffd60a" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle">c3-8e7c</text>
+              <text class="node-title" x="0" y="-16" fill="#ffffff" font-size="10.5" font-weight="600" text-anchor="middle">diskon 20%</text>
+            </g>
+
+            <!-- Node C4: Member Tier logic (Hidden initially) -->
+            <g class="commit-node" id="nodeC4" transform="translate(620, 150)" style="display:none;" onclick="inspectCommit('C4')">
+              <circle class="node-core" cx="0" cy="0" r="10" fill="#ffd60a" stroke="#000000" stroke-width="2.5"/>
+              <text class="node-hash" x="0" y="24" fill="#ffd60a" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle">c4-1a5f</text>
+              <text class="node-title" x="0" y="-16" fill="#ffffff" font-size="10.5" font-weight="600" text-anchor="middle">tier member</text>
+            </g>
+
+            <!-- Node C5: Merge Commit (Hidden initially) -->
+            <g class="commit-node" id="nodeC5" transform="translate(740, 80)" style="display:none;" onclick="inspectCommit('C5')">
+              <circle class="node-core" cx="0" cy="0" r="12" fill="#30d158" stroke="#000000" stroke-width="3" filter="url(#glowWhite)"/>
+              <text class="node-hash" x="0" y="24" fill="#30d158" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle">c5-merge</text>
+              <text class="node-title" x="0" y="-16" fill="#ffffff" font-size="10.5" font-weight="600" text-anchor="middle">Merge PR #1</text>
+            </g>
+          </g>
+
+          <!-- Floating Animated HEAD Pointer -->
+          <g id="headPointerTag" class="head-badge" transform="translate(380, 42)">
+            <rect x="-24" y="-18" width="48" height="18" rx="4" fill="#ffffff" />
+            <text x="0" y="-5" fill="#000000" font-size="10" font-weight="800" font-family="'JetBrains Mono', monospace" text-anchor="middle">HEAD</text>
+            <polygon points="-5,0 5,0 0,6" fill="#ffffff" />
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Lower Interactive Workbench -->
+    <div class="cockpit-grid">
+      <!-- Left Panel: File Dispatcher & Staging Warehouse -->
+      <section class="workbench-card">
+        <div class="card-title-bar">
+          <h3>
+            <span>🗂️</span> Meja Kerja & Kardus Staging
+          </h3>
+          <span class="subtitle">git status / git add</span>
+        </div>
+
+        <!-- Working Tree File Cards -->
+        <div class="file-deck">
+          <!-- File 1: kasir.c (Valid) -->
+          <div class="file-item" id="fileKasirC">
+            <div class="file-info">
+              <span class="file-icon">📄</span>
+              <div>
+                <div class="file-name">src/kasir.c</div>
+                <div class="file-diff-stat">+18 lines (hitung_diskon)</div>
+                <span class="file-cli-chip" onclick="fillCliCommand('git add src/kasir.c', false)">git add src/kasir.c</span>
+              </div>
+            </div>
+            <button type="button" class="btn-action-file" onclick="toggleStageFile('src/kasir.c')">Stage (Add)</button>
+          </div>
+
+          <!-- File 2: struk.h (Valid) -->
+          <div class="file-item" id="fileStrukH">
+            <div class="file-info">
+              <span class="file-icon">📑</span>
+              <div>
+                <div class="file-name">include/struk.h</div>
+                <div class="file-diff-stat">+6 lines (prototype nota)</div>
+                <span class="file-cli-chip" onclick="fillCliCommand('git add include/struk.h', false)">git add include/struk.h</span>
+              </div>
+            </div>
+            <button type="button" class="btn-action-file" onclick="toggleStageFile('include/struk.h')">Stage (Add)</button>
+          </div>
+
+          <!-- File 3: TRAP kasir.exe (Binary) -->
+          <div class="file-item is-danger" id="fileKasirExe">
+            <div class="file-info">
+              <span class="file-icon">⚠️</span>
+              <div>
+                <div class="file-name">build/kasir.exe</div>
+                <div class="file-diff-stat trap">[TRAP] Binary compiler output (142 KB)</div>
+                <span class="file-cli-chip" onclick="fillCliCommand('git add build/kasir.exe', false)">git add build/kasir.exe</span>
+              </div>
+            </div>
+            <button type="button" class="btn-action-file" onclick="triggerBinaryTrap()">Stage (Add)</button>
+          </div>
+
+          <!-- File 4: TRAP debug.log (Temporary Log) -->
+          <div class="file-item is-danger" id="fileDebugLog">
+            <div class="file-info">
+              <span class="file-icon">⚠️</span>
+              <div>
+                <div class="file-name">logs/debug_run.log</div>
+                <div class="file-diff-stat trap">[TRAP] Temp log file (4 KB)</div>
+                <span class="file-cli-chip" onclick="fillCliCommand('git add logs/debug_run.log', false)">git add logs/debug_run.log</span>
+              </div>
+            </div>
+            <button type="button" class="btn-action-file" onclick="triggerLogTrap()">Stage (Add)</button>
+          </div>
+        </div>
+
+        <!-- Kardus Staging Area -->
+        <div class="staging-bay">
+          <div class="staging-bay-header">
+            <strong>📦 Isi Kardus Staging (Siap di-Commit):</strong>
+            <span id="stagedCount">0 file</span>
+          </div>
+          <div class="staged-chips" id="stagedChips">
+            <span class="chip-empty">Belum ada file yang di-stage. Klik tombol "Stage (Add)" pada file C/H di atas.</span>
+          </div>
+        </div>
+
+        <!-- Commit Seal Deck -->
+        <div class="commit-box">
+          <div class="commit-input-wrap">
+            <input type="text" class="commit-input" id="commitMsgInput" placeholder="Masukkan pesan commit..." value="[FEAT] Tambah modul diskon member 20%">
+          </div>
+          <div class="commit-presets">
+            <span class="preset-chip" onclick="fillPreset('[FEAT] Tambah modul diskon member 20%')">+ [FEAT] diskon</span>
+            <span class="preset-chip" onclick="fillPreset('[FIX] Tangani pembagian nol pada kasir')">+ [FIX] bugfix</span>
+            <span class="preset-chip" onclick="fillPreset('[DOCS] Perbarui petunjuk kompilasi gcc')">+ [DOCS] gcc</span>
+          </div>
+          <button type="button" class="btn-commit-seal" id="btnSealCommit" onclick="executeCommit()">
+            <span>🔒</span> Segel Kardus (git commit)
+          </button>
+        </div>
+      </section>
+
+      <!-- Right Panel: Terminal Studio & Tactical Command Deck -->
+      <section class="terminal-card">
+        <div class="card-title-bar">
+          <h3>
+            <span>💻</span> macOS Dev Terminal
+          </h3>
+          <span class="subtitle">zsh — kasirkita-c</span>
+        </div>
+
+        <!-- Terminal Window Mockup -->
+        <div class="terminal-mockup">
+          <div class="terminal-titlebar">
+            <div class="mac-dots">
+              <span class="mac-dot red"></span>
+              <span class="mac-dot yellow"></span>
+              <span class="mac-dot green"></span>
+            </div>
+            <span class="terminal-tab-name">dev-studio: ~/KasirKita (main)</span>
+            <span style="font-size:10px;color:var(--muted-foreground)">zsh</span>
+          </div>
+          <div class="terminal-console-body" id="consoleBody">
+            <div class="terminal-line"><span class="t-dim"># KasirKita Git Simulation Terminal loaded.</span></div>
+            <div class="terminal-line"><span class="t-dim"># Ketik perintah git langsung di prompt bawah (atau klik chip bantuan).</span></div>
+            <div class="terminal-line"><span class="t-prompt">ahmad@macbook:~/KasirKita$ </span><span class="t-cmd">git status</span></div>
+            <div class="terminal-line">On branch main</div>
+            <div class="terminal-line">Changes not staged for commit:</div>
+            <div class="terminal-line">&nbsp;&nbsp;<span class="t-warn">modified:   src/kasir.c</span></div>
+            <div class="terminal-line">&nbsp;&nbsp;<span class="t-warn">modified:   include/struk.h</span></div>
+            <div class="terminal-line">Untracked files:</div>
+            <div class="terminal-line">&nbsp;&nbsp;<span class="t-err">build/kasir.exe</span></div>
+            <div class="terminal-line">&nbsp;&nbsp;<span class="t-err">logs/debug_run.log</span></div>
+          </div>
+          <!-- Real Interactive Terminal Prompt Form -->
+          <form class="terminal-input-bar" id="cliForm" onsubmit="event.preventDefault(); submitCliCommand();">
+            <span class="cli-prompt-label" id="cliPrompt">kasirkita (main) $</span>
+            <input type="text" id="cliInput" class="cli-input-field" placeholder="Ketik perintah git di sini... (cth: git status, git add src/kasir.c)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus>
+            <button type="submit" class="cli-submit-btn" id="cliSubmitBtn" title="Jalankan perintah (Enter)">
+              <span>Eksekusi</span>
+              <kbd class="cli-kbd">↵</kbd>
+            </button>
+          </form>
+        </div>
+
+        <div class="deck-helper-heading">
+          <span>💡 Quick Command Chips (Klik untuk mengisi terminal atau ketik manual):</span>
+          <span style="font-family:'JetBrains Mono', monospace;font-size:10px;color:#71717a;">Tab = Autocomplete | ↑/↓ = Riwayat</span>
+        </div>
+
+        <!-- Quick Tactical Buttons with Level Indicators & Clue Tooltips -->
+        <div class="command-deck-grid">
+          <button type="button" class="deck-btn" onclick="runCmdStatus()" id="deckBtnStatus">
+            <div class="deck-btn-title-row">
+              <span class="deck-btn-title">git status</span>
+              <span class="deck-btn-badge active-lvl">Lvl 1</span>
+            </div>
+            <span class="deck-btn-sub">Cek kondisi repositori</span>
+          </button>
+
+          <button type="button" class="deck-btn" onclick="runCmdAddSafe()" id="deckBtnAdd">
+            <div class="deck-btn-title-row">
+              <span class="deck-btn-title">git add src/*</span>
+              <span class="deck-btn-badge active-lvl">Lvl 1</span>
+            </div>
+            <span class="deck-btn-sub">Stage hanya kode aman</span>
+          </button>
+
+          <button type="button" class="deck-btn btn-muted-deck" onclick="runCmdBranchFeat()" id="deckBtnBranch">
+            <div class="deck-btn-title-row">
+              <span class="deck-btn-title">git checkout -b</span>
+              <span class="deck-btn-badge" id="badgeBtnBranch">Lvl 2 🔒</span>
+            </div>
+            <span class="deck-btn-sub">Buat ranting feat/diskon</span>
+          </button>
+
+          <button type="button" class="deck-btn btn-muted-deck" onclick="runCmdPullRemote()" id="deckBtnPull">
+            <div class="deck-btn-title-row">
+              <span class="deck-btn-title">git pull origin</span>
+              <span class="deck-btn-badge" id="badgeBtnPull">Lvl 3 🔒</span>
+            </div>
+            <span class="deck-btn-sub">Tarik update dari tim</span>
+          </button>
+
+          <button type="button" class="deck-btn btn-muted-deck" onclick="runCmdPushRemote()" id="deckBtnPush">
+            <div class="deck-btn-title-row">
+              <span class="deck-btn-title">git push origin</span>
+              <span class="deck-btn-badge" id="badgeBtnPush">Lvl 3 🔒</span>
+            </div>
+            <span class="deck-btn-sub">Kirim ke GitHub awan</span>
+          </button>
+
+          <button type="button" class="deck-btn emergency btn-muted-deck" onclick="triggerConflictSimulation()" id="deckBtnConflict">
+            <div class="deck-btn-title-row">
+              <span class="deck-btn-title">⚠️ Defuse Conflict</span>
+              <span class="deck-btn-badge" id="badgeBtnConflict">Lvl 4 🔒</span>
+            </div>
+            <span class="deck-btn-sub">Simulasi bentrok kode</span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- LEVEL-UP CELEBRATION MODAL (SHADCN DIALOG) -->
+  <div class="levelup-modal-overlay" id="levelUpModal">
+    <div class="levelup-card">
+      <div class="levelup-icon" id="lvlUpIcon">🏆</div>
+      <h2 id="lvlUpTitle">Misi Selesai!</h2>
+      <p class="levelup-desc" id="lvlUpDesc">
+        Kamu berhasil menyelesaikan tugas level ini dengan sempurna.
+      </p>
+      <div class="levelup-actions">
+        <button type="button" class="hud-btn" onclick="closeLevelUpModal()">Eksplorasi Lagi</button>
+        <button type="button" class="btn-next-level" id="btnNextLevelAction" onclick="proceedToNextLevel()">Lanjut ke Level Berikutnya →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 4 MERGE CONFLICT MODAL DRAWER (SHADCN DIALOG PATTERN) -->
+  <div class="conflict-modal-overlay" id="conflictModal">
+    <div class="conflict-card">
+      <div class="conflict-header">
+        <div class="conflict-title-group">
+          <span class="conflict-badge">🚨 CRITICAL CONFLICT</span>
+          <h2>Bentrok Terdeteksi pada <code>src/kasir.c</code></h2>
+        </div>
+        <button type="button" class="hud-btn" onclick="closeConflictModal()">Tutup ✕</button>
+      </div>
+
+      <div class="conflict-body">
+        <p style="font-size:12.5px;color:var(--muted-foreground);margin:0;">
+          Kamu dan rekan tim (Budi) sama-sama mengubah baris logika diskon kasir di fungsi yang sama secara bersamaan. Git tidak bisa menebak mana yang benar tanpa bantuan manusia!
+        </p>
+
+        <!-- Visual 3-Way Diff Comparison -->
+        <div class="conflict-diff-viewer">
+          <div style="color:#71717a;margin-bottom:6px;">// Baris 42 dalam src/kasir.c:</div>
+          <div class="marker-head">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (Ranting Kamu: feat/diskon)</div>
+          <div style="color:#ffffff;padding-left:14px;margin:4px 0;">
+            float diskon = hitung_diskon_member(total, 0.20, member_id); // Diskon VIP 20%
+          </div>
+          <div class="marker-sep">======= (Pembatas Versi)</div>
+          <div style="color:#ffffff;padding-left:14px;margin:4px 0;">
+            float diskon = hitung_diskon_reguler(total, 0.15); // Diskon Weekend 15% dari Budi
+          </div>
+          <div class="marker-remote">&gt;&gt;&gt;&gt;&gt;&gt;&gt; origin/main (Commit Budi)</div>
+        </div>
+
+        <div style="font-size:12px;font-weight:600;color:#ffffff;margin-top:6px;">
+          Pilih Resolusi Penggabungan:
+        </div>
+
+        <!-- Decision Deck -->
+        <div class="diff-choice-deck">
+          <button type="button" class="diff-btn" onclick="resolveConflict('head')">
+            <span style="font-weight:600;">Pakai Versi HEAD</span>
+            <span style="color:var(--muted-foreground);font-size:11px;">Hanya pertahankan diskon member 20%. Timpa perubahan Budi.</span>
+          </button>
+
+          <button type="button" class="diff-btn" onclick="resolveConflict('remote')">
+            <span style="font-weight:600;">Pakai Versi Budi</span>
+            <span style="color:var(--muted-foreground);font-size:11px;">Gunakan diskon reguler 15%. Batalkan fitur member kamu.</span>
+          </button>
+
+          <button type="button" class="diff-btn recommended" onclick="resolveConflict('both')">
+            <span class="diff-btn-tag">★ Solusi Rekomendasi</span>
+            <span style="font-weight:600;color:#ffffff;">Gabungkan Keduanya</span>
+            <span style="color:#d4d4d8;font-size:11px;">Jika punya kartu member dapat 20%, jika pembeli umum dapat 15%.</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Alarm -->
+  <div class="toast-alarm" id="toastAlarm">
+    <span id="toastIcon">⚠️</span>
+    <span class="toast-msg" id="toastMsg">Pesan peringatan di sini.</span>
+  </div>
+
+  <!-- Pure Web Audio API & Motion Engine -->
+  <script>
+    (function () {
+      'use strict';
+
+      // Audio Synthesis Engine
+      let audioCtx = null;
+      let soundEnabled = true;
+
+      function getAudioContext() {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
+
+      function playTone(freq, type, duration, gainVal = 0.15) {
+        if (!soundEnabled) return;
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          gain.gain.setValueAtTime(gainVal, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + duration);
+        } catch (_) {}
+      }
+
+      const SFX = {
+        click: () => playTone(800, 'sine', 0.05, 0.08),
+        stage: () => {
+          playTone(520, 'triangle', 0.08, 0.12);
+          setTimeout(() => playTone(780, 'triangle', 0.08, 0.1), 60);
+        },
+        commit: () => {
+          playTone(220, 'sine', 0.25, 0.2);
+          setTimeout(() => playTone(440, 'triangle', 0.18, 0.15), 100);
+        },
+        push: () => {
+          if (!soundEnabled) return;
+          try {
+            const ctx = getAudioContext();
+            if (!ctx) return;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.frequency.setValueAtTime(300, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.35);
+            gain.gain.setValueAtTime(0.12, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.35);
+          } catch (_) {}
+        },
+        alarm: () => {
+          playTone(180, 'sawtooth', 0.15, 0.25);
+          setTimeout(() => playTone(140, 'sawtooth', 0.2, 0.25), 150);
+        },
+        triumph: () => {
+          [523.25, 659.25, 783.99, 1046.50].forEach((f, idx) => {
+            setTimeout(() => playTone(f, 'sine', 0.3, 0.12), idx * 90);
+          });
+        }
+      };
+
+      window.toggleAudio = function () {
+        soundEnabled = !soundEnabled;
+        const btn = document.getElementById('btnAudioToggle');
+        if (btn) btn.textContent = soundEnabled ? '🔊 SFX: ON' : '🔇 SFX: OFF';
+        if (soundEnabled) SFX.click();
+      };
+
+      // State Manager with Progressive Level Unlocking
+      const state = {
+        level: 1,
+        unlockedLevels: {
+          1: true,
+          2: false,
+          3: false,
+          4: false
+        },
+        branch: 'main',
+        head: 'c2-4a19',
+        headCoords: { x: 380, y: 80 },
+        stagedFiles: new Set(),
+        workingFiles: new Set(['src/kasir.c', 'include/struk.h']),
+        hasBranchFeat: false,
+        hasCommittedFeat: false,
+        hasPulled: false,
+        hasPushed: false,
+        isConflictDefused: false
+      };
+
+      // Mission Descriptions, Narratives & Clues
+      const MISSIONS = {
+        1: {
+          badge: 'LEVEL 01 / 04',
+          title: 'Misi 01: Pemilahan Kardus Staging & Penyelamatan Repositori',
+          avatar: '👨‍💻',
+          story: '<strong>Konteks KasirKita:</strong> "Malam sebelum demo tugas besar, kamu baru saja menambahkan fitur hitung diskon di <code>src/kasir.c</code> dan prototype nota di <code>include/struk.h</code>. Namun, compiler gcc menghasilkan file <code>build/kasir.exe</code> dan log. <em>Ingat aturan emas Git: Jangan kotori riwayat Git kelompok dengan file binary atau log!</em>"',
+          task1: 'Pindahkan <code>src/kasir.c</code> dan <code>include/struk.h</code> ke Kardus Staging',
+          task2: 'Lindungi tim: JANGAN pernah men-stage <code>build/kasir.exe</code> atau log',
+          task3: 'Segel kardus dengan pesan commit yang jelas (git commit -m)',
+          clue: 'Gunakan tombol <strong>Stage (Add)</strong> pada masing-masing file kode, atau klik tombol cepat <code>git add src/*</code> di Terminal Deck sebelah kanan. Setelah kardus terisi 2 file, tombol <strong>🔒 Segel Kardus (git commit)</strong> akan aktif untuk mencetak commit pertama.'
+        },
+        2: {
+          badge: 'LEVEL 02 / 04',
+          title: 'Misi 02: Branch Divergence — Ranting Eksperimen yang Aman',
+          avatar: '🌿',
+          story: '<strong>Konteks KasirKita:</strong> "Budi mengingatkan: <em>\'Jangan pernah coding fitur baru langsung di branch main!\'</em> Jika kode eksperimenmu error, batang utama program kasir bisa crash saat dites dosen. Buatlah ranting baru bernama <code>feat/diskon</code>."',
+          task1: 'Ketik atau klik perintah <code>git checkout -b feat/diskon</code>',
+          task2: 'Perhatikan rel kuning <code>feat/diskon</code> melengkung di DAG Canvas',
+          task3: 'Cetak commit fitur lanjutan di ranting baru dengan tombol Segel Kardus',
+          clue: 'Klik tombol <strong><code>git checkout -b</code></strong> di Command Deck. Pointer <strong>HEAD</strong> akan meluncur ke cabang baru. Selanjutnya klik <strong>Segel Kardus (git commit)</strong> untuk menyimpan node <code>c4-1a5f</code> di ranting tersebut.'
+        },
+        3: {
+          badge: 'LEVEL 03 / 04',
+          title: 'Misi 03: Remote Synchronization — Tarik & Bagikan ke GitHub Awan',
+          avatar: '☁️',
+          story: '<strong>Konteks KasirKita:</strong> "Fitur diskon member kamu di laptop sudah aman. Sekarang saatnya mengirimkannya ke repositori GitHub tim. Tapi sebagai DevOps disiplin, kamu harus selalu <code>git pull</code> terlebih dahulu sebelum <code>git push</code> agar tidak menabrak update teman!"',
+          task1: 'Lakukan sinkronisasi masuk dengan <code>git pull origin</code>',
+          task2: 'Pastikan repositori lokal sudah sejajar dengan <code>origin/main</code>',
+          task3: 'Kirim commit lokal ke awan dengan <code>git push origin</code>',
+          clue: 'Klik tombol <strong><code>git pull origin</code></strong> terlebih dahulu untuk memastikan tidak ada perubahan tertinggal, lalu klik <strong><code>git push origin</code></strong> untuk menembakkan laser commit ke awan <code>☁️ origin/main</code>!'
+        },
+        4: {
+          badge: 'LEVEL 04 / 04',
+          title: 'Misi 04: Defuse Merge Conflict — Penyatuan Logika Diskon Kasir',
+          avatar: '🚨',
+          story: '<strong>Konteks KasirKita:</strong> "ALARM DARURAT! Budi mem-push diskon reguler 15% di <code>src/kasir.c</code> baris 42. Di saat yang sama, kamu memprogram diskon member 20% di baris yang persis sama! Git tidak bisa menebak otomatis mana yang harus dipakai tanpa keputusanmu."',
+          task1: 'Buka panel 3-Way visual diff dengan tombol <code>⚠️ Defuse Conflict</code>',
+          task2: 'Pahami penanda konflik <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code>, <code>=======</code>, dan <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>',
+          task3: 'Pilih resolusi terbaik: <strong>★ Gabungkan Keduanya</strong> untuk mencetak commit merge',
+          clue: 'Klik tombol merah <strong><code>⚠️ Defuse Conflict</code></strong> di Command Deck. Di dalam dialog, pilih opsi rekomendasi <strong>Gabungkan Keduanya</strong> agar kasir cerdas memberikan diskon member 20% jika punya kartu, dan 15% untuk umum.'
+        }
+      };
+
+      // Toast Notifications
+      window.showToast = function (msg, isDanger = false, isSuccess = false) {
+        const toast = document.getElementById('toastAlarm');
+        const icon = document.getElementById('toastIcon');
+        const text = document.getElementById('toastMsg');
+        if (!toast || !icon || !text) return;
+
+        text.textContent = msg;
+        toast.className = 'toast-alarm show' + (isDanger ? ' danger' : '') + (isSuccess ? ' success' : '');
+        icon.textContent = isDanger ? '🚫' : (isSuccess ? '✅' : 'ℹ️');
+
+        if (isDanger) SFX.alarm();
+        else if (isSuccess) SFX.triumph();
+        else SFX.click();
+
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => {
+          toast.className = 'toast-alarm';
+        }, 4500);
+      };
+
+      // Update Checklist UI
+      function updateTasksUI() {
+        const t1 = document.getElementById('task1Item');
+        const t1c = document.getElementById('task1Check');
+        const t2 = document.getElementById('task2Item');
+        const t2c = document.getElementById('task2Check');
+        const t3 = document.getElementById('task3Item');
+        const t3c = document.getElementById('task3Check');
+
+        if (!t1 || !t1c || !t2 || !t2c || !t3 || !t3c) return;
+
+        if (state.level === 1) {
+          const hasStagedC = state.stagedFiles.has('src/kasir.c');
+          const hasStagedH = state.stagedFiles.has('include/struk.h');
+
+          if (hasStagedC && hasStagedH) {
+            t1.classList.add('is-completed');
+            t1c.textContent = '✅';
+          } else {
+            t1.classList.remove('is-completed');
+            t1c.textContent = '⭕';
+          }
+
+          // Task 2: always clean unless trap triggered
+          t2.classList.add('is-completed');
+          t2c.textContent = '✅';
+
+          // Task 3: committed
+          if (state.unlockedLevels[2]) {
+            t3.classList.add('is-completed');
+            t3c.textContent = '✅';
+          } else {
+            t3.classList.remove('is-completed');
+            t3c.textContent = '⭕';
+          }
+        } else if (state.level === 2) {
+          if (state.hasBranchFeat) {
+            t1.classList.add('is-completed');
+            t1c.textContent = '✅';
+            t2.classList.add('is-completed');
+            t2c.textContent = '✅';
+          } else {
+            t1.classList.remove('is-completed');
+            t1c.textContent = '⭕';
+            t2.classList.remove('is-completed');
+            t2c.textContent = '⭕';
+          }
+
+          if (state.hasCommittedFeat) {
+            t3.classList.add('is-completed');
+            t3c.textContent = '✅';
+          } else {
+            t3.classList.remove('is-completed');
+            t3c.textContent = '⭕';
+          }
+        } else if (state.level === 3) {
+          if (state.hasPulled) {
+            t1.classList.add('is-completed');
+            t1c.textContent = '✅';
+            t2.classList.add('is-completed');
+            t2c.textContent = '✅';
+          }
+          if (state.hasPushed) {
+            t3.classList.add('is-completed');
+            t3c.textContent = '✅';
+          }
+        } else if (state.level === 4) {
+          t1.classList.add('is-completed');
+          t1c.textContent = '✅';
+          t2.classList.add('is-completed');
+          t2c.textContent = '✅';
+          if (state.isConflictDefused) {
+            t3.classList.add('is-completed');
+            t3c.textContent = '✅';
+          }
+        }
+      }
+
+      // Update Level Tab Lock States
+      function updateLevelTabsUI() {
+        for (let i = 1; i <= 4; i++) {
+          const btn = document.getElementById(`btnLvl${i}`);
+          const lock = document.getElementById(`lockLvl${i}`);
+          if (!btn) continue;
+
+          if (state.unlockedLevels[i]) {
+            btn.classList.remove('is-locked');
+            if (lock) lock.textContent = (i < state.level || (i === 1 && state.unlockedLevels[2])) ? '✓' : '';
+          } else {
+            btn.classList.add('is-locked');
+            if (lock) lock.textContent = '🔒';
+          }
+        }
+
+        // Update Command Deck Badges
+        const bBranch = document.getElementById('badgeBtnBranch');
+        const bPull = document.getElementById('badgeBtnPull');
+        const bPush = document.getElementById('badgeBtnPush');
+        const bConflict = document.getElementById('badgeBtnConflict');
+
+        if (bBranch) bBranch.textContent = state.unlockedLevels[2] ? 'Lvl 2 ✓' : 'Lvl 2 🔒';
+        if (bPull) bPull.textContent = state.unlockedLevels[3] ? 'Lvl 3 ✓' : 'Lvl 3 🔒';
+        if (bPush) bPush.textContent = state.unlockedLevels[3] ? 'Lvl 3 ✓' : 'Lvl 3 🔒';
+        if (bConflict) bConflict.textContent = state.unlockedLevels[4] ? 'Lvl 4 ✓' : 'Lvl 4 🔒';
+      }
+
+      // Staging Functions
+      window.toggleStageFile = function (fileName) {
+        if (state.stagedFiles.has(fileName)) {
+          state.stagedFiles.delete(fileName);
+          logTerminal(`Unstaged '${fileName}'`, 'warn');
+        } else {
+          state.stagedFiles.add(fileName);
+          SFX.stage();
+          logTerminal(`git add ${fileName}`, 'cmd');
+          logTerminal(`File '${fileName}' berhasil dipindahkan ke Kardus Staging Area.`, 'success');
+        }
+        updateStagingUI();
+        updateTasksUI();
+      };
+
+      window.triggerBinaryTrap = function () {
+        SFX.alarm();
+        logTerminal(`git add build/kasir.exe`, 'cmd');
+        logTerminal(`FATAL ERROR: DILARANG meng-commit file binary / compiler executable!`, 'err');
+        logTerminal(`Gunakan file .gitignore untuk mengabaikan folder build/`, 'warn');
+        showToast('BAHAYA: Jangan commit binary build/kasir.exe ke repositori tim!', true);
+      };
+
+      window.triggerLogTrap = function () {
+        SFX.alarm();
+        logTerminal(`git add logs/debug_run.log`, 'cmd');
+        logTerminal(`WARNING: Log file tidak boleh di-commit ke Git.`, 'err');
+        showToast('File log sementara hanya mengotori repositori GitHub!', true);
+      };
+
+      function updateStagingUI() {
+        const stagedContainer = document.getElementById('stagedChips');
+        const stagedCount = document.getElementById('stagedCount');
+        const btnSeal = document.getElementById('btnSealCommit');
+        const itemKasir = document.getElementById('fileKasirC');
+        const itemStruk = document.getElementById('fileStrukH');
+
+        if (!stagedContainer || !stagedCount || !btnSeal) return;
+
+        stagedContainer.innerHTML = '';
+        if (state.stagedFiles.size === 0) {
+          stagedContainer.innerHTML = '<span class="chip-empty">Belum ada file yang di-stage. Klik tombol "Stage (Add)" pada file C/H di atas.</span>';
+          stagedCount.textContent = '0 file';
+          btnSeal.disabled = true;
+        } else {
+          state.stagedFiles.forEach(file => {
+            const chip = document.createElement('span');
+            chip.className = 'staged-chip';
+            chip.innerHTML = `✓ ${file} <span style="cursor:pointer;margin-left:4px;" onclick="toggleStageFile('${file}')">✕</span>`;
+            stagedContainer.appendChild(chip);
+          });
+          stagedCount.textContent = `${state.stagedFiles.size} file siap`;
+          btnSeal.disabled = false;
+        }
+
+        // Toggle file item styles
+        if (itemKasir) {
+          const btn = itemKasir.querySelector('button');
+          if (state.stagedFiles.has('src/kasir.c')) {
+            itemKasir.classList.add('is-staged');
+            btn.textContent = 'Batalkan (Unstage)';
+            btn.classList.add('staged-btn');
+          } else {
+            itemKasir.classList.remove('is-staged');
+            btn.textContent = 'Stage (Add)';
+            btn.classList.remove('staged-btn');
+          }
+        }
+
+        if (itemStruk) {
+          const btn = itemStruk.querySelector('button');
+          if (state.stagedFiles.has('include/struk.h')) {
+            itemStruk.classList.add('is-staged');
+            btn.textContent = 'Batalkan (Unstage)';
+            btn.classList.add('staged-btn');
+          } else {
+            itemStruk.classList.remove('is-staged');
+            btn.textContent = 'Stage (Add)';
+            btn.classList.remove('staged-btn');
+          }
+        }
+      }
+
+      window.fillPreset = function (text) {
+        SFX.click();
+        const input = document.getElementById('commitMsgInput');
+        if (input) input.value = text;
+      };
+
+      // Execute Commit (Motion Graphics node creation & Level Progression)
+      window.executeCommit = function () {
+        if (state.stagedFiles.size === 0) {
+          showToast('Kardus Staging masih kosong! Lakukan git add terlebih dahulu.', true);
+          return;
+        }
+
+        const msgInput = document.getElementById('commitMsgInput');
+        const msg = msgInput ? msgInput.value.trim() : '[FEAT] Update kasirkita';
+
+        SFX.commit();
+        logTerminal(`git commit -m "${msg}"`, 'cmd');
+
+        // Minting Commit Hash
+        const randomHash = 'c3-' + Math.random().toString(16).substring(2, 6);
+        logTerminal(`[${state.branch} ${randomHash}] ${msg}`, 'success');
+        logTerminal(` ${state.stagedFiles.size} files changed, 24 insertions(+)`, 'dim');
+
+        // Clear Staging
+        state.stagedFiles.clear();
+        updateStagingUI();
+
+        // Update DAG Visualizer
+        if (state.branch === 'feat/diskon') {
+          const nodeC4 = document.getElementById('nodeC4');
+          const linkC3C4 = document.getElementById('linkC3C4');
+          if (nodeC4 && linkC3C4) {
+            linkC3C4.style.display = 'block';
+            nodeC4.style.display = 'block';
+            setHeadPointer(620, 150, 'c4-1a5f');
+            state.hasCommittedFeat = true;
+          }
+
+          // Unlock Level 3!
+          state.unlockedLevels[3] = true;
+          updateLevelTabsUI();
+          updateTasksUI();
+          triggerCelebration(2, 'Level 2 Selesai! Cabang feat/diskon sukses diamankan dengan commit baru.', 'Level 3: Remote Synchronization kini Terbuka 🔓!');
+        } else {
+          // Level 1 Commit on main
+          const nodeC3 = document.getElementById('nodeC3');
+          const linkC2C3 = document.getElementById('linkC2C3');
+          if (nodeC3 && linkC2C3) {
+            linkC2C3.style.display = 'block';
+            nodeC3.style.display = 'block';
+            setHeadPointer(480, 150, 'c3-8e7c');
+          }
+
+          // Unlock Level 2!
+          state.unlockedLevels[2] = true;
+          updateLevelTabsUI();
+          updateTasksUI();
+          triggerCelebration(1, 'Level 1 Selesai! Kardus tersegel rapi bebas dari file binary build/kasir.exe.', 'Level 2: Branch Divergence kini Terbuka 🔓!');
+        }
+      };
+
+      // Set Floating Head Pointer
+      function setHeadPointer(x, y, hash) {
+        state.head = hash;
+        state.headCoords = { x, y };
+        const pointer = document.getElementById('headPointerTag');
+        const hudHead = document.getElementById('hudHead');
+        if (pointer) {
+          pointer.setAttribute('transform', `translate(${x}, ${y - 38})`);
+        }
+        if (hudHead) {
+          hudHead.textContent = hash;
+        }
+      }
+
+      // Terminal Logging Engine
+      function logTerminal(text, type = 'normal') {
+        const consoleBody = document.getElementById('consoleBody');
+        if (!consoleBody) return;
+        const line = document.createElement('div');
+        line.className = 'terminal-line';
+
+        if (type === 'cmd') {
+          line.innerHTML = `<span class="t-prompt">ahmad@macbook:~/KasirKita (${state.branch})$ </span><span class="t-cmd">${text}</span>`;
+        } else if (type === 'success') {
+          line.innerHTML = `<span class="t-success">✔ ${text}</span>`;
+        } else if (type === 'warn') {
+          line.innerHTML = `<span class="t-warn">! ${text}</span>`;
+        } else if (type === 'err') {
+          line.innerHTML = `<span class="t-err">✖ ${text}</span>`;
+        } else if (type === 'dim') {
+          line.innerHTML = `<span class="t-dim">${text}</span>`;
+        } else {
+          line.textContent = text;
+        }
+
+        consoleBody.appendChild(line);
+        consoleBody.scrollTop = consoleBody.scrollHeight;
+      }
+
+      // CLI Command History & Autocomplete Engine
+      const cmdHistory = [];
+      let historyIdx = -1;
+
+      const AUTOCOMPLETE_LIST = [
+        'git status',
+        'git add src/kasir.c',
+        'git add include/struk.h',
+        'git add src/kasir.c include/struk.h',
+        'git add src/*',
+        'git add .',
+        'git add build/kasir.exe',
+        'git add logs/debug_run.log',
+        'git restore --staged src/kasir.c',
+        'git restore --staged include/struk.h',
+        'git commit -m "[FEAT] Tambah modul diskon member 20%"',
+        'git checkout -b feat/diskon',
+        'git checkout main',
+        'git branch',
+        'git pull origin main',
+        'git push origin feat/diskon',
+        'git push origin main',
+        'git merge origin/main',
+        'git merge feat/diskon',
+        'git diff',
+        'git log --oneline',
+        'git help',
+        'clear'
+      ];
+
+      window.updateCliPrompt = function () {
+        const promptEl = document.getElementById('cliPrompt');
+        if (promptEl) {
+          promptEl.textContent = `kasirkita (${state.branch}) $`;
+        }
+      };
+
+      window.fillCliCommand = function (cmd, autoRun = false) {
+        const input = document.getElementById('cliInput');
+        if (!input) return;
+        input.value = cmd;
+        input.focus();
+        if (autoRun) {
+          submitCliCommand();
+        }
+      };
+
+      window.submitCliCommand = function () {
+        const input = document.getElementById('cliInput');
+        if (!input) return;
+        const cmd = input.value.trim();
+        if (!cmd) return;
+
+        cmdHistory.push(cmd);
+        historyIdx = cmdHistory.length;
+        input.value = '';
+
+        executeGitCommand(cmd);
+      };
+
+      window.executeGitCommand = function (rawCmd) {
+        const cmd = rawCmd.trim().replace(/\s+/g, ' ');
+        if (!cmd) return;
+
+        // Print command in console
+        logTerminal(cmd, 'cmd');
+
+        // Help command
+        if (cmd === 'help' || cmd === 'git help' || cmd === 'git --help') {
+          logTerminal('=== DAFTAR PERINTAH GIT KASIRKITA ===', 'warn');
+          logTerminal('  git status                 : Lihat status working tree & kardus staging');
+          logTerminal('  git add <file>             : Pindahkan file ke Kardus Staging (misal: src/kasir.c)');
+          logTerminal('  git restore --staged <file>: Batalkan file dari kardus staging');
+          logTerminal('  git commit -m "<pesan>"    : Segel kardus jadi commit permanen');
+          logTerminal('  git branch                 : Cek daftar ranting cabang repositori');
+          logTerminal('  git checkout -b <branch>   : Buat dan pindah ke ranting baru (feat/diskon)');
+          logTerminal('  git checkout <branch>      : Pindah ke ranting yang sudah ada');
+          logTerminal('  git pull origin main       : Ambil update terbaru dari tim di remote');
+          logTerminal('  git push origin <branch>   : Kirim commit ranting lokal ke GitHub awan');
+          logTerminal('  git merge origin/main      : Gabungkan ranting & jinakkan konflik merge');
+          logTerminal('  git diff                   : Tampilkan perbedaan baris kode');
+          logTerminal('  git log --oneline          : Tampilkan riwayat silsilah commit');
+          logTerminal('  clear                      : Bersihkan layar terminal');
+          return;
+        }
+
+        // Clear command
+        if (cmd === 'clear' || cmd === 'cls') {
+          const body = document.getElementById('consoleBody');
+          if (body) body.innerHTML = '';
+          return;
+        }
+
+        // Non-git commands handling
+        if (!cmd.startsWith('git')) {
+          logTerminal(`zsh: command not found: ${cmd.split(' ')[0]}. Ketik 'help' atau 'git help'.`, 'err');
+          SFX.alarm();
+          return;
+        }
+
+        // 1. git status
+        if (cmd === 'git status' || cmd === 'git st') {
+          logTerminal(`On branch ${state.branch}`);
+          if (state.stagedFiles.size > 0) {
+            logTerminal('Changes to be committed:');
+            logTerminal('  (use "git restore --staged <file>..." to unstage)', 'dim');
+            state.stagedFiles.forEach(f => logTerminal(`\tnew file:   ${f}`, 'success'));
+          }
+          const unstaged = [];
+          if (!state.stagedFiles.has('src/kasir.c')) unstaged.push('src/kasir.c');
+          if (!state.stagedFiles.has('include/struk.h')) unstaged.push('include/struk.h');
+
+          if (unstaged.length > 0) {
+            logTerminal('Changes not staged for commit:');
+            logTerminal('  (use "git add <file>..." to update what will be committed)', 'dim');
+            unstaged.forEach(f => logTerminal(`\tmodified:   ${f}`, 'warn'));
+          }
+
+          logTerminal('Untracked files:');
+          logTerminal('  (use "git add <file>..." to include in what will be committed)', 'dim');
+          logTerminal('\tbuild/kasir.exe', 'err');
+          logTerminal('\tlogs/debug_run.log', 'err');
+          SFX.click();
+          return;
+        }
+
+        // 2. git add
+        if (cmd.startsWith('git add')) {
+          const args = cmd.slice(7).trim();
+          if (!args) {
+            logTerminal('Nothing specified, nothing added. Gunakan: git add <file> atau git add src/*', 'warn');
+            return;
+          }
+
+          // Traps check
+          if (args.includes('build/kasir.exe') || args.includes('kasir.exe')) {
+            triggerBinaryTrap();
+            return;
+          }
+          if (args.includes('logs/debug_run.log') || args.includes('debug_run.log') || args.includes('logs/')) {
+            triggerLogTrap();
+            return;
+          }
+          if (args === '.' || args === '*' || args === '-A' || args === '--all') {
+            SFX.alarm();
+            logTerminal("⚠️ PERINGATAN: 'git add .' menyertakan build/kasir.exe dan logs/debug_run.log!", 'err');
+            logTerminal("Di dunia nyata, jangan pernah men-stage file compiler output (.exe) atau log sementara.", 'warn');
+            logTerminal("Men-stage hanya file aman: src/kasir.c dan include/struk.h...", 'dim');
+            state.stagedFiles.add('src/kasir.c');
+            state.stagedFiles.add('include/struk.h');
+            updateStagingUI();
+            updateTasksUI();
+            showToast("⚠️ Peringatan: Hindari 'git add .' saat ada binary! File kode aman telah dimasukkan.", true);
+            return;
+          }
+
+          // Safe files
+          let addedCount = 0;
+          if (args.includes('src/kasir.c') || args.includes('src/*') || args.includes('kasir.c')) {
+            state.stagedFiles.add('src/kasir.c');
+            addedCount++;
+          }
+          if (args.includes('include/struk.h') || args.includes('src/*') || args.includes('struk.h')) {
+            state.stagedFiles.add('include/struk.h');
+            addedCount++;
+          }
+
+          if (addedCount > 0) {
+            SFX.stage();
+            logTerminal(`File berhasil dipindahkan ke Kardus Staging Area:`, 'success');
+            if (state.stagedFiles.has('src/kasir.c')) logTerminal(`  + src/kasir.c`, 'success');
+            if (state.stagedFiles.has('include/struk.h')) logTerminal(`  + include/struk.h`, 'success');
+            updateStagingUI();
+            updateTasksUI();
+            showToast("File kode aman berhasil di-stage! Sekarang segel kardus dengan git commit.");
+          } else {
+            logTerminal(`fatal: pathspec '${args}' did not match any files`, 'err');
+            SFX.alarm();
+          }
+          return;
+        }
+
+        // 3. git restore --staged / git reset
+        if (cmd.startsWith('git restore --staged') || cmd.startsWith('git reset HEAD') || cmd.startsWith('git rm --cached')) {
+          let unstagedAny = false;
+          if (cmd.includes('src/kasir.c')) {
+            state.stagedFiles.delete('src/kasir.c');
+            unstagedAny = true;
+          }
+          if (cmd.includes('include/struk.h')) {
+            state.stagedFiles.delete('include/struk.h');
+            unstagedAny = true;
+          }
+          if (unstagedAny) {
+            logTerminal('File berhasil dikeluarkan dari Kardus Staging Area.', 'warn');
+            SFX.click();
+            updateStagingUI();
+            updateTasksUI();
+          } else {
+            logTerminal('Tidak ada file staged yang cocok untuk dibatalkan.', 'dim');
+          }
+          return;
+        }
+
+        // 4. git commit
+        if (cmd.startsWith('git commit')) {
+          if (state.stagedFiles.size === 0) {
+            SFX.alarm();
+            logTerminal('On branch ' + state.branch);
+            logTerminal('nothing added to commit but untracked files present (use "git add" to track)', 'warn');
+            showToast('Kardus Staging masih kosong! Lakukan git add terlebih dahulu.', true);
+            return;
+          }
+
+          let msg = '[FEAT] Update modul KasirKita';
+          const match = cmd.match(/-m\s+["']?([^"']+)["']?/);
+          if (match && match[1]) {
+            msg = match[1];
+          }
+
+          const msgInput = document.getElementById('commitMsgInput');
+          if (msgInput) msgInput.value = msg;
+
+          executeCommit();
+          return;
+        }
+
+        // 5. git branch
+        if (cmd === 'git branch' || cmd === 'git branch -a') {
+          if (state.hasBranchFeat) {
+            if (state.branch === 'feat/diskon') {
+              logTerminal('* feat/diskon', 'success');
+              logTerminal('  main');
+            } else {
+              logTerminal('  feat/diskon');
+              logTerminal('* main', 'success');
+            }
+          } else {
+            logTerminal('* main', 'success');
+          }
+          return;
+        }
+
+        // 6. git checkout -b / git switch -c
+        if (cmd.startsWith('git checkout -b') || cmd.startsWith('git switch -c')) {
+          const bName = cmd.split(' ').pop();
+          if (bName === 'feat/diskon') {
+            runCmdBranchFeat();
+          } else {
+            logTerminal(`Switched to a new branch '${bName}'`, 'success');
+            state.branch = bName;
+            updateCliPrompt();
+          }
+          return;
+        }
+
+        // 7. git checkout / git switch
+        if (cmd.startsWith('git checkout') || cmd.startsWith('git switch')) {
+          const bName = cmd.split(' ').pop();
+          if (bName === 'main' || (bName === 'feat/diskon' && state.hasBranchFeat)) {
+            state.branch = bName;
+            document.getElementById('branchName').textContent = bName;
+            document.getElementById('hudBranch').style.color = (bName === 'main') ? '#ffffff' : '#ffd60a';
+            logTerminal(`Switched to branch '${bName}'`, 'success');
+            updateCliPrompt();
+            SFX.click();
+          } else {
+            logTerminal(`error: pathspec '${bName}' did not match any file(s) known to git`, 'err');
+            SFX.alarm();
+          }
+          return;
+        }
+
+        // 8. git pull
+        if (cmd.startsWith('git pull')) {
+          runCmdPullRemote();
+          return;
+        }
+
+        // 9. git push
+        if (cmd.startsWith('git push')) {
+          runCmdPushRemote();
+          return;
+        }
+
+        // 10. git merge
+        if (cmd.startsWith('git merge')) {
+          if (state.level === 4 || state.unlockedLevels[4]) {
+            triggerConflictSimulation();
+          } else {
+            logTerminal(`Simulasi merge: branch sudah up to date. Selesaikan level sebelumnya untuk skenario merge conflict!`, 'warn');
+          }
+          return;
+        }
+
+        // 11. git diff
+        if (cmd.startsWith('git diff')) {
+          if (state.level === 4) {
+            logTerminal('diff --git a/src/kasir.c b/src/kasir.c', 'dim');
+            logTerminal('<<<<<<< HEAD (feat/diskon)', 'err');
+            logTerminal('  float diskon = hitung_diskon_member(total, 0.20, member_id);', 'success');
+            logTerminal('=======', 'warn');
+            logTerminal('  float diskon = hitung_diskon_reguler(total, 0.15);', 'success');
+            logTerminal('>>>>>>> origin/main (commit Budi)', 'err');
+          } else {
+            logTerminal('diff --git a/src/kasir.c b/src/kasir.c', 'dim');
+            logTerminal('--- a/src/kasir.c\n+++ b/src/kasir.c', 'dim');
+            logTerminal('+ float hitung_diskon(float total) { return total * 0.20f; }', 'success');
+          }
+          return;
+        }
+
+        // 12. git log
+        if (cmd.startsWith('git log')) {
+          logTerminal('* c5-merge (HEAD -> main) Merge PR #1: feat/diskon', 'success');
+          if (state.hasBranchFeat) {
+            logTerminal('| \\', 'warn');
+            logTerminal('|  * c4-1a5f (feat/diskon) [FEAT] Tambah modul diskon member 20%', 'warn');
+            logTerminal('|  * c3-8e7c [FEAT] Inisialisasi perhitungan diskon pelanggan', 'warn');
+          }
+          logTerminal('*  c2-4a19 [FEAT] border crt gotoxy', 'dim');
+          logTerminal('*  c1-3d8b [FEAT] struct kasir', 'dim');
+          logTerminal('*  c0-9f12 [CHORE] Initial project', 'dim');
+          return;
+        }
+
+        // Default: command unrecognized
+        SFX.alarm();
+        logTerminal(`git: '${cmd.split(' ')[1] || cmd}' is not a recognized git command. Ketik 'help' untuk panduan.`, 'err');
+      };
+
+      // Tactical Button Actions with Level Verification & Guidance Clues
+      window.runCmdStatus = function () {
+        SFX.click();
+        logTerminal('git status', 'cmd');
+        logTerminal(`On branch ${state.branch}`);
+        if (state.stagedFiles.size > 0) {
+          logTerminal('Changes to be committed:');
+          state.stagedFiles.forEach(f => logTerminal(`  staged:   ${f}`, 'success'));
+        } else {
+          logTerminal('No changes staged for commit.', 'dim');
+        }
+      };
+
+      window.runCmdAddSafe = function () {
+        SFX.stage();
+        state.stagedFiles.add('src/kasir.c');
+        state.stagedFiles.add('include/struk.h');
+        logTerminal('git add src/kasir.c include/struk.h', 'cmd');
+        logTerminal("Hanya menyertakan source code C dan header file ke Kardus Staging.", 'success');
+        updateStagingUI();
+        updateTasksUI();
+        showToast("File kode aman berhasil di-stage! Sekarang segel kardus dengan git commit.");
+      };
+
+      window.runCmdBranchFeat = function () {
+        if (!state.unlockedLevels[2] && state.level === 1) {
+          SFX.alarm();
+          showToast("💡 Clue: Di Level 1, selesaikan dulu staging & commit pertamamu sebelum membuat ranting di Level 2!", true);
+          return;
+        }
+
+        SFX.stage();
+        state.branch = 'feat/diskon';
+        state.hasBranchFeat = true;
+        document.getElementById('branchName').textContent = 'feat/diskon';
+        document.getElementById('hudBranch').style.color = '#ffd60a';
+
+        logTerminal('git checkout -b feat/diskon', 'cmd');
+        logTerminal("Switched to a new branch 'feat/diskon'", 'success');
+
+        // Reveal C3 and feature rail
+        const linkC2C3 = document.getElementById('linkC2C3');
+        const nodeC3 = document.getElementById('nodeC3');
+        if (linkC2C3 && nodeC3) {
+          linkC2C3.style.display = 'block';
+          nodeC3.style.display = 'block';
+          setHeadPointer(480, 150, 'c3-8e7c');
+        }
+
+        showToast("Ranting 'feat/diskon' terbentuk! Sekarang kamu bisa bereksperimen dengan aman.", false, true);
+        switchLevel(2);
+        updateTasksUI();
+      };
+
+      window.runCmdPullRemote = function () {
+        if (!state.unlockedLevels[3] && state.level < 3) {
+          SFX.alarm();
+          showToast("💡 Clue: Fitur Remote Sync dipelajari di Level 3 setelah kamu memahami branch!", true);
+          return;
+        }
+
+        SFX.push();
+        state.hasPulled = true;
+        logTerminal('git pull origin main', 'cmd');
+        logTerminal('remote: Enumerating objects: 6, done.', 'dim');
+        logTerminal('remote: Compressing objects: 100% (4/4), done.', 'dim');
+        logTerminal('From github.com:tim-kasirkita/app-c', 'dim');
+        logTerminal(' * branch            main       -> FETCH_HEAD', 'dim');
+        logTerminal('Already up to date. (Ranting lokal sinkron dengan GitHub)', 'success');
+        updateTasksUI();
+        showToast('Repositori lokal kamu telah selaras dengan GitHub! Sekarang lakukan git push.');
+      };
+
+      window.runCmdPushRemote = function () {
+        if (!state.unlockedLevels[3] && state.level < 3) {
+          SFX.alarm();
+          showToast("💡 Clue: Kamu belum memiliki commit yang siap di-push ke GitHub. Selesaikan Level 1 & 2 dulu!", true);
+          return;
+        }
+
+        SFX.push();
+        state.hasPushed = true;
+        logTerminal(`git push origin ${state.branch}`, 'cmd');
+        logTerminal(`Enumerating objects: 8, done.`, 'dim');
+        logTerminal(`Counting objects: 100% (8/8), done.`, 'dim');
+        logTerminal(`Delta compression using up to 8 threads`, 'dim');
+        logTerminal(`Compressing objects: 100% (4/4), done.`, 'dim');
+        logTerminal(`Writing objects: 100% (5/5), 1.24 KiB | 1.24 MiB/s, done.`, 'dim');
+        logTerminal(`To github.com:tim-kasirkita/app-c.git`, 'dim');
+        logTerminal(` * [new branch]      ${state.branch} -> ${state.branch}`, 'success');
+
+        // Animate Remote Beam
+        const beam = document.getElementById('remoteSyncBeam');
+        if (beam) {
+          beam.style.display = 'block';
+          setTimeout(() => { beam.style.display = 'none'; }, 2500);
+        }
+
+        // Unlock Level 4
+        state.unlockedLevels[4] = true;
+        updateLevelTabsUI();
+        updateTasksUI();
+        triggerCelebration(3, 'Level 3 Selesai! Kode sukses meluncur ke server GitHub.', 'Level 4: Defuse Merge Conflict kini Terbuka 🔓!');
+      };
+
+      // Conflict Simulator
+      window.triggerConflictSimulation = function () {
+        if (!state.unlockedLevels[4] && state.level < 4) {
+          SFX.alarm();
+          showToast("🔒 Level 4 Terkunci! Skenario bentrok darurat akan aktif setelah menyelesaikan Level 3.", true);
+          return;
+        }
+
+        SFX.alarm();
+        logTerminal('git merge origin/main', 'cmd');
+        logTerminal('Auto-merging src/kasir.c', 'warn');
+        logTerminal('CONFLICT (content): Merge conflict in src/kasir.c', 'err');
+        logTerminal('Automatic merge failed; fix conflicts and then commit the result.', 'err');
+
+        const modal = document.getElementById('conflictModal');
+        if (modal) modal.classList.add('active');
+        switchLevel(4);
+      };
+
+      window.closeConflictModal = function () {
+        const modal = document.getElementById('conflictModal');
+        if (modal) modal.classList.remove('active');
+      };
+
+      window.resolveConflict = function (strategy) {
+        closeConflictModal();
+        SFX.triumph();
+        state.isConflictDefused = true;
+
+        if (strategy === 'both') {
+          logTerminal('Resolusi: Menggabungkan diskon member VIP 20% dan diskon weekend 15%.', 'success');
+        } else if (strategy === 'head') {
+          logTerminal('Resolusi: Mempertahankan versi lokal HEAD (20%).', 'warn');
+        } else {
+          logTerminal('Resolusi: Menerima versi remote Budi (15%).', 'warn');
+        }
+
+        logTerminal('git add src/kasir.c', 'cmd');
+        logTerminal('git commit -m "merge: selesaikan konflik logika diskon kasir"', 'cmd');
+
+        // Reveal Merge Commit on DAG
+        const linkMerge = document.getElementById('linkMerge');
+        const nodeC5 = document.getElementById('nodeC5');
+        if (linkMerge && nodeC5) {
+          linkMerge.style.display = 'block';
+          nodeC5.style.display = 'block';
+          setHeadPointer(740, 80, 'c5-merge');
+        }
+
+        state.branch = 'main';
+        document.getElementById('branchName').textContent = 'main';
+        updateTasksUI();
+
+        triggerCelebration(4, 'SELAMAT! Kamu berhasil menuntaskan seluruh 4 level tantangan DevOps KasirKita!', 'Kamu sekarang siap berkolaborasi di Git & GitHub tanpa takut bentrok kode!');
+      };
+
+      // Celebration Modal
+      function triggerCelebration(levelCompleted, descText, nextText) {
+        SFX.triumph();
+        const modal = document.getElementById('levelUpModal');
+        const title = document.getElementById('lvlUpTitle');
+        const desc = document.getElementById('lvlUpDesc');
+        const btnNext = document.getElementById('btnNextLevelAction');
+
+        if (title) title.textContent = `🎉 Level ${levelCompleted} Berhasil Dituntaskan!`;
+        if (desc) desc.innerHTML = `${descText}<br><strong style="color:var(--green);display:block;margin-top:6px;">${nextText}</strong>`;
+        if (btnNext) {
+          btnNext.setAttribute('data-target-level', levelCompleted + 1);
+          btnNext.style.display = levelCompleted < 4 ? 'block' : 'none';
+        }
+        if (modal) modal.classList.add('active');
+      }
+
+      window.closeLevelUpModal = function () {
+        const modal = document.getElementById('levelUpModal');
+        if (modal) modal.classList.remove('active');
+      };
+
+      window.proceedToNextLevel = function () {
+        const btnNext = document.getElementById('btnNextLevelAction');
+        const target = btnNext ? parseInt(btnNext.getAttribute('data-target-level') || '2', 10) : 2;
+        closeLevelUpModal();
+        if (target <= 4) switchLevel(target);
+      };
+
+      // Level Switcher with Lock Check
+      window.switchLevel = function (lvl) {
+        if (!state.unlockedLevels[lvl]) {
+          SFX.alarm();
+          showToast(`🔒 Level ${lvl} masih terkunci! Selesaikan tantangan level sebelumnya terlebih dahulu.`, true);
+          return;
+        }
+
+        state.level = lvl;
+        for (let i = 1; i <= 4; i++) {
+          const btn = document.getElementById(`btnLvl${i}`);
+          if (btn) {
+            if (i === lvl) btn.classList.add('active');
+            else btn.classList.remove('active');
+          }
+        }
+
+        const data = MISSIONS[lvl];
+        if (!data) return;
+
+        // Update Briefing Card
+        document.getElementById('badgeLevelNum').textContent = data.badge;
+        document.getElementById('missionTitle').textContent = data.title;
+        document.getElementById('narrativeAvatar').textContent = data.avatar;
+        document.getElementById('missionStory').innerHTML = data.story;
+        document.getElementById('task1Text').innerHTML = data.task1;
+        document.getElementById('task2Text').innerHTML = data.task2;
+        document.getElementById('task3Text').innerHTML = data.task3;
+        document.getElementById('missionClueText').innerHTML = data.clue;
+
+        updateTasksUI();
+        SFX.click();
+      };
+
+      // Reset All Progress
+      window.resetAllProgress = function () {
+        SFX.alarm();
+        state.level = 1;
+        state.unlockedLevels = { 1: true, 2: false, 3: false, 4: false };
+        state.branch = 'main';
+        state.hasBranchFeat = false;
+        state.hasCommittedFeat = false;
+        state.hasPulled = false;
+        state.hasPushed = false;
+        state.isConflictDefused = false;
+        state.stagedFiles.clear();
+
+        document.getElementById('branchName').textContent = 'main';
+        document.getElementById('hudBranch').style.color = '#ffffff';
+
+        // Reset DAG Elements
+        const linkC2C3 = document.getElementById('linkC2C3');
+        const nodeC3 = document.getElementById('nodeC3');
+        const linkC3C4 = document.getElementById('linkC3C4');
+        const nodeC4 = document.getElementById('nodeC4');
+        const linkMerge = document.getElementById('linkMerge');
+        const nodeC5 = document.getElementById('nodeC5');
+
+        if (linkC2C3) linkC2C3.style.display = 'none';
+        if (nodeC3) nodeC3.style.display = 'none';
+        if (linkC3C4) linkC3C4.style.display = 'none';
+        if (nodeC4) nodeC4.style.display = 'none';
+        if (linkMerge) linkMerge.style.display = 'none';
+        if (nodeC5) nodeC5.style.display = 'none';
+
+        setHeadPointer(380, 80, 'c2-4a19');
+        updateStagingUI();
+        updateLevelTabsUI();
+        switchLevel(1);
+
+        logTerminal('Progress reset to Level 1. Siap belajar dari awal!', 'warn');
+        showToast('Simulasi telah direset ke Level 1.');
+      };
+
+      // Node Inspector
+      window.inspectCommit = function (nodeId) {
+        SFX.click();
+        logTerminal(`git show ${nodeId}`, 'cmd');
+        if (nodeId === 'C0') {
+          logTerminal(`commit c0-9f12: Setup direktori awal dan Makefile`, 'dim');
+        } else if (nodeId === 'C1') {
+          logTerminal(`commit c1-3d8b: Tambah struct Transaksi dan Produk pada lib.h`, 'dim');
+        } else if (nodeId === 'C2') {
+          logTerminal(`commit c2-4a19: Pasang border ganda CRT dan helper gotoxy`, 'dim');
+        } else if (nodeId === 'C3') {
+          logTerminal(`commit c3-8e7c: Inisialisasi perhitungan diskon pelanggan`, 'dim');
+        } else if (nodeId === 'C4') {
+          logTerminal(`commit c4-1a5f: Implementasi tier member gold/silver`, 'dim');
+        } else if (nodeId === 'C5') {
+          logTerminal(`commit c5-merge: Merge branch 'feat/diskon' into main`, 'success');
+        }
+      };
+
+      // Keyboard Navigation (ArrowUp/Down for History, Tab for Autocomplete)
+      const cliInput = document.getElementById('cliInput');
+      if (cliInput) {
+        cliInput.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (cmdHistory.length > 0) {
+              if (historyIdx > 0) historyIdx--;
+              cliInput.value = cmdHistory[historyIdx] || '';
+            }
+          } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (cmdHistory.length > 0) {
+              if (historyIdx < cmdHistory.length - 1) {
+                historyIdx++;
+                cliInput.value = cmdHistory[historyIdx] || '';
+              } else {
+                historyIdx = cmdHistory.length;
+                cliInput.value = '';
+              }
+            }
+          } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const val = cliInput.value.trim().toLowerCase();
+            if (val) {
+              const match = AUTOCOMPLETE_LIST.find(cmd => cmd.toLowerCase().startsWith(val));
+              if (match) {
+                cliInput.value = match;
+                SFX.click();
+              }
+            }
+          }
+        });
+      }
+
+      // Auto-focus input when terminal window is clicked
+      const termMockup = document.querySelector('.terminal-mockup');
+      if (termMockup && cliInput) {
+        termMockup.addEventListener('click', function (e) {
+          if (e.target !== cliInput) {
+            cliInput.focus();
+          }
+        });
+      }
+
+      // Init UI state
+      updateLevelTabsUI();
+      updateTasksUI();
+      updateCliPrompt();
+
+    })();
+  </script>
+</body>
+</html>

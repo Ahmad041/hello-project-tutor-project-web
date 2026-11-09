@@ -19,7 +19,7 @@
   hud.innerHTML = `
     <div class="step-hud-controls">
       <button class="step-hud-btn" id="stepPrevBtn" type="button" title="Langkah sebelumnya (Shortcut: K atau ↑)" aria-label="Langkah sebelumnya">‹</button>
-      <button class="step-hud-trigger" id="stepTriggerBtn" type="button" aria-expanded="false" aria-controls="stepFlyoutMenu" title="Buka daftar langkah modul">
+      <button class="step-hud-trigger" id="stepTriggerBtn" type="button" aria-expanded="false" aria-controls="stepFlyoutMenu" title="Klik untuk membuka daftar lompat langkah modul">
         <span class="step-hud-icon">☰</span>
         <span class="step-hud-label">Langkah <strong id="stepActiveNum">01</strong> / <span>${String(totalSteps).padStart(2, '0')}</span></span>
         <span class="step-hud-arrow">▴</span>

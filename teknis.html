@@ -1,73 +1,1054 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="description" content="Tutorial KasirKita: bangun aplikasi kasir desktop IntelliJ dengan file processing dari dokumen persiapan hingga lib.h dan UI ASCII art."><title>Penggunaan lib.h — Hello Project</title><link rel="stylesheet" href="assets/css/site.css?v=20261016-clean"></head><body class="docs" data-page="teknis.html"><video class="art" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/130837c4-0244-4f37-9c61-8d801d93fd29.jpg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260912_104303_0c6d60b2-9353-408e-9449-585108a22fb5.mp4"></video><div class="veil"></div><a class="skip" href="#main">Lewati navigasi</a><header class="bar"><a class="brand" href="index.html" aria-label="Hello Project beranda"><svg viewBox="0 0 23 17" aria-hidden="true"><path d="M8.15 .9H4.55L.5 9.3h3.6Z"/><path d="M17 0h-3.6L6.15 16.4h3.6Z"/><path d="M22.9 0h-3.6L15 7.6h3.6Z"/><path d="M22.6 6.9H19l-4.95 9.5h3.6Z"/></svg>Hello Project</a></header><div class="layout module-content"><main class="article" id="main"><div class="breadcrumb"><a href="index.html">Beranda</a> &nbsp; / &nbsp; KasirKita &nbsp; / &nbsp; Modul 03</div><div class="eyebrow"><span class="dot"></span> MODUL 03 · PENGGUNAAN LIB.H</div><h1>Kenali alat untuk menggambar di terminal.</h1><p class="lead">Pelajari fungsi lib.h, kebutuhan Windows, koordinat, border, kursor, dan input.</p><div class="chapter-meta"><span>◷ ± 60 menit</span><span>Level pemula</span><span>Project KasirKita</span></div><p><a class="pill" href="daftarisi-3.html">Daftar isi modul 03</a></p><div class="story-guide" aria-hidden="true"><span>PERJALANAN RANI</span><strong data-story-title>Mulai dari satu langkah kecil.</strong><span data-story-count>Gulir untuk mengikuti cerita ↓</span></div><div class="story-chapters"><section class="story-step" id="folder" data-story-title="Siapkan struktur folder"><p class="story-kicker">LANGKAH 01 / 07</p><h2>Siapkan struktur folder</h2><p class="story-explanation">Pisahkan file C, header library, ASCII art, dan executable.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti menyediakan rak berbeda untuk alat dan bahan.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Simpan lib.h di include dan main.c di src.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Siapkan struktur folder</h3><div class="codebar"><span>Struktur latihan</span><button class="copy">Salin kode</button></div><pre><code>kasirkita/
-├── include/lib.h
-├── src/main.c
-├── assets/ascii/judul.txt
-├── build/latihan.exe
-└── docs/</code></pre><p>Gunakan satu file C pada latihan awal karena lib.h berisi definisi fungsi. Jalankan executable dari root project agar path assets/ascii/judul.txt dapat ditemukan.</p></div></details></section><section class="story-step" id="lib-intro" data-story-title="Kenali isi lib.h"><p class="story-kicker">LANGKAH 02 / 07</p><h2>Kenali isi lib.h</h2><p class="story-explanation">Library membantu menata tampilan dan input di console Windows.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti kotak alat: pilih alat sesuai pekerjaan.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Cari fungsi untuk memindahkan kursor.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Apa isi lib.h?</h3><div class="download-card"><div><span class="download-label">BAHAN DOWNLOAD</span><h3>Library lib.h</h3><p>Header C berisi fungsi bantuan untuk tampilan dan input console Windows.</p></div><a class="pill download-button" href="files/lib.h" download>Unduh Library lib.h <span aria-hidden="true">↓</span></a></div><p><a class="pill" href="dokumentasi-lib.html">Buka dokumentasi lib.h</a></p><p><code>lib.h</code> adalah header bantuan console Windows yang diberikan untuk latihan. File ini berisi definisi fungsi, bukan hanya deklarasi. Gunakan satu file C untuk latihan awal dan include header ini satu kali; project banyak file memerlukan pemisahan deklarasi dan implementasi.</p><div class="table-wrap"><table><thead><tr><th>Kelompok</th><th>Fungsi</th><th>Kegunaan</th></tr></thead><tbody><tr><td>Posisi dan teks</td><td>gotoxy, gotoPrintString, gotoPrintChar</td><td>Menempatkan teks atau karakter pada koordinat</td></tr><tr><td>Bingkai</td><td>borderLine, borderDoubleLine, borderClear</td><td>Menggambar atau menghapus garis tepi</td></tr><tr><td>Area dan kursor</td><td>clearArea, hideCursor, showCursor</td><td>Mengelola area tampilan dan kursor</td></tr><tr><td>Teks dari file</td><td>PrintTxt</td><td>Menampilkan isi TXT per baris</td></tr><tr><td>Input</td><td>scanInputString, scanInputText, scanInputPassword, scanInputNumber, scanInputMoney</td><td>Menerima input sesuai jenis field</td></tr><tr><td>Console</td><td>fullscreen, remove_scrollbar, setConsoleFont</td><td>Pengaturan jendela dan font</td></tr></tbody></table></div><div class="callout">Fungsi ini memakai Windows API. Efek font, fullscreen, dan karakter border dapat berbeda menurut terminal, font, serta code page.</div></div></details></section><section class="story-step" id="lib-review" data-story-title="Periksa sebelum memakai"><p class="story-kicker">LANGKAH 03 / 07</p><h2>Periksa sebelum memakai</h2><p class="story-explanation">Koreksi salinan header sebelum compile pertama, lalu periksa batas input dan pembacaan file.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Periksa alat sebelum dipakai bekerja.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Ganti blok BACKSPACE pada empat fungsi input di salinan include/lib.h.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Periksa library sebelum dipakai</h3><p><strong>Kerjakan sebelum compile pertama.</strong> Empat lokasi berada pada scanInputString, scanInputText, scanInputPassword, dan scanInputNumber. Di setiap cabang BACKSPACE, ganti blok if (i &gt; 0) yang berisi text[i] = "" dengan pola lengkap di bawah; jangan menyisipkannya sebagai blok tambahan.</p><p>File unduhan tetap merupakan file asli pengguna. Catat dan perbaiki masalah berikut pada salinan latihan sebelum memakai fungsi input:</p><div class="table-wrap"><table><thead><tr><th>Lokasi</th><th>Masalah</th><th>Tindakan</th></tr></thead><tbody><tr><td>Empat fungsi input · BACKSPACE</td><td>text[i] = "" memberikan pointer string ke char</td><td>Kurangi i lalu tulis <code>text[i] = '\0';</code> sebagai karakter NUL</td></tr><tr><td>scanInputString · ESC</td><td>Kondisi i &lt; 0 tidak tercapai</td><td>Tetapkan perilaku batal; contoh: kosongkan buffer lalu keluar</td></tr><tr><td>PrintTxt</td><td>fopen gagal belum diperiksa sebelum fgets</td><td>Periksa file != NULL sebelum membaca</td></tr><tr><td>Semua fungsi input</td><td>Batas buffer tidak dibuktikan dari maxChar</td><td>Batasi karakter dan sisakan ruang terminator</td></tr><tr><td>setConsoleFont</td><td>wcscpy tidak membatasi panjang nama font</td><td>Batasi nama font sesuai kapasitas FaceName</td></tr></tbody></table></div><div class="codebar"><span>Pola BACKSPACE · gunakan pada keempat fungsi input</span><button class="copy">Salin kode</button></div><pre><code>if (ch == BACKSPACE &amp;&amp; i &gt; 0) {
-    --i;
-    text[i] = &#x27;\0&#x27;;
-    printf(&quot;\b \b&quot;);
-}</code></pre><div class="checklist"><label><input type="checkbox"><span>Saya tahu fungsi posisi, bingkai, area, dan input.</span></label><label><input type="checkbox"><span>Saya menyiapkan header yang diperlukan sebelum lib.h.</span></label><label><input type="checkbox"><span>Saya sudah mencatat koreksi input pada salinan latihan.</span></label><label><input type="checkbox"><span>Saya membatasi koordinat dan kapasitas buffer.</span></label></div><p>Koreksi BACKSPACE menghilangkan kesalahan assignment tersebut, tetapi tidak menjamin seluruh fungsi sudah benar. Untuk latihan input, periksa juga batas buffer dan perilaku ESC pada tabel. Untuk file TXT, gunakan <a href="testing.html#ascii-c">pengganti PrintTxt lengkap di modul 4</a>. Rincian tersedia pada <a href="dokumentasi-lib.html#perbaikan-status">catatan dokumentasi library</a>.</p></div></details></section><section class="story-step" id="lib-setup" data-story-title="Siapkan latihan pertama"><p class="story-kicker">LANGKAH 04 / 07</p><h2>Siapkan latihan pertama</h2><p class="story-explanation">Pasang header dan compiler sebelum memanggil fungsi library.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Siapkan meja dan alat sebelum merakit.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Simpan src/main.c dan include/lib.h, lalu compile dari root project.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Siapkan header dan compiler</h3><p><strong>Sebelum compile pertama:</strong> unduh lib.h asli, buat salinan di include/lib.h, lalu terapkan koreksi BACKSPACE pada empat fungsi input di <a href="#lib-review">pemeriksaan library</a>. Semua definisi dalam header ikut dikompilasi meskipun fungsi tersebut belum dipanggil.</p><p>Simpan <code>main.c</code> dan <code>lib.h</code> pada folder include dan src sesuai struktur latihan. Pakai GCC untuk Windows, misalnya MinGW-w64. Header standar dan Windows harus di-include sebelum <code>lib.h</code> karena file yang diberikan belum menyertakannya.</p><div class="codebar"><span>main.c · latihan pertama</span><button class="copy">Salin kode</button></div><pre><code>#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;windows.h&gt;
-#include &lt;conio.h&gt;
-#include &lt;wchar.h&gt;
-#include &lt;ctype.h&gt;
-#include &quot;lib.h&quot;
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Modul 03 — Pustaka Grafis lib.h | Hello Project</title>
+  <meta name="description" content="Modul 03 KasirKita: Manipulasi console Windows, fungsi gotoxy, border visual, kursor, dan input buffer dengan arsitektur UI Modul 01.">
 
-int main(void) {
-    gotoPrintString(2, 2, &quot;Halo dari lib.h&quot;);
-    getch();
-    return 0;
-}</code></pre><div class="codebar"><span>PowerShell · dari root kasirkita</span><button class="copy">Salin kode</button></div><pre><code>gcc --version
-New-Item -ItemType Directory -Force build
-gcc -std=c17 -Wall -Wextra -Iinclude src/main.c -o build/latihan.exe -luser32
-.\build\latihan.exe</code></pre><div class="callout">Kode contoh perlu dicoba di Windows. Library asli memiliki kesalahan pada fungsi input yang dibahas pada langkah pemeriksaan; jangan menyembunyikan peringatan compiler.</div><p>Prasyarat: Windows, editor teks, dasar variabel/fungsi C, dan GCC Windows (MinGW-w64) yang dapat dipanggil dari PowerShell. Jika gcc tidak dikenali, periksa pemasangan compiler dan PATH lalu buka terminal baru. Opsi -Iinclude mencari header; -luser32 menghubungkan fungsi Windows yang digunakan library.</p><p><strong>Hasil yang diharapkan:</strong> teks Halo dari lib.h muncul pada (2, 2), program menunggu satu tombol, lalu keluar. Jalankan executable hanya setelah compile berhasil; jika gagal, periksa pesan compiler agar tidak menjalankan executable lama.</p><p><a href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-keybd_event" target="_blank" rel="noopener">Referensi Windows: kebutuhan User32</a></p></div></details></section><section class="story-step" id="lib-position" data-story-title="Atur posisi teks"><p class="story-kicker">LANGKAH 05 / 07</p><h2>Atur posisi teks</h2><p class="story-explanation">Setiap teks ditempatkan pada kolom x dan baris y.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti memilih kotak pada kertas petak.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Pindahkan tulisan dari (4, 3) ke (10, 5).</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Koordinat dan teks</h3><p>Letakkan perintah berikut di dalam main, menggantikan pemanggilan gotoPrintString pada latihan pertama. Pertahankan includes, getch() dan return 0. KASIRKITA mulai di (4, 3), label di (4, 5), dan penanda di (3, 5).</p><p>Koordinat <code>(x, y)</code> dihitung dalam sel karakter, dimulai dari <code>(0, 0)</code> di pojok kiri atas. x bergerak ke kanan; y bergerak ke bawah. <code>gotoPrintString</code> mencetak teks setelah memindahkan kursor, sedangkan <code>gotoPrintChar</code> mencetak satu karakter.</p><div class="codebar"><span>Latihan posisi</span><button class="copy">Salin kode</button></div><pre><code>gotoxy(4, 3);
-printf(&quot;KASIRKITA&quot;);
-gotoPrintString(4, 5, &quot;Nama produk:&quot;);
-gotoPrintChar(3, 5, &#x27;&gt;&#x27;);</code></pre><div class="callout">Pastikan koordinat dan panjang teks muat di jendela console. Teks panjang tidak otomatis dipotong oleh library.</div></div></details></section><section class="story-step" id="lib-border" data-story-title="Kenali bingkai dan area"><p class="story-kicker">LANGKAH 06 / 07</p><h2>Kenali bingkai dan area</h2><p class="story-explanation">Gambar tepi, bersihkan area pesan, dan atur kursor.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti menyiapkan papan pengumuman.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Gambar bingkai dan hapus satu baris pesan.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Bingkai, area, dan kursor</h3><p>Letakkan perintah berikut di dalam main sebelum getch(), menggantikan latihan posisi. Pertahankan includes dan return 0; panggil showCursor() setelah getch() sebelum keluar. Periksa bingkai dari (2, 1) sampai (62, 16) dan judul di (5, 3).</p><p><code>borderLine(x, y, lebar, tinggi)</code> dan <code>borderDoubleLine</code> menggambar bingkai hingga koordinat <code>x + lebar</code> dan <code>y + tinggi</code>. <code>borderClear</code> menghapus tepinya; <code>clearArea</code> mengisi area dengan spasi.</p><div class="codebar"><span>Latihan bingkai</span><button class="copy">Salin kode</button></div><pre><code>hideCursor();
-borderDoubleLine(2, 1, 60, 15);
-gotoPrintString(5, 3, &quot;Menu utama&quot;);
-clearArea(5, 12, 50, 1);
-hideCursor();</code></pre><div class="callout">clearArea memanggil showCursor di akhir. Sembunyikan kursor kembali jika UI sedang menampilkan menu.</div><div class="download-card uat-sim-card" style="margin-top:16px;border-color:rgba(16,185,129,0.4);background:linear-gradient(135deg,rgba(13,23,37,0.9),rgba(5,150,105,0.12));"><div><span class="download-label" style="background:#059669;color:#fff;">SIMULATOR RETRO CONSOLE · FULLSCREEN</span><h3 style="color:#6ee7b7;">Terminal Studio 80×25</h3><p>Uji fungsi koordinat <code>gotoxy</code>, <code>borderLine</code>, dan <code>borderDoubleLine</code> langsung di atas grid layar C console. Klik atau drag pada kanvas retro, lalu copy kode C yang dihasilkan otomatis ke IntelliJ!</p></div><a class="pill" href="game/terminal-studio.html" style="background:linear-gradient(135deg,#059669,#047857);color:#fff;border:none;font-weight:700;">💻 Buka Terminal Studio 80×25 ↗</a></div></div></details></section><section class="story-step" id="lib-input" data-story-title="Pilih fungsi input"><p class="story-kicker">LANGKAH 07 / 07</p><h2>Pilih fungsi input</h2><p class="story-explanation">Sesuaikan input dengan field teks, angka, atau uang.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti menyediakan kotak formulir yang berbeda.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Tentukan batas panjang nama produk.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Kenali fungsi input</h3><p>Gunakan salinan header yang sudah dikoreksi pada pemeriksaan library. Letakkan deklarasi dan perintah berikut di dalam main sebelum getch(), menggantikan latihan bingkai. Pertahankan includes dan return 0. Contoh ini membaca nama serta jumlah, belum menyimpan transaksi.</p><div class="table-wrap"><table><thead><tr><th>Fungsi</th><th>Argumen hasil</th><th>Batas yang harus dijaga</th></tr></thead><tbody><tr><td>scanInputString / Text / Password</td><td>char buffer[] dan maxChar</td><td>maxChar paling besar kapasitas buffer dikurangi 1 untuk NUL</td></tr><tr><td>scanInputNumber</td><td>int *num dan maxChar</td><td>Buffer internal 50 byte; jumlah digit dan nilai int harus diperiksa</td></tr><tr><td>scanInputMoney</td><td>int *nilai, min, max</td><td>min/max berarti jumlah digit, bukan batas nilai rupiah</td></tr></tbody></table></div><div class="codebar"><span>Contoh pemanggilan input</span><button class="copy">Salin kode</button></div><pre><code>/* Coba setelah koreksi fungsi input pada langkah pemeriksaan sebelumnya. */
-char nama[100] = {0};
-int jumlah = 0;
-scanInputString(18, 5, nama, 30);
-scanInputNumber(18, 7, &amp;jumlah, 3);
-if (jumlah &lt;= 0) gotoPrintString(4, 11, &quot;Jumlah harus lebih dari nol.&quot;);</code></pre><div class="callout">Masking password dengan * hanya menyamarkan tampilan. atoi tidak melaporkan overflow; validasi angka dan nilai kosong tetap menjadi tanggung jawab program.</div><p><strong>Coba:</strong> ketik BukuX, tekan BACKSPACE sekali, lalu ENTER; buffer nama harus berisi Buku. Masukkan 2 untuk jumlah, lalu coba 0: pesan Jumlah harus lebih dari nol harus terlihat. Helper angka menghasilkan int; contoh dibatasi tiga digit (0–999). Data model memakai int untuk angka, sehingga scanner ini membaca angka bulat dengan sederhana.</p><p><strong>Hasil modul 3:</strong> folder latihan berisi satu main.c, salinan lib.h dengan catatan koreksi, aset TXT, dan executable yang dihasilkan compile berhasil. Perlihatkan teks pada koordinat yang dipilih serta catat hasil percobaan BACKSPACE dan jumlah nol.</p></div></details></section></div><script src="assets/js/story.js" defer></script><script src="assets/js/step-nav.js" defer></script><button class="cta complete" aria-pressed="false">Tandai modul selesai ✓</button><nav class="pagination" aria-label="Modul sebelum dan sesudah"><a href="daftarisi-2.html"><small>← SEBELUMNYA</small>Dokumen After</a><a href="daftarisi-4.html"><small>BERIKUTNYA →</small>UI/UX menggunakan lib.h</a></nav></main></div><button class="video-toggle" aria-label="Jeda latar video">Ⅱ</button><footer class="foot"><span>Hello Project <span class="footer-tagline">/ Belajar dengan membangun.</span></span><span>PROJECT GUIDE · VOL. 01 &nbsp; © 2026</span></footer><script>const storage={get(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch{return[]}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
-const video=document.querySelector('video'), toggle=document.querySelector('.video-toggle');
-let userManuallyPaused=false;
-if(video){
-  video.muted=true;video.defaultMuted=true;video.playsInline=true;
-  video.play().catch(()=>{});
-  function videoLabel(){
-    if(!toggle)return;
-    toggle.textContent=video.paused?'▷':'Ⅱ';
-    toggle.setAttribute('aria-label',video.paused?'Putar latar video':'Jeda latar video');
-  }
-  video.addEventListener('play',videoLabel);
-  video.addEventListener('pause',videoLabel);
-  videoLabel();
-  if(toggle){
-    toggle.addEventListener('click',()=>{
-      if(video.paused){
-        userManuallyPaused=false;
-        video.play().catch(()=>{});
-      }else{
-        userManuallyPaused=true;
-        video.pause();
+  <!-- Google Fonts: Inter & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Zero-FOUC Theme Initializer -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('kasirkita-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
       }
-    });
-  }
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){
-      video.pause();
-    }else if(!userManuallyPaused){
-      video.play().catch(()=>{});
+    })();
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              925: '#111114',
+              950: '#09090b',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ================= DUAL-THEME TOKENS (1:1 MODUL 01 PARITY) ================= */
+    :root {
+      --sc-canvas: #fcfcfd;
+      --sc-surface: rgba(255, 255, 255, 0.94);
+      --sc-ink: #18181b;
+      --sc-ink-soft: #71717a;
+      --sc-accent: #2563eb;
+      --sc-accent-ink: #ffffff;
+      --sc-hairline: rgba(228, 228, 231, 0.85);
+      --sc-hairline-strong: rgba(161, 161, 170, 0.4);
+      --sc-font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+      --sc-font-text: "Inter", system-ui, sans-serif;
+      --sc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
     }
-  });
-}
-const page=document.body.dataset.page;const completed=storage.get('kasirkita-completed');document.querySelectorAll('[data-progress]').forEach(e=>e.textContent=completed.length+' dari 4 modul selesai');document.querySelectorAll('.track i').forEach(e=>e.style.width=completed.length/4*100+'%');
-const done=document.querySelector('.complete');function renderDone(){if(done){const yes=completed.includes(page);done.classList.toggle('done',yes);done.textContent=yes?'✓ Modul selesai — batalkan':'Tandai modul selesai  ✓';done.setAttribute('aria-pressed',yes)}}renderDone();if(done)done.onclick=()=>{const i=completed.indexOf(page);if(i<0)completed.push(page);else completed.splice(i,1);storage.set('kasirkita-completed',completed);renderDone();document.querySelectorAll('[data-progress]').forEach(e=>e.textContent=completed.length+' dari 4 modul selesai');document.querySelectorAll('.track i').forEach(e=>e.style.width=completed.length/4*100+'%')};
-document.querySelectorAll('.checklist input').forEach((el,i)=>{const key=page+'-checks';el.checked=storage.get(key).includes(i);el.onchange=()=>{let v=storage.get(key).filter(x=>x!==i);if(el.checked)v.push(i);storage.set(key,v)}});
-document.querySelectorAll('.copy').forEach(b=>{const label=b.textContent;b.onclick=async()=>{try{await navigator.clipboard.writeText(b.parentElement.nextElementSibling.textContent);b.textContent='Tersalin ✓'}catch{b.textContent='Pilih kode untuk menyalin'}setTimeout(()=>b.textContent=label,2200)}});</script></body></html>
+
+    html.dark {
+      --sc-canvas: #09090b;
+      --sc-surface: rgba(18, 18, 21, 0.82);
+      --sc-ink: #f4f4f5;
+      --sc-ink-soft: #a1a1aa;
+      --sc-accent: #38bdf8;
+      --sc-accent-ink: #09090b;
+      --sc-hairline: rgba(255, 255, 255, 0.08);
+      --sc-hairline-strong: rgba(255, 255, 255, 0.16);
+    }
+
+    /* Architectural Cards for Chaptered Curriculum */
+    .arch-card {
+      background: var(--sc-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--sc-hairline);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: border-color 200ms ease, box-shadow 200ms ease, background-color 300ms ease;
+    }
+    .dark .arch-card {
+      box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .arch-card:hover {
+      border-color: var(--sc-hairline-strong);
+    }
+
+    /* Clean Collapsible Details Drawer */
+    .arch-details {
+      background: rgba(244, 244, 245, 0.6);
+      border: 1px solid rgba(228, 228, 231, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .arch-details > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(244, 244, 245, 0.9);
+      color: #18181b;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      list-style: none;
+      transition: background-color 200ms ease;
+    }
+    .dark .arch-details > summary {
+      background: rgba(255, 255, 255, 0.03);
+      color: #f4f4f5;
+    }
+    .arch-details > summary::-webkit-details-marker { display: none; }
+    .arch-details > summary::after {
+      content: "Detail Teknis ▾";
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #e4e4e7;
+      color: #3f3f46;
+      font-weight: 600;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details > summary::after {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d4d4d8;
+    }
+    .arch-details[open] > summary::after {
+      content: "Tutup ▴";
+      background: #18181b;
+      color: #ffffff;
+    }
+    .dark .arch-details[open] > summary::after {
+      background: #ffffff;
+      color: #09090b;
+    }
+  </style>
+
+  <link rel="stylesheet" href="assets/css/module-shared.css">
+</head>
+<body class="relative min-h-screen text-zinc-900 dark:text-zinc-100 bg-[#fcfcfd] dark:bg-[#09090b]" data-page="teknis.html">
+
+  <!-- ================= TOP READING PROGRESS BAR ================= -->
+  <span data-sc-progress class="fixed top-0 left-0 right-0 h-[3px] bg-zinc-900 dark:bg-white z-50 origin-left scale-x-0 transition-transform duration-75"></span>
+
+  <!-- ================= TOP THEME TOGGLE CAPSULE (FLOATING & ACCESSIBLE) ================= -->
+  <aside class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-zinc-200 dark:border-white/10 bg-white/85 dark:bg-zinc-900/80 p-1.5 backdrop-blur-xl shadow-sm dark:shadow-2xl transition-colors duration-300" aria-label="Pengalih Mode Tampilan">
+    <button id="theme-btn-light" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Terang">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <span>Terang</span>
+    </button>
+    <button id="theme-btn-dark" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Gelap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></svg>
+      <span>Gelap</span>
+    </button>
+  </aside>
+
+  <!-- ================= TOP NAV CHROME ================= -->
+  <header class="fixed top-5 left-5 right-5 sm:left-8 sm:right-8 z-40 flex items-center justify-between pointer-events-none">
+    <a href="index.html" class="pointer-events-auto flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>HELLO PROJECT</span>
+    </a>
+    <a href="daftarModul.html" class="pointer-events-auto text-xs font-mono font-medium text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <span>Daftar Modul</span><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+    </a>
+  </header>
+
+  <main id="top" class="w-full flex flex-col">
+
+    <!-- ================= HERO SECTION (ATMOSPHERIC GRADIENT BENCHMARK) ================= -->
+    <section class="relative bg-zinc-950 text-white pt-32 pb-24 px-5 sm:px-8 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-zinc-950/80 to-zinc-950 pointer-events-none"></div>
+      
+      <div class="relative max-w-4xl mx-auto z-10">
+        <div class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/50 px-3 py-1 backdrop-blur-md mb-6">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-white font-semibold">
+            MODUL 03 · PUSTAKA GRAFIS LIB.H
+          </span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-display tracking-tight text-white leading-[1.08] drop-shadow-2xl">
+          Gunakan lib.h untuk tampilan dan input konsol.
+        </h1>
+        <p class="text-base sm:text-lg text-white/85 mt-6 max-w-2xl leading-relaxed drop-shadow-md">
+          Pelajari penataan folder proyek C, fungsi gotoxy Windows, pembuatan border ASCII, dan pembacaan input buffer string dengan proteksi NUL terminator.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-300">
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">⏱ ± 60 Menit</span>
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">Level Menengah</span>
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">Output: Header Modular &amp; UI Terminal</span>
+          <a href="https://astrapolytechnic-my.sharepoint.com/personal/0320240065_polytechnic_astra_ac_id/_layouts/15/stream.aspx?id=%2Fpersonal%2F0320240065%5Fpolytechnic%5Fastra%5Fac%5Fid%2FDocuments%2FKepanitiaan%2FHello%20Project%2FTutorial%20Design%20%2D%20Hello%20Project%2Emp4&amp;nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&amp;ga=1&amp;referrer=StreamWebApp%2EWeb&amp;referrerScenario=AddressBarCopied%2Eview%2Ee3f7d5c8%2Dc981%2D4f66%2D87da%2D19285b013b00" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 text-emerald-300 hover:text-white transition-colors flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Video Tutorial lib.h</span>
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="daftarisi-3.html" class="px-3 py-1.5 rounded-lg bg-blue-500/20 backdrop-blur-md border border-blue-400/30 text-blue-300 hover:text-white transition-colors flex items-center gap-1.5"><span>Daftar Isi Modul 03</span><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SUBSTANCE: THE 7 SYSTEMATIC CHAPTERS ================= -->
+    <section class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-16 sm:py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300">
+      <div class="w-full max-w-4xl mx-auto">
+
+        <!-- Curriculum Header -->
+        <div class="text-center mb-16">
+          <span class="inline-block border border-zinc-300 dark:border-white/10 bg-zinc-100 dark:bg-zinc-800/60 px-3.5 py-1 rounded-full font-mono text-[11px] text-zinc-700 dark:text-zinc-300 uppercase tracking-widest mb-3 font-semibold">
+            KURIKULUM LENGKAP · 7 LANGKAH REKAYASA PUSTAKA C
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Perjalanan Modul 03</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base mt-2 max-w-lg mx-auto">
+            Pelajari setiap konsep, analogi nyata, bedah cetak biru, dan pola kode C secara teratur.
+          </p>
+        </div>
+
+        <div class="space-y-8">
+
+          <!-- Langkah 01: Folder -->
+          <article class="arch-card p-6 sm:p-8" id="folder">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 01 / 07
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 10 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Siapkan struktur folder</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Pisahkan file C, header library, ASCII art, dan executable agar proses build MinGW rapi dan terisolasi.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti menyediakan rak berbeda untuk alat dan bahan kerja di bengkel.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Buat folder <code>kasirkita</code>, lalu subfolder <code>src</code>, <code>include</code>, <code>data</code>, <code>assets/ascii</code>, dan <code>build</code>.
+            </div>
+
+            <!-- Fig 3.1 Diagram -->
+            <div class="story-anatomy" data-anatomy-scroll data-steps="3">
+              <div class="anatomy-header">
+                <span class="anatomy-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 dark:bg-sky-400/10 border border-blue-500/20 dark:border-sky-400/20 text-blue-600 dark:text-sky-400 font-mono text-xs font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 22h18"/><path d="m14 22 3-3 3 3"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="m12 6 4-4 3 3-4 4"/></svg><span>BEDAH ANATOMI</span></span>
+                <span class="anatomy-fig">Fig 3.1 · Anatomi Struktur Folder &amp; Pipeline Build C</span>
+              </div>
+              <h4 class="anatomy-title">Pemisahan Direktori Source Code, Header, Data TXT &amp; Build Artifacts</h4>
+              
+              <div class="anatomy-canvas">
+                <svg viewBox="0 0 760 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram Anatomi Struktur Folder C">
+      <defs>
+        <pattern id="fldGridClean" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1" fill="#38bdf8" opacity="0.15"/>
+        </pattern>
+        <marker id="fldArrowHead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 1 2 L 8 5 L 1 8 z" fill="#38bdf8"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="760" height="270" rx="10" fill="#040914" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
+      <rect width="760" height="270" fill="url(#fldGridClean)" rx="10"/>
+
+      <!-- 1. KOTAK KIRI: DIRECTORY TREE (STEP 1) -->
+      <g id="fld-step-1" data-step="1">
+        <rect x="20" y="16" width="350" height="238" rx="8" fill="#071526" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2"/>
+        <text x="36" y="38" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">1. STRUKTUR DIREKTORI kasirkita/</text>
+
+        <!-- File items -->
+        <rect x="34" y="52" width="322" height="40" rx="6" fill="#0b1e38" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1"/>
+        <text x="48" y="75" fill="#ffffff" font-size="12" font-weight="700" font-family="monospace">[DIR] src/main.c</text>
+        <text x="170" y="75" fill="#94a3b8" font-size="10" font-family="monospace">(Source code alur utama)</text>
+
+        <rect x="34" y="100" width="322" height="40" rx="6" fill="#0b1e38" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1"/>
+        <text x="48" y="123" fill="#ffffff" font-size="12" font-weight="700" font-family="monospace">[DIR] include/lib.h</text>
+        <text x="180" y="123" fill="#94a3b8" font-size="10" font-family="monospace">(Header fungsi grafis)</text>
+
+        <rect x="34" y="148" width="322" height="40" rx="6" fill="#0b1e38" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1"/>
+        <text x="48" y="171" fill="#ffffff" font-size="12" font-weight="700" font-family="monospace">[DIR] assets/ascii/</text>
+        <text x="170" y="171" fill="#94a3b8" font-size="10" font-family="monospace">(File TXT banner visual)</text>
+
+        <rect x="34" y="196" width="322" height="46" rx="6" fill="#052e16" stroke="rgba(34, 197, 94, 0.4)" stroke-width="1"/>
+        <text x="48" y="217" fill="#6ee7b7" font-size="12" font-weight="700" font-family="monospace">[DIR] build/latihan.exe</text>
+        <text x="48" y="233" fill="#94a3b8" font-size="10" font-family="monospace">Target binary hasil kompilasi GCC</text>
+
+        <!-- Pin 1: Blue in src/main.c -->
+        <circle cx="334" cy="72" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="334" y="76" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">1</text>
+        <!-- Pin 2: Blue in include/lib.h -->
+        <circle cx="334" cy="120" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="334" y="124" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">2</text>
+        <!-- Pin 3: Blue in assets/ascii -->
+        <circle cx="334" cy="168" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="334" y="172" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">3</text>
+      </g>
+
+      <!-- 2. KOTAK KANAN: BUILD PIPELINE (STEP 2) -->
+      <g id="fld-step-2" data-step="2">
+        <rect x="400" y="16" width="340" height="136" rx="8" fill="#071526" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2"/>
+        <text x="416" y="38" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">2. PIPELINE BUILD GCC MINGW-W64</text>
+
+        <!-- Compiler Command Card -->
+        <rect x="414" y="52" width="312" height="90" rx="6" fill="#0b1e38" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+        <text x="426" y="72" fill="#38bdf8" font-size="10" font-weight="700" font-family="monospace">gcc -std=c17 -Wall -Wextra</text>
+        <text x="426" y="90" fill="#fbbf24" font-size="10" font-weight="700" font-family="monospace">-Iinclude src/main.c</text>
+        <text x="426" y="108" fill="#6ee7b7" font-size="10" font-weight="700" font-family="monospace">-o build/latihan.exe -luser32</text>
+        <text x="426" y="130" fill="#94a3b8" font-size="10" font-family="monospace">Kompilasi C17 + Link API Windows User32</text>
+
+        <!-- Connecting Flow Arrow: src/main.c to compiler -->
+        <path d="M 356 72 C 378 72, 388 88, 410 88" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" fill="none" marker-end="url(#fldArrowHead)"/>
+
+        <!-- Pin 4: Blue in Compiler Box -->
+        <circle cx="704" cy="72" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="704" y="76" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">4</text>
+      </g>
+
+      <!-- 3. KOTAK KANAN BAWAH: EXECUTION WARNING (STEP 3) -->
+      <g id="fld-step-3" data-step="3">
+        <rect x="400" y="158" width="340" height="96" rx="8" fill="#180a0e" stroke="rgba(239, 68, 68, 0.4)" stroke-width="1.2"/>
+        <text x="416" y="178" fill="#f87171" font-size="11" font-weight="700" font-family="monospace">ZONA KRITIS: ROOT DIRECTORY RUN</text>
+        <text x="416" y="196" fill="#fca5a5" font-size="10" font-family="monospace">Jalankan .\build\latihan.exe dari root project!</text>
+        <text x="416" y="214" fill="#94a3b8" font-size="10" font-family="monospace">Jika dijalankan dari dalam folder /build, path relatif</text>
+        <text x="416" y="230" fill="#f87171" font-size="10" font-weight="700" font-family="monospace">assets/ascii/judul.txt akan NOT FOUND!</text>
+      </g>
+    </svg>
+              </div>
+
+              <!-- Stepper Controls Bar -->
+              <div class="mt-4 flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-white/10 text-xs font-mono">
+                <div class="flex items-center gap-1.5">
+                  <button data-step-prev class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Sebelumnya"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span>Prev</span></button>
+                  <button data-step-btn="1" class="px-3 py-1 rounded transition-colors" title="Source & Header">Tahap 1</button>
+                  <button data-step-btn="2" class="px-3 py-1 rounded transition-colors" title="Data & Assets">Tahap 2</button>
+                  <button data-step-btn="3" class="px-3 py-1 rounded transition-colors" title="Build & Compile">Tahap 3</button>
+                  <button data-step-next class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Selanjutnya"><span>Next</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+                </div>
+                <span data-step-display class="font-bold text-blue-600 dark:text-sky-400">Tahap 1 / 3</span>
+              </div>
+
+              <!-- Responsive Callout Legend Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5 text-xs">
+                <div id="dir-legend-1" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="1">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">1</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Direktori include/ &amp; src/:</strong> Memisahkan deklarasi fungsi pustaka dengan implementasi logika utama kasir.</span>
+                </div>
+                <div id="dir-legend-2" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="2">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">2</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Direktori data/ &amp; assets/:</strong> Wadah file persistensi transaksi dan seni ASCII terpisah dari binary.</span>
+                </div>
+                <div id="dir-legend-3" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="3">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">3</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Direktori build/:</strong> Tempat penyimpanan file output hasil kompilasi executable (.exe).</span>
+                </div>
+                <div id="dir-legend-4" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="3">
+                  <span class="w-6 h-6 rounded-full bg-emerald-600 dark:bg-emerald-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">4</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Working Directory Rule:</strong> Program wajib dieksekusi dari root folder proyek agar path relatif <code>assets/...</code> terbaca.</span>
+                </div>
+              </div>
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 shadow-sm">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                        <th class="p-3">Folder</th>
+                        <th class="p-3">Isi</th>
+                        <th class="p-3">Penjelasan</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                      <tr><td class="p-3 font-mono text-blue-600 dark:text-sky-400">kasirkita/</td><td class="p-3">Root proyek</td><td class="p-3">Folder utama; jalankan perintah kompilasi dan eksekusi dari sini</td></tr>
+                      <tr><td class="p-3 font-mono text-blue-600 dark:text-sky-400">kasirkita/src/</td><td class="p-3">main.c</td><td class="p-3">Program utama C yang memanggil fungsi lib.h</td></tr>
+                      <tr><td class="p-3 font-mono text-blue-600 dark:text-sky-400">kasirkita/include/</td><td class="p-3">lib.h</td><td class="p-3">Header bantuan console Windows</td></tr>
+                      <tr><td class="p-3 font-mono text-blue-600 dark:text-sky-400">kasirkita/assets/ascii/</td><td class="p-3">judul.txt</td><td class="p-3">Gambar ASCII untuk header toko</td></tr>
+                      <tr><td class="p-3 font-mono text-blue-600 dark:text-sky-400">kasirkita/build/</td><td class="p-3">latihan.exe</td><td class="p-3">Hasil kompilasi executable</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
+                  <div class="text-zinc-400 text-[11px] mb-2">// Perintah Kompilasi Terminal PowerShell / CMD</div>
+                  <pre><code>gcc src/main.c -Iinclude -o build/latihan.exe
+.\build\latihan.exe</code></pre>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 02: lib-intro -->
+          <article class="arch-card p-6 sm:p-8" id="lib-intro">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 02 / 07
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 12 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Kenali isi lib.h</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Library membantu menata tampilan dan input di console Windows dengan fungsi abstraksi User32/Kernel32.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti kotak alat mekanik: pilih kunci pas yang sesuai jenis baut.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Buka header dan temukan fungsi untuk memindahkan kursor: <code>gotoxy(x, y)</code>.
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-emerald-500/30 dark:border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/20 shadow-sm">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">VIDEO TUTORIAL RESMI</span>
+                      <span class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20">Stream · MP4</span>
+                    </div>
+                    <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">Tutorial Design &amp; Pemanfaatan lib.h</h4>
+                    <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Panduan video langkah demi langkah merancang antarmuka konsol, koordinat gotoxy, dan border ASCII.</p>
+                  </div>
+                  <a href="https://astrapolytechnic-my.sharepoint.com/personal/0320240065_polytechnic_astra_ac_id/_layouts/15/stream.aspx?id=%2Fpersonal%2F0320240065%5Fpolytechnic%5Fastra%5Fac%5Fid%2FDocuments%2FKepanitiaan%2FHello%20Project%2FTutorial%20Design%20%2D%20Hello%20Project%2Emp4&amp;nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&amp;ga=1&amp;referrer=StreamWebApp%2EWeb&amp;referrerScenario=AddressBarCopied%2Eview%2Ee3f7d5c8%2Dc981%2D4f66%2D87da%2D19285b013b00" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 font-semibold text-xs transition-colors shrink-0 shadow-sm">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <span>Tonton Video Tutorial</span>
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                  </a>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/60 shadow-sm">
+                  <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400">BAHAN DOWNLOAD</span>
+                    <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">Library lib.h</h4>
+                    <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Header C berisi fungsi bantuan untuk tampilan dan input console Windows.</p>
+                  </div>
+                  <a href="files/lib.h" download class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold text-xs hover:opacity-90 transition-opacity shrink-0 shadow-sm">
+                    <span>Unduh Library lib.h</span>
+                    <span>↓</span>
+                  </a>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 shadow-sm">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                        <th class="p-3">Kelompok</th>
+                        <th class="p-3">Fungsi</th>
+                        <th class="p-3">Kegunaan</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Posisi &amp; Teks</td><td class="p-3 font-mono text-blue-600 dark:text-sky-400">gotoxy, gotoPrintString, gotoPrintChar</td><td class="p-3">Menempatkan teks atau karakter pada koordinat (x, y)</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Bingkai</td><td class="p-3 font-mono text-blue-600 dark:text-sky-400">borderLine, borderDoubleLine, borderClear</td><td class="p-3">Menggambar atau menghapus garis tepi kotak menu</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Area &amp; Kursor</td><td class="p-3 font-mono text-blue-600 dark:text-sky-400">clearArea, hideCursor, showCursor</td><td class="p-3">Membersihkan area teks dan mengatur visibilitas kursor</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Input Buffer</td><td class="p-3 font-mono text-blue-600 dark:text-sky-400">scanInputString, scanInputInt, scanInputFormatPrice</td><td class="p-3">Membaca teks, bilangan bulat, dan nominal rupiah berformat</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p class="leading-relaxed">
+                  <code>lib.h</code> adalah header bantuan console Windows yang diberikan untuk latihan. File ini berisi definisi fungsi, bukan hanya deklarasi. Gunakan satu file C untuk latihan awal dan include header ini satu kali.
+                </p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 03: lib-review -->
+          <article class="arch-card p-6 sm:p-8" id="lib-review">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 03 / 07
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 15 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Periksa sebelum memakai</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Periksa logika penanganan tombol BACKSPACE pada fungsi input agar pengguna bisa menghapus karakter tanpa merusak memori buffer.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti menguji fungsi penghapus pada pensil sebelum mulai menggambar.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Periksa apakah blok <code>else if (ch == 8)</code> sudah memundurkan kursor dan mengurangi indeks.
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                
+                <div class="rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
+                  <div class="text-zinc-400 text-[11px] mb-2">// Koreksi Bug Backspace pada lib.h (Karakter ASCII 8)</div>
+                  <pre><code><span class="text-purple-400">else if</span> (ch == <span class="text-amber-400">8</span>) { <span class="text-zinc-500">// Tombol BACKSPACE ditekan</span>
+    <span class="text-purple-400">if</span> (i &gt; <span class="text-amber-400">0</span>) {
+        i--;
+        printf(<span class="text-emerald-400">"\b \b"</span>); <span class="text-zinc-500">// Mundur 1 char, timpa spasi, mundur lagi</span>
+    }
+}</code></pre>
+                </div>
+
+                <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
+                  <strong>Penting untuk Ujian Sidang:</strong> Empat fungsi input (<code>scanInputString</code>, <code>scanInputInt</code>, <code>scanInputFloat</code>, <code>scanInputFormatPrice</code>) harus menerapkan penanganan backspace yang sama agar terminal tidak mencetak karakter sampah saat pengguna salah ketik.
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 04: lib-setup -->
+          <article class="arch-card p-6 sm:p-8" id="lib-setup">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 04 / 07
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 8 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Siapkan latihan pertama</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Buat <code>src/main.c</code> minimal untuk memverifikasi compiler GCC dapat menemukan header <code>include/lib.h</code> tanpa peringatan.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Siapkan meja dan alat sebelum mulai merakit mesin kasir.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Simpan <code>src/main.c</code> dan <code>include/lib.h</code>, lalu compile dari root project.
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                
+                <div class="rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
+                  <div class="text-zinc-400 text-[11px] mb-2">// src/main.c · Template Kompilasi Pertama</div>
+                  <pre><code><span class="text-purple-400">#include</span> <span class="text-emerald-400">&lt;stdio.h&gt;</span>
+<span class="text-purple-400">#include</span> <span class="text-emerald-400">&lt;stdlib.h&gt;</span>
+<span class="text-purple-400">#include</span> <span class="text-emerald-400">&lt;windows.h&gt;</span>
+<span class="text-purple-400">#include</span> <span class="text-emerald-400">"lib.h"</span>
+
+<span class="text-blue-400">int</span> <span class="text-amber-400">main</span>() {
+    system(<span class="text-emerald-400">"cls"</span>);
+    gotoxy(<span class="text-amber-400">10</span>, <span class="text-amber-400">5</span>);
+    printf(<span class="text-emerald-400">"Halo KasirKita! lib.h siap digunakan.\n"</span>);
+    getch();
+    <span class="text-purple-400">return</span> <span class="text-amber-400">0</span>;
+}</code></pre>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 05: lib-position -->
+          <article class="arch-card p-6 sm:p-8" id="lib-position">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 05 / 07
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 12 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Atur posisi teks</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Setiap elemen antarmuka kasir ditempatkan pada koordinat kolom X dan baris Y console Windows secara presisi.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti memilih nomor kotak baris dan kolom pada kertas berpetak matematika.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Tempatkan teks judul di <code>(4, 5)</code> dan field input kasir di <code>(4, 10)</code>.
+            </div>
+
+            <!-- Fig 3.5 Diagram -->
+            <div class="story-anatomy" data-anatomy-scroll data-steps="3">
+              <div class="anatomy-header">
+                <span class="anatomy-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 dark:bg-sky-400/10 border border-blue-500/20 dark:border-sky-400/20 text-blue-600 dark:text-sky-400 font-mono text-xs font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 22h18"/><path d="m14 22 3-3 3 3"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="m12 6 4-4 3 3-4 4"/></svg><span>BEDAH ANATOMI</span></span>
+                <span class="anatomy-fig">Fig 3.5 · Matriks Grid Layar Console Windows (gotoxy)</span>
+              </div>
+              <h4 class="anatomy-title">Sistem Koordinat 80 Kolom &times; 25 Baris Terminal Windows</h4>
+              
+              <div class="anatomy-canvas">
+                <svg viewBox="0 0 760 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram Anatomi Koordinat Console 80x25">
+      <defs>
+        <pattern id="conGridClean" width="16" height="16" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.8" fill="#38bdf8" opacity="0.12"/>
+        </pattern>
+        <marker id="conArrowHead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 1 2 L 8 5 L 1 8 z" fill="#38bdf8"/>
+        </marker>
+      </defs>
+
+      <!-- Canvas Background -->
+      <rect width="760" height="270" rx="10" fill="#040914" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
+      <rect width="760" height="270" fill="url(#conGridClean)" rx="10"/>
+
+      <!-- Console Window Bezel (Retro Terminal) -->
+      <rect x="50" y="32" width="670" height="200" rx="8" fill="#030712" stroke="#38bdf8" stroke-width="2"/>
+      
+      <!-- Terminal Window Bar -->
+      <rect x="50" y="32" width="670" height="24" rx="8" fill="#0f172a"/>
+      <circle cx="68" cy="44" r="4" fill="#ef4444"/>
+      <circle cx="82" cy="44" r="4" fill="#f59e0b"/>
+      <circle cx="96" cy="44" r="4" fill="#10b981"/>
+      <text x="115" y="48" fill="#94a3b8" font-family="monospace" font-size="10">Command Prompt Windows - 80 Kolom x 25 Baris</text>
+
+      <!-- 1. ORIGIN & SUMBU KOORDINAT (STEP 1) -->
+      <g id="gxy-step-1" data-step="1">
+        <!-- Origin Point (0,0) -->
+        <circle cx="65" cy="70" r="7" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="78" y="74" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">ORIGIN (0, 0)</text>
+
+        <!-- Axis X (Horizontal) -->
+        <line x1="65" y1="20" x2="650" y2="20" stroke="#38bdf8" stroke-width="1.8"/>
+        <path d="M 650 20 L 640 16 L 640 24 Z" fill="#38bdf8"/>
+        <text x="230" y="16" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">SUMBU X (KOLOM: 0 s.d. 79) ➔ KE KANAN</text>
+
+        <!-- Axis Y (Vertical) -->
+        <line x1="26" y1="70" x2="26" y2="220" stroke="#fbbf24" stroke-width="1.8"/>
+        <path d="M 26 220 L 22 210 L 30 210 Z" fill="#fbbf24"/>
+        <text x="-165" y="18" fill="#fbbf24" font-size="10" font-weight="700" font-family="monospace" transform="rotate(-90)">SUMBU Y (BARIS: 0..24) ➔ KE BAWAH</text>
+
+        <!-- Pin 1: Origin Point Badge -->
+        <circle cx="185" cy="70" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="185" y="74" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">1</text>
+        <!-- Pin 2: Sumbu X Badge -->
+        <circle cx="510" cy="12" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="510" y="16" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">2</text>
+        <!-- Pin 3: Sumbu Y Badge -->
+        <circle cx="26" cy="56" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="26" y="60" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">3</text>
+      </g>
+
+      <!-- 2. TARGET POSISI GOTOXY (STEP 2) -->
+      <g id="gxy-step-2" data-step="2">
+        <!-- Sample Point 1: KASIRKITA (4, 3) -->
+        <rect x="90" y="88" width="160" height="32" rx="5" fill="#0b1e38" stroke="#38bdf8" stroke-width="1"/>
+        <circle cx="102" cy="104" r="4" fill="#38bdf8"/>
+        <text x="114" y="102" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">KASIRKITA</text>
+        <text x="114" y="114" fill="#94a3b8" font-size="9" font-family="monospace">gotoxy(4, 3)</text>
+
+        <!-- Sample Point 2: Label Input (4, 5) -->
+        <rect x="90" y="132" width="220" height="32" rx="5" fill="#0b1e38" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <circle cx="102" cy="148" r="4" fill="#fbbf24"/>
+        <text x="114" y="146" fill="#e2e8f0" font-size="10" font-family="monospace">&gt; Nama produk: [_______]</text>
+        <text x="114" y="158" fill="#94a3b8" font-size="9" font-family="monospace">gotoPrintString(4, 5)</text>
+      </g>
+
+      <!-- 3. ZONA BAHAYA X >= 80 (STEP 3) -->
+      <g id="gxy-step-3" data-step="3">
+        <!-- Danger Zone: Right edge X >= 80 -->
+        <rect x="620" y="56" width="95" height="170" rx="4" fill="rgba(239, 68, 68, 0.15)" stroke="rgba(239, 68, 68, 0.5)" stroke-dasharray="3 3"/>
+        <text x="632" y="140" fill="#fca5a5" font-size="10" font-weight="700" font-family="monospace" transform="rotate(90, 632, 140)">ZONA BAHAYA (X ≥ 80)</text>
+
+        <!-- Pin 4: Red in Danger Zone -->
+        <circle cx="690" cy="75" r="9.5" fill="#dc2626" stroke="#fca5a5" stroke-width="1.2"/>
+        <text x="690" y="79" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">4</text>
+      </g>
+    </svg>
+              </div>
+
+              <!-- Stepper Controls Bar -->
+              <div class="mt-4 flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-white/10 text-xs font-mono">
+                <div class="flex items-center gap-1.5">
+                  <button data-step-prev class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Sebelumnya"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span>Prev</span></button>
+                  <button data-step-btn="1" class="px-3 py-1 rounded transition-colors" title="Posisi Input (4, 10)">Tahap 1</button>
+                  <button data-step-btn="2" class="px-3 py-1 rounded transition-colors" title="Posisi Banner (4, 5)">Tahap 2</button>
+                  <button data-step-btn="3" class="px-3 py-1 rounded transition-colors" title="Posisi Kursor (18, 10)">Tahap 3</button>
+                  <button data-step-next class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Selanjutnya"><span>Next</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+                </div>
+                <span data-step-display class="font-bold text-blue-600 dark:text-sky-400">Tahap 1 / 3</span>
+              </div>
+
+              <!-- Responsive Callout Legend Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5 text-xs">
+                <div id="pos-legend-1" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="1">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">1</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Titik Origin (0,0):</strong> Sudut kiri paling atas layar terminal console Windows.</span>
+                </div>
+                <div id="pos-legend-2" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="2">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">2</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Sumbu X (Kolom):</strong> Bergerak horizontal ke kanan dari indeks 0 s.d. 79 karakter.</span>
+                </div>
+                <div id="pos-legend-3" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="1">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">3</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Sumbu Y (Baris):</strong> Bergerak vertikal KE BAWAH dari indeks 0 s.d. 24 baris.</span>
+                </div>
+                <div id="pos-legend-4" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="3">
+                  <span class="w-6 h-6 rounded-full bg-red-600 dark:bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">4</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Batas Aman Buffer:</strong> Menulis melebihi batas 80x25 akan memicu auto-scroll yang merusak layout visual antarmuka.</span>
+                </div>
+              </div>
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                <div class="rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
+                  <div class="text-zinc-400 text-[11px] mb-2">// Latihan Menata Posisi Teks dengan gotoxy</div>
+                  <pre><code>gotoxy(<span class="text-amber-400">4</span>, <span class="text-amber-400">5</span>);
+printf(<span class="text-emerald-400">"KASIRKITA - TOKO ALAT TULIS"</span>);
+
+gotoxy(<span class="text-amber-400">4</span>, <span class="text-amber-400">10</span>);
+printf(<span class="text-emerald-400">"Nama Produk: [                   ]"</span>);
+
+gotoxy(<span class="text-amber-400">18</span>, <span class="text-amber-400">10</span>); <span class="text-zinc-500">// Kursor tepat di dalam kotak kurung</span></code></pre>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 06: lib-border -->
+          <article class="arch-card p-6 sm:p-8" id="lib-border">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 06 / 07
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 10 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Kenali bingkai dan area</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Gambar bingkai tepi ganda, bersihkan area pesan status, dan kelola kursor kedip terminal.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti menyiapkan papan pengumuman kayu dengan garis pembatas informasi.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Gambar bingkai ganda dari <code>(2, 1)</code> sampai <code>(62, 16)</code> dan sembunyikan kursor saat menu tampil.
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                <div class="rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
+                  <div class="text-zinc-400 text-[11px] mb-2">// Latihan Bingkai dan Manajemen Kursor</div>
+                  <pre><code>hideCursor();
+borderDoubleLine(<span class="text-amber-400">2</span>, <span class="text-amber-400">1</span>, <span class="text-amber-400">60</span>, <span class="text-amber-400">15</span>);
+gotoPrintString(<span class="text-amber-400">5</span>, <span class="text-amber-400">3</span>, <span class="text-emerald-400">"MENU UTAMA KASIR"</span>);
+getch();
+showCursor();</code></pre>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 07: lib-input -->
+          <article class="arch-card p-6 sm:p-8" id="lib-input">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 07 / 07
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 18 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Pilih fungsi input</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Sesuaikan fungsi pembacaan input dengan tipe data teks string, kuantitas bilangan bulat, atau nominal harga.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti menyediakan lubang koin yang hanya menerima koin dan kotak formulir yang menerima kertas.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Gunakan <code>scanInputString</code> untuk nama barang dan <code>scanInputInt</code> untuk kuantitas stok.
+            </div>
+
+            <!-- Fig 3.7 Diagram -->
+            <div class="story-anatomy" data-anatomy-scroll data-steps="3">
+              <div class="anatomy-header">
+                <span class="anatomy-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 dark:bg-sky-400/10 border border-blue-500/20 dark:border-sky-400/20 text-blue-600 dark:text-sky-400 font-mono text-xs font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 22h18"/><path d="m14 22 3-3 3 3"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="m12 6 4-4 3 3-4 4"/></svg><span>BEDAH ANATOMI</span></span>
+                <span class="anatomy-fig">Fig 3.7 · Anatomi Alokasi Buffer String &amp; NUL Terminator</span>
+              </div>
+              <h4 class="anatomy-title">Alokasi Buffer Memori Karakter C char input[50] &amp; Batas Mutlak \0</h4>
+              
+              <div class="anatomy-canvas">
+                <svg viewBox="0 0 760 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram Anatomi Buffer Input C">
+      <defs>
+        <pattern id="inpGridClean" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1" fill="#38bdf8" opacity="0.15"/>
+        </pattern>
+        <marker id="inpArrowHead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 1 2 L 8 5 L 1 8 z" fill="#38bdf8"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="760" height="270" rx="10" fill="#040914" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
+      <rect width="760" height="270" fill="url(#inpGridClean)" rx="10"/>
+
+      <!-- Header Label -->
+      <text x="25" y="34" fill="#38bdf8" font-size="12" font-weight="700" font-family="monospace">STRUKTUR ARRAY MEMORI: scanInputString(x, y, buffer, maxChar = 49)</text>
+
+      <!-- 1. MEMORY CELLS & CAPACITY (STEP 1) -->
+      <g id="inp-step-1" data-step="1">
+        <g transform="translate(25, 50)">
+          <!-- Cell 0 -->
+          <rect x="0" y="0" width="54" height="60" rx="5" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="27" y="32" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700" font-family="monospace">'B'</text>
+          <text x="27" y="50" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">[0]</text>
+
+          <!-- Cell 1 -->
+          <rect x="62" y="0" width="54" height="60" rx="5" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="89" y="32" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700" font-family="monospace">'u'</text>
+          <text x="89" y="50" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">[1]</text>
+
+          <!-- Cell 2 -->
+          <rect x="124" y="0" width="54" height="60" rx="5" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="151" y="32" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700" font-family="monospace">'k'</text>
+          <text x="151" y="50" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">[2]</text>
+
+          <!-- Cell 3 -->
+          <rect x="186" y="0" width="54" height="60" rx="5" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="213" y="32" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700" font-family="monospace">'u'</text>
+          <text x="213" y="50" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">[3]</text>
+
+          <!-- Ellipsis -->
+          <rect x="248" y="0" width="70" height="60" rx="5" fill="#071526" stroke="rgba(255,255,255,0.1)" stroke-dasharray="2 2"/>
+          <text x="283" y="36" text-anchor="middle" fill="#64748b" font-size="18" font-family="monospace">...</text>
+
+          <!-- Cell 48: Last Char Allowed -->
+          <rect x="326" y="0" width="60" height="60" rx="5" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="356" y="32" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="700" font-family="monospace">'A'</text>
+          <text x="356" y="50" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">[48]</text>
+
+          <!-- Total Allocation Box -->
+          <rect x="490" y="0" width="220" height="60" rx="5" fill="#071b33" stroke="rgba(56, 189, 248, 0.4)"/>
+          <text x="504" y="24" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">TOTAL KAPASITAS: 50 BYTE</text>
+          <text x="504" y="42" fill="#94a3b8" font-size="10" font-family="monospace">Maksimum Karakter: 49 Huruf</text>
+        </g>
+
+        <!-- Pin 1: Array Char Badge -->
+        <circle cx="210" cy="74" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="210" y="78" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">1</text>
+      </g>
+
+      <!-- 2. PAYLOAD INPUT PENGGUNA (STEP 2) -->
+      <g id="inp-step-2" data-step="2">
+        <rect x="25" y="130" width="345" height="116" rx="6" fill="#071526" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+        <text x="38" y="152" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">1. PAYLOAD INPUT PENGGUNA</text>
+        <text x="38" y="172" fill="#e2e8f0" font-size="10" font-family="monospace">• Karakter disimpan berturut-turut di memori</text>
+        <text x="38" y="190" fill="#e2e8f0" font-size="10" font-family="monospace">• maxChar = kapasitas_array - 1</text>
+        <text x="38" y="208" fill="#94a3b8" font-size="10" font-family="monospace">• Tombol BACKSPACE wajib menggeser pointer index</text>
+        <text x="38" y="226" fill="#38bdf8" font-size="10" font-family="monospace">  dan menulis '\0' di posisi lama!</text>
+
+        <!-- Pin 2: maxChar Payload Badge -->
+        <circle cx="340" cy="150" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="340" y="154" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">2</text>
+      </g>
+
+      <!-- 3. NUL TERMINATOR & DANGER GUARD (STEP 3) -->
+      <g id="inp-step-3" data-step="3">
+        <!-- Cell 49: Null Terminator '\0' -->
+        <g transform="translate(25, 50)">
+          <rect x="394" y="0" width="70" height="60" rx="5" fill="#2a0c1a" stroke="#f43f5e" stroke-width="2"/>
+          <text x="429" y="32" text-anchor="middle" fill="#fda4af" font-size="16" font-weight="700" font-family="monospace">'\0'</text>
+          <text x="429" y="50" text-anchor="middle" fill="#f43f5e" font-size="10" font-family="monospace">[49]</text>
+        </g>
+
+        <!-- Guard Danger Card -->
+        <rect x="390" y="130" width="345" height="116" rx="6" fill="#180a0e" stroke="rgba(239, 68, 68, 0.4)" stroke-width="1"/>
+        <text x="404" y="152" fill="#f87171" font-size="11" font-weight="700" font-family="monospace">2. BAHAYA BUFFER OVERFLOW</text>
+        <text x="404" y="172" fill="#fca5a5" font-size="10" font-family="monospace">⚠️ Jika maxChar &gt;= kapasitas buffer:</text>
+        <text x="404" y="190" fill="#fca5a5" font-size="10" font-family="monospace">Karakter akan menimpa memori stack variabel lain!</text>
+        <text x="404" y="208" fill="#94a3b8" font-size="10" font-family="monospace">• Tanpa '\0', printf membaca memori liar (sampah)</text>
+        <text x="404" y="226" fill="#f87171" font-size="10" font-family="monospace">• Selalu cadangkan 1 byte mutlak untuk NUL</text>
+
+        <!-- Pin 3: NUL Terminator Badge -->
+        <circle cx="454" cy="74" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <text x="454" y="78" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">3</text>
+
+        <!-- Pin 4: Red in Buffer Overflow Guard -->
+        <circle cx="704" cy="150" r="9.5" fill="#dc2626" stroke="#fca5a5" stroke-width="1.2"/>
+        <text x="704" y="154" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">4</text>
+      </g>
+    </svg>
+              </div>
+
+              <!-- Stepper Controls Bar -->
+              <div class="mt-4 flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-white/10 text-xs font-mono">
+                <div class="flex items-center gap-1.5">
+                  <button data-step-prev class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Sebelumnya"><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" x2="5" y1="12" y2="12"/><polyline points="12 19 5 12 12 5"/></svg><span>Prev</span></button>
+                  <button data-step-btn="1" class="px-3 py-1 rounded transition-colors" title="Alokasi Buffer [0]..[49]">Tahap 1</button>
+                  <button data-step-btn="2" class="px-3 py-1 rounded transition-colors" title="Masukan Karakter Keystroke">Tahap 2</button>
+                  <button data-step-btn="3" class="px-3 py-1 rounded transition-colors" title="Penutup Mutlak \0">Tahap 3</button>
+                  <button data-step-next class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Selanjutnya"><span>Next</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+                </div>
+                <span data-step-display class="font-bold text-blue-600 dark:text-sky-400">Tahap 1 / 3</span>
+              </div>
+
+              <!-- Responsive Callout Legend Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5 text-xs">
+                <div id="buf-legend-1" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="1">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">1</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Alokasi Array Buffer:</strong> Ukuran array <code>char input[50]</code> harus cukup menampung string + 1 byte terminator.</span>
+                </div>
+                <div id="buf-legend-2" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="2">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">2</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Penulisan Karakter:</strong> Setiap ketukan tombol keyboard mengisi indeks array secara berurutan ('B', 'u', 'k', 'u').</span>
+                </div>
+                <div id="buf-legend-3" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="2">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">3</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Koreksi Backspace:</strong> Tombol backspace memundurkan indeks <code>i--</code> dan mencetak karakter escape '\b \b'.</span>
+                </div>
+                <div id="buf-legend-4" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="3">
+                  <span class="w-6 h-6 rounded-full bg-red-600 dark:bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">4</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>NUL Terminator Guard (\0):</strong> Wajib mengunci akhir string dengan karakter byte 0 untuk mencegah pembacaan memori liar.</span>
+                </div>
+              </div>
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                <div class="rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
+                  <div class="text-zinc-400 text-[11px] mb-2">// Latihan scanInputString dengan Batas Buffer</div>
+                  <pre><code><span class="text-blue-400">char</span> namaBarang[<span class="text-amber-400">50</span>];
+gotoxy(<span class="text-amber-400">4</span>, <span class="text-amber-400">10</span>);
+printf(<span class="text-emerald-400">"Masukkan Nama: "</span>);
+scanInputString(namaBarang, <span class="text-amber-400">49</span>); <span class="text-zinc-500">// Maks 49 char, byte ke-50 otomatis didedikasikan untuk '\0'</span></code></pre>
+                </div>
+              </div>
+            </details>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ACT 05 · COMMITMENT: RESOLVED CLOSE ================= -->
+    <section id="close-section" class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300">
+      <div class="w-full max-w-xl mx-auto flex flex-col items-center text-center p-8 rounded-3xl border border-zinc-300 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-2xl">
+        
+        <!-- Terminal Status Card -->
+        <div class="w-full bg-zinc-950 text-left rounded-xl p-4 font-mono text-xs text-zinc-300 border border-zinc-800 mb-6 shadow-inner">
+          <div class="flex items-center gap-2 mb-3 pb-2 border-b border-zinc-800">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+            <span class="text-[11px] text-zinc-500 ml-2">kasirkita-audit.exe</span>
+          </div>
+          <div class="space-y-1 text-emerald-400">
+            <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[INCLUDE] Header lib.h Terpasang: Valid</span></p>
+            <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[GOTOXY] Koordinat Terminal 80x25: Presisi</span></p>
+            <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[BUFFER] NUL Terminator &amp; Backspace: Aman</span></p>
+            <p class="text-zinc-400 mt-2">&gt; Status Modul 03: LULUS. Siap melanjutkan ke Modul 04.</p>
+          </div>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          Pustaka Konsol Selesai.
+        </h2>
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2 max-w-md">
+          Anda telah menguasai pengaturan kursor, bingkai, dan input buffer aman. Lanjutkan ke kanvas tampilan ASCII Art pada Modul 04.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 mt-6">
+          <a href="testing.html" class="inline-flex items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 px-6 py-3 text-sm font-semibold hover:opacity-90 transition-opacity shadow-md">
+            <span>Lanjut ke Modul 04 (ASCII Art)</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="daftarModul.html" class="inline-flex items-center justify-center rounded-full border border-zinc-300 dark:border-white/20 bg-white/60 dark:bg-zinc-800/60 px-6 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors">
+            Buka Daftar Modul ↗
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= SCRIPTS ================= -->
+  <!-- 1. Surgical Anatomy Scrollytelling Engine -->
+  <script src="assets/js/anatomy-scroll.js"></script>
+
+  <!-- 2. Dual-Theme Toggle & Reading Progress Orchestration -->
+  <script>
+    // Theme Management (Zero-FOUC & Reactive)
+    (function initThemeToggle() {
+      const btnLight = document.getElementById('theme-btn-light');
+      const btnDark = document.getElementById('theme-btn-dark');
+
+      function updateButtons(isDark) {
+        if (!btnLight || !btnDark) return;
+        if (isDark) {
+          btnDark.classList.add('bg-zinc-800', 'text-white', 'shadow-sm');
+          btnDark.classList.remove('text-zinc-400');
+          btnLight.classList.remove('bg-zinc-200', 'text-zinc-900', 'shadow-sm');
+          btnLight.classList.add('text-zinc-400');
+        } else {
+          btnLight.classList.add('bg-zinc-200', 'text-zinc-900', 'shadow-sm');
+          btnLight.classList.remove('text-zinc-600');
+          btnDark.classList.remove('bg-zinc-800', 'text-white', 'shadow-sm');
+          btnDark.classList.add('text-zinc-600');
+        }
+      }
+
+      function setTheme(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('kasirkita-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('kasirkita-theme', 'light');
+        }
+        updateButtons(isDark);
+      }
+
+      const initialDark = document.documentElement.classList.contains('dark');
+      updateButtons(initialDark);
+
+      if (btnLight) btnLight.addEventListener('click', () => setTheme(false));
+      if (btnDark) btnDark.addEventListener('click', () => setTheme(true));
+    })();
+
+    // Reading Progress Bar
+    (function initReadingProgress() {
+      const bar = document.querySelector('[data-sc-progress]');
+      if (!bar) return;
+      function update() {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        const p = total > 0 ? window.scrollY / total : 0;
+        bar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, p)) + ')';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+  <!-- Navigation Integration Script -->
+  <script src="assets/js/step-nav.js"></script>
+</body>
+</html>

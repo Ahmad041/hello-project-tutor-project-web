@@ -179,7 +179,7 @@ html, body {
 .uat-cockpit {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1.05fr;
+  grid-template-columns: minmax(420px, 0.82fr) minmax(580px, 1.28fr);
   gap: 14px;
   min-height: 0; /* Important for inner flex scroll */
 }
@@ -593,13 +593,14 @@ html, body {
 
 .uat-table-container {
   flex: 1;
-  overflow-y: auto;
+  overflow: auto;
   position: relative;
 }
 
-/* Official UAT Table (Lampiran C Format) */
+/* Official User Testing (UT) Table */
 .uat-table {
   width: 100%;
+  min-width: 860px;
   border-collapse: collapse;
   font-size: 11px;
   line-height: 1.35;
@@ -624,7 +625,75 @@ html, body {
   color: #cbd5e1;
 }
 
-.uat-table tr:hover {
+/* Category Banner Header Row (Matching Image 2 Yellow Banner) */
+.ut-category-banner td {
+  background: #eab308;
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-align: center;
+  padding: 8px 12px;
+  text-transform: uppercase;
+  border-top: 1px solid #ca8a04;
+  border-bottom: 2px solid #ca8a04;
+  cursor: pointer;
+  user-select: none;
+  transition: filter 0.15s ease;
+}
+
+.ut-category-banner:hover td {
+  filter: brightness(1.1);
+}
+
+/* Kasus Uji Badges (Normal vs Error) */
+.ut-badge-case {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.ut-badge-case.normal {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.ut-badge-case.error {
+  background: rgba(244, 63, 94, 0.15);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.4);
+}
+
+/* Prosedur & Kasus Uji Steps */
+.ut-proc-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ut-proc-step {
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: #cbd5e1;
+}
+
+/* Expected & Actual Results */
+.ut-expected {
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: #cbd5e1;
+}
+
+.col-tester-result {
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.uat-table tr:hover:not(.ut-category-banner) {
   background: rgba(255, 255, 255, 0.02);
 }
 

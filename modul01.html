@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Modul 01 — Dokumen Persiapan | Hello Project</title>
+  <meta name="description" content="Edisi interaktif Scroll-Craft: Modul 01 KasirKita. Arsitektur data master vs transaksi, SDLC, dan Activity Plan dengan dimensional scrollytelling.">
+
+  <!-- Google Fonts: Inter & DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Zero-FOUC Theme Initializer -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('kasirkita-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              925: '#111114',
+              950: '#09090b',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Scroll-Craft Engine Stylesheet -->
+  <link rel="stylesheet" href="assets/scrollcraft/scrollcraft.css">
+
+  <!-- ThreeJS CDN for subtle ambient atmosphere -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    /* ================= SCROLL-CRAFT DUAL-THEME OVERRIDES ================= */
+    :root {
+      --sc-canvas: #fcfcfd;
+      --sc-surface: rgba(255, 255, 255, 0.94);
+      --sc-ink: #18181b;
+      --sc-ink-soft: #71717a;
+      --sc-accent: #2563eb;
+      --sc-accent-ink: #ffffff;
+      --sc-hairline: rgba(228, 228, 231, 0.85);
+      --sc-hairline-strong: rgba(161, 161, 170, 0.4);
+      --sc-font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+      --sc-font-text: "Inter", system-ui, sans-serif;
+      --sc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    }
+
+    html.dark {
+      --sc-canvas: #09090b;
+      --sc-surface: rgba(18, 18, 21, 0.82);
+      --sc-ink: #f4f4f5;
+      --sc-ink-soft: #a1a1aa;
+      --sc-accent: #38bdf8;
+      --sc-accent-ink: #09090b;
+      --sc-hairline: rgba(255, 255, 255, 0.08);
+      --sc-hairline-strong: rgba(255, 255, 255, 0.16);
+    }
+
+    /* Architectural Cards for Chaptered Curriculum */
+    .arch-card {
+      background: var(--sc-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--sc-hairline);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: border-color 200ms ease, box-shadow 200ms ease, background-color 300ms ease;
+    }
+    .dark .arch-card {
+      box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .arch-card:hover {
+      border-color: var(--sc-hairline-strong);
+    }
+
+    /* Clean Collapsible Details Drawer */
+    .arch-details {
+      background: rgba(244, 244, 245, 0.6);
+      border: 1px solid rgba(228, 228, 231, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .arch-details > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(244, 244, 245, 0.9);
+      color: #18181b;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      list-style: none;
+      transition: background-color 200ms ease;
+    }
+    .dark .arch-details > summary {
+      background: rgba(255, 255, 255, 0.03);
+      color: #f4f4f5;
+    }
+    .arch-details > summary::-webkit-details-marker { display: none; }
+    .arch-details > summary::after {
+      content: "Detail Teknis ▾";
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #e4e4e7;
+      color: #3f3f46;
+      font-weight: 600;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details > summary::after {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d4d4d8;
+    }
+    .arch-details[open] > summary::after {
+      content: "Tutup ▴";
+      background: #18181b;
+      color: #ffffff;
+    }
+    .dark .arch-details[open] > summary::after {
+      background: #ffffff;
+      color: #09090b;
+    }
+
+    /* Ambient ThreeJS Container */
+    #three-particles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Signature Move Flow Animation */
+    .flow-line-active {
+      stroke-dasharray: 8 4;
+      animation: dashMove 1.2s linear infinite;
+    }
+    @keyframes dashMove {
+      to {
+        stroke-dashoffset: -24;
+      }
+    }
+  </style>
+</head>
+<body class="relative min-h-screen text-zinc-900 dark:text-zinc-100">
+
+  <!-- ================= TOP READING PROGRESS BAR ================= -->
+  <span data-sc-progress class="fixed top-0 left-0 right-0 h-[3px] bg-zinc-900 dark:bg-white z-50 origin-left scale-x-0 transition-transform duration-75"></span>
+
+  <!-- ================= TOP THEME TOGGLE CAPSULE (FLOATING & ACCESSIBLE) ================= -->
+  <aside class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-zinc-200 dark:border-white/10 bg-white/85 dark:bg-zinc-900/80 p-1.5 backdrop-blur-xl shadow-sm dark:shadow-2xl transition-colors duration-300" aria-label="Pengalih Mode Tampilan">
+    <button id="theme-btn-light" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Terang">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <span>Terang</span>
+    </button>
+    <button id="theme-btn-dark" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Gelap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></svg>
+      <span>Gelap</span>
+    </button>
+  </aside>
+
+  <!-- ================= TOP NAV CHROME ================= -->
+  <header class="fixed top-5 left-5 right-5 sm:left-8 sm:right-8 z-40 flex items-center justify-between pointer-events-none">
+    <a href="index.html" class="pointer-events-auto flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <span>⬡ HELLO PROJECT</span>
+    </a>
+    <a href="daftarModul.html" class="pointer-events-auto text-xs font-mono font-medium text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <span>Daftar Modul ↗</span>
+    </a>
+  </header>
+
+  <main id="top" class="w-full flex flex-col">
+
+    <!-- ================= ACT 01 · RECOGNITION: DIMENSIONAL SCRUB HERO ================= -->
+    <section data-sc-act="scrub" data-sc-span="2.5" data-sc-dwell="0.32" class="relative">
+      <div data-sc-stage class="sc-stage">
+        <!-- Live Poster Fallback -->
+        <img class="sc-stage__poster object-cover w-full h-full" src="assets/images/video_frame.jpg" alt="KasirKita 3D Abstract Architecture">
+        
+        <!-- Native Video Scrubber (Dense GOP Blob-accelerated) -->
+        <video data-sc-scrub data-sc-src="hf_bg_h264.mp4" playsinline muted class="absolute inset-0 w-full h-full object-cover"></video>
+        
+        <!-- Ambient Three.js Particles -->
+        <div id="three-particles"></div>
+
+        <!-- Scrim: Subtle Vignette + Lead Scrim to guarantee WCAG contrast -->
+        <div class="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none"></div>
+
+        <!-- Plane 2: Floating Track Pill (Parallax) -->
+        <div class="absolute top-24 left-5 sm:left-12 z-20" data-sc-parallax="0.12">
+          <div class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/50 px-3 py-1 backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-white font-semibold">
+              MODUL 01 · DOKUMEN PERSIAPAN
+            </span>
+          </div>
+        </div>
+
+        <!-- Plane 3: Kinetic Headline (Greet Cue: Visible immediately on load) -->
+        <div class="sc-copy sc-copy--lead max-w-3xl z-20 pb-16 sm:pb-20" data-sc-cue="0 0.82 0">
+          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.06] drop-shadow-2xl" data-sc-kinetic="lines">
+            Siapkan dokumen sebelum membuat program.
+          </h1>
+          <p class="sc-body text-base sm:text-lg text-white/85 mt-6 max-w-xl leading-relaxed drop-shadow-md">
+            Pilih tema, tetapkan scope, temukan atribut, lalu susun Probis dan Activity Plan. Fondasi arsitektur perangkat lunak yang kokoh dimulai di sini.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ACT 02 · TENSION: THE ARCHITECTURAL DILEMMA (PINNED) ================= -->
+    <section data-sc-act="pin" data-sc-span="2.8" class="relative">
+      <div data-sc-stage class="sc-stage flex items-center justify-center px-6 sm:px-12">
+        <div class="w-full max-w-2xl mx-auto flex flex-col justify-center relative min-h-[360px]">
+          
+          <!-- Beat 2.1: Early Coding Trap -->
+          <div class="absolute inset-0 flex flex-col justify-center" data-sc-cue="0 0.34 0">
+            <span class="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400 font-semibold mb-3">
+              01 / DILEMA AWAL
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-950 dark:text-white tracking-tight leading-tight">
+              Godaan langsung mengetik kode di editor.
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              Banyak programmer pemula langsung membuka text editor dan mengetik <code>main()</code>. Hasilnya: struktur kode tambal-sulam, nama atribut tidak konsisten, dan logika buntu di tengah jalan.
+            </p>
+          </div>
+
+          <!-- Beat 2.2: The Cost of Dirty Data -->
+          <div class="absolute inset-0 flex flex-col justify-center" data-sc-cue="0.30 0.68">
+            <span class="font-mono text-xs uppercase tracking-widest text-amber-500 font-semibold mb-3">
+              02 / RISIKO FATAL
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-950 dark:text-white tracking-tight leading-tight">
+              Membaurkan master dan transaksi merusak sistem.
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              Jika nota belanja menduplikasi nama dan harga barang secara mentah, setiap perubahan harga katalog akan merusak rekap histori masa lalu. File data menjadi kacau dan stok tidak pernah cocok.
+            </p>
+          </div>
+
+          <!-- Beat 2.3: The KasirKita Method -->
+          <div class="absolute inset-0 flex flex-col justify-center" data-sc-cue="0.64">
+            <span class="font-mono text-xs uppercase tracking-widest text-blue-500 font-semibold mb-3">
+              03 / SOLUSI SISTEMATIS
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-950 dark:text-white tracking-tight leading-tight">
+              Sembilan langkah fondasi yang dirancang presisi.
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              KasirKita mengajarkan pemisahan relasi acuan, batasan scope, dan siklus SDLC nyata sebelum menulis satu baris pun kode struct C.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ACT 03 · THE TURN: SIGNATURE MOVE (LIVE BLUEPRINT STROKE-BUILD) ================= -->
+    <section data-sc-act="pin" data-sc-span="3.4" id="act-signature-move" class="relative">
+      <div data-sc-stage class="sc-stage flex flex-col justify-center px-4 sm:px-8 py-12">
+        <div class="w-full max-w-4xl mx-auto flex flex-col">
+          
+          <!-- Header of Blueprint Stage -->
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-4 border-b border-zinc-200 dark:border-white/10 pb-3">
+            <div>
+              <span class="font-mono text-xs uppercase tracking-widest font-bold text-blue-600 dark:text-blue-400">
+                SIGNATURE MOVE · CETAK BIRU INTERAKTIF
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold text-zinc-950 dark:text-white tracking-tight mt-1">
+                Anatomi Relasi: Master vs Transaksi
+              </h2>
+            </div>
+            <div class="mt-2 sm:mt-0 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+              <span>Putar wheel scroll untuk mengalirkan data ▾</span>
+            </div>
+          </div>
+
+          <!-- Interactive SVG Blueprint Surface -->
+          <div class="relative w-full rounded-2xl border border-zinc-300 dark:border-white/15 bg-white dark:bg-zinc-925 p-4 sm:p-6 shadow-xl transition-colors duration-300">
+            <svg id="blueprint-svg" viewBox="0 0 780 290" fill="none" class="w-full h-auto rounded-xl" aria-label="Diagram Anatomi Master vs Transaksi Dinamis">
+              <defs>
+                <!-- Crisp Clean Grid Pattern -->
+                <pattern id="scGridClean" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="1" fill="currentColor" class="text-zinc-300 dark:text-white/10"/>
+                </pattern>
+                
+                <!-- Blue Rightward Flow Arrow Head -->
+                <marker id="scArrowHead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1 2 L 8 5 L 1 8 z" fill="#2563eb" class="dark:fill-[#38bdf8]"/>
+                </marker>
+                
+                <!-- Blue Downward Arrow Head (Points along +X so orient="auto" rotates correctly to point DOWN) -->
+                <marker id="scArrowDown" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1 2 L 8 5 L 1 8 z" fill="#2563eb" class="dark:fill-[#38bdf8]"/>
+                </marker>
+              </defs>
+
+              <!-- Layer 1: Blueprint Canvas Background -->
+              <rect width="780" height="290" rx="12" class="fill-zinc-50 dark:fill-zinc-950 stroke-zinc-200 dark:stroke-white/10" stroke-width="1"/>
+              <rect width="780" height="290" fill="url(#scGridClean)" rx="12"/>
+
+              <!-- Layer 2: 1. KOTAK MASTER (ACUAN STATIS) Container -->
+              <rect x="20" y="16" width="360" height="258" rx="10" class="fill-white/80 dark:fill-zinc-900/90 stroke-zinc-400 dark:stroke-zinc-600" stroke-width="1.5" stroke-dasharray="5 3"/>
+              <text x="36" y="40" class="fill-zinc-700 dark:fill-zinc-300 font-mono text-[11px] font-bold tracking-wider">1. KOTAK MASTER (ACUAN STATIS)</text>
+
+              <!-- Layer 3: Card Category -->
+              <rect id="card-cat" x="34" y="52" width="332" height="66" rx="8" class="fill-zinc-100 dark:fill-zinc-800/90 stroke-zinc-300 dark:stroke-white/10" stroke-width="1.2"/>
+              <text x="48" y="74" class="fill-zinc-900 dark:fill-white font-mono text-[12px] font-bold">CATEGORY</text>
+              <text x="48" y="93" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">PK: <tspan class="fill-zinc-900 dark:fill-white font-bold">id_cat: K01</tspan> &bull; name: &ldquo;Alat Tulis&rdquo;</text>
+              <text x="48" y="108" class="fill-zinc-500 font-mono text-[10px]">&bull; Bersifat acuan mandiri &bull; Jarang berubah</text>
+
+              <!-- Layer 4: Card Product -->
+              <rect id="card-prod" x="34" y="136" width="332" height="124" rx="8" class="fill-zinc-100 dark:fill-zinc-800/90 stroke-zinc-300 dark:stroke-white/10" stroke-width="1.2"/>
+              <text x="48" y="158" class="fill-zinc-900 dark:fill-white font-mono text-[12px] font-bold">PRODUCT (Katalog Acuan)</text>
+              <text x="48" y="178" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">PK: <tspan class="fill-zinc-900 dark:fill-white font-bold">id_prod: P001</tspan> &bull; FK: <tspan class="fill-blue-600 dark:fill-blue-400 font-bold">id_cat: K01 &larr;</tspan></text>
+              <text x="48" y="196" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">name: &ldquo;Buku Tulis A5&rdquo; &bull; price: Rp12.000</text>
+              
+              <!-- Divider inside Product -->
+              <line x1="48" y1="206" x2="352" y2="206" class="stroke-zinc-200 dark:stroke-white/10" stroke-width="1"/>
+              
+              <!-- Stock Rows with Right-aligned Pin 4 -->
+              <g id="stock-row-group">
+                <text x="48" y="224" id="stock-text" class="fill-red-600 dark:fill-red-400 font-mono text-[11px] font-bold transition-all duration-300">
+                  stock: 20 &rarr; 18 pcs (Terpotong -2)
+                </text>
+                <text x="48" y="240" class="fill-red-500/80 dark:fill-red-400/70 font-mono text-[10px]">
+                  Status: 2 pcs dialokasikan ke Struk #N001
+                </text>
+              </g>
+
+              <!-- Layer 5: 2. KOTAK TRANSAKSI (DINAMIS) Container -->
+              <rect x="430" y="16" width="330" height="258" rx="10" class="fill-white/80 dark:fill-zinc-900/90 stroke-zinc-400 dark:stroke-zinc-600" stroke-width="1.5"/>
+              <text x="446" y="40" class="fill-zinc-700 dark:fill-zinc-300 font-mono text-[11px] font-bold tracking-wider">2. KOTAK TRANSAKSI (DINAMIS)</text>
+
+              <!-- Card: Sale -->
+              <rect id="card-sale" x="444" y="52" width="302" height="208" rx="8" class="fill-zinc-100 dark:fill-zinc-800/90 stroke-zinc-300 dark:stroke-white/10" stroke-width="1.2"/>
+              <text x="458" y="74" class="fill-zinc-900 dark:fill-white font-mono text-[12px] font-bold">SALE (Nota Belanja Kasir)</text>
+              <text x="458" y="93" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">No. Struk: <tspan class="fill-amber-600 dark:fill-amber-400 font-bold">#N001</tspan> &bull; Pelanggan: <tspan class="fill-zinc-900 dark:fill-white font-semibold">C001 (Rani)</tspan></text>
+              
+              <text x="458" y="120" class="fill-zinc-500 font-mono text-[10px] tracking-wider uppercase font-semibold">ITEM BELANJA (PINJAM ID MASTER):</text>
+              
+              <!-- Highlight box for active transaction item -->
+              <rect id="row-item-highlight" x="454" y="130" width="282" height="34" rx="6" class="fill-blue-50/80 dark:fill-blue-950/40 stroke-blue-200 dark:stroke-blue-800/50" stroke-width="1"/>
+              <text x="468" y="151" class="fill-blue-700 dark:fill-blue-400 font-mono text-[11px] font-bold">&rarr; id_prod: P001 &bull; Qty: 2 pcs</text>
+
+              <!-- Financial recap -->
+              <text x="458" y="184" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">Subtotal: 2 &times; 12.000 = <tspan class="fill-emerald-600 dark:fill-emerald-400 font-bold">Rp24.000</tspan></text>
+              <text x="458" y="202" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">Bayar: Rp30.000 &bull; Kembali: <tspan class="fill-emerald-600 dark:fill-emerald-400 font-bold">Rp6.000</tspan></text>
+              
+              <line x1="458" y1="214" x2="732" y2="214" class="stroke-zinc-200 dark:stroke-white/10" stroke-width="1"/>
+              <text x="458" y="228" class="fill-zinc-500 font-mono text-[10px]">&bull; Mode: Append ke file data/penjualan.txt</text>
+              <text x="458" y="242" class="fill-zinc-500 font-mono text-[10px]">&bull; Tidak menduplikasi field nama atau kategori</text>
+
+              <!-- ================= LAYER 6: CONNECTING ARROWS ================= -->
+              <!-- 1. Category -> Product Downward Arrow -->
+              <path id="arrow-down-cat-prod"
+                    d="M 175 118 L 175 128" 
+                    stroke="#2563eb" 
+                    class="dark:stroke-[#38bdf8]"
+                    stroke-width="2" 
+                    stroke-linecap="round"
+                    marker-end="url(#scArrowDown)"/>
+
+              <!-- 2. Product -> SALE Signature Blue Flow Path (Smooth continuous bezier ending cleanly at row-item-highlight) -->
+              <circle cx="366" cy="178" r="3.5" class="fill-blue-600 dark:fill-blue-400"/>
+              <path id="signature-flow-path" 
+                    d="M 366 178 C 395 178, 415 147, 448 147" 
+                    stroke="#2563eb" 
+                    class="dark:stroke-[#38bdf8] transition-all duration-300"
+                    stroke-width="2.2" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    fill="none"
+                    marker-end="url(#scArrowHead)"/>
+
+              <!-- ================= LAYER 7: SOLID CIRCULAR PIN BADGES (IMAGE 2 STANDARD) ================= -->
+              <!-- Pin 1 Badge (inside Category card, top-right) -->
+              <g id="pin-1-group">
+                <circle id="pin-1-circle" cx="346" cy="74" r="10" class="fill-blue-600 dark:fill-blue-500 shadow-sm transition-all duration-300"/>
+                <text id="pin-1-num" x="346" y="78" text-anchor="middle" class="fill-white font-mono text-[11px] font-bold">1</text>
+              </g>
+
+              <!-- Pin 2 Badge (inside Product card, top-right) -->
+              <g id="pin-2-group">
+                <circle id="pin-2-circle" cx="346" cy="158" r="10" class="fill-blue-600 dark:fill-blue-500 shadow-sm transition-all duration-300"/>
+                <text id="pin-2-num" x="346" y="162" text-anchor="middle" class="fill-white font-mono text-[11px] font-bold">2</text>
+              </g>
+
+              <!-- Pin 3 Badge (inside active item row, right-side) -->
+              <g id="pin-3-group">
+                <circle id="pin-3-circle" cx="716" cy="147" r="10" class="fill-blue-600 dark:fill-blue-500 shadow-sm transition-all duration-300"/>
+                <text id="pin-3-num" x="716" y="151" text-anchor="middle" class="fill-white font-mono text-[11px] font-bold">3</text>
+              </g>
+
+              <!-- Pin 4 Badge (inside Product card, stock row right-side) -->
+              <g id="pin-4-group">
+                <circle id="pin-4-circle" cx="346" cy="226" r="10" class="fill-red-600 dark:fill-red-500 shadow-sm transition-all duration-300"/>
+                <text id="pin-4-num" x="346" y="230" text-anchor="middle" class="fill-white font-mono text-[11px] font-bold">4</text>
+              </g>
+            </svg>
+
+            <!-- Responsive Callout Legend (Clean Badges matching Image 2) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5 text-xs">
+              <div id="legend-1" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">1</span>
+                <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Primary Key (PK):</strong> ID paten unik K01, P001 mencegah duplikasi katalog.</span>
+              </div>
+              <div id="legend-2" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">2</span>
+                <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Master-ke-Master:</strong> Kategori K01 dimasukkan ke Produk P001 untuk rak.</span>
+              </div>
+              <div id="legend-3" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">3</span>
+                <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Foreign Key (FK):</strong> Nota meminjam P001 tanpa menduplikasi nama barang.</span>
+              </div>
+              <div id="legend-4" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-red-600 dark:bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">4</span>
+                <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Mutasi Stok:</strong> Transaksi otomatis memotong saldo stok master (-2).</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ACT 04 · SUBSTANCE: THE 9 SYSTEMATIC CHAPTERS (FLOW) ================= -->
+    <section class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300" data-sc-act="flow">
+      <div class="w-full max-w-4xl mx-auto">
+        
+        <div class="text-center mb-16" data-sc-in>
+          <span class="inline-block border border-zinc-300 dark:border-white/10 bg-zinc-100 dark:bg-zinc-800/60 px-3.5 py-1 rounded-full font-mono text-[11px] text-zinc-700 dark:text-zinc-300 uppercase tracking-widest mb-3 font-semibold">
+            KURIKULUM LENGKAP · 9 LANGKAH PEMBELAJARAN
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-zinc-950 dark:text-white tracking-tight">Perjalanan Modul 01</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base mt-2 max-w-lg mx-auto">
+            Pelajari setiap konsep, analogi nyata, bedah cetak biru, dan pola kode C secara teratur.
+          </p>
+        </div>
+
+        <div class="space-y-8" data-sc-in data-sc-stagger="50">
+
+          <!-- Langkah 01: SDLC -->
+          <article class="arch-card p-6 sm:p-8" id="sdlc">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 01 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 10 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Lihat perjalanan SDLC</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              SDLC menggambarkan siklus pengembangan project, bukan urutan membaca modul. Tahap pengujian bisa mengembalikan pekerjaan ke implementasi.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti merancang, membuat, mencoba, dan merawat sebuah rak.</p>
+            </div>
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Temukan jalur perbaikan dari pengujian kembali ke implementasi pada diagram SDLC.
+            </div>
+            <details class="arch-details mt-5">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                <p>SDLC adalah siklus pengembangan project, bukan urutan membaca modul. Gunakan zoom untuk menelusuri tahapan dan jalur perbaikan.</p>
+                <div class="p-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-white/10">
+                  <a href="diagrams/sdlc.html" target="_blank" class="text-zinc-900 dark:text-zinc-100 hover:underline font-semibold">Buka Diagram SDLC KasirKita Ukuran Penuh ↗</a>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 02: Tema -->
+          <article class="arch-card p-6 sm:p-8" id="tema">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 02 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 8 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Tentukan tema project</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Mulai dari masalah nyata. KasirKita membantu toko alat tulis mencatat produk, penjualan, dan nota.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti memilih tujuan perjalanan sebelum menentukan kendaraan.</p>
+            </div>
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Tuliskan masalah, pengguna, dan hasil yang dibutuhkan.
+            </div>
+          </article>
+
+          <!-- Langkah 03: Platform -->
+          <article class="arch-card p-6 sm:p-8" id="platform">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 03 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 12 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Bedakan desktop dan website</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Program latihan berjalan di console Windows; website Hello Project menjadi buku panduannya.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Buku di meja dan buku yang dibuka lewat browser sama-sama menyampaikan isi dengan cara berbeda.</p>
+            </div>
+          </article>
+
+          <!-- Langkah 04: Standalone -->
+          <article class="arch-card p-6 sm:p-8" id="standalone">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 04 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 6 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Standalone atau terintegrasi?</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Tentukan apakah program bekerja sendiri atau bertukar data dengan sistem lain. Latihan KasirKita berdiri sendiri dengan file TXT lokal.
+            </p>
+          </article>
+
+          <!-- Langkah 05: Scope -->
+          <article class="arch-card p-6 sm:p-8" id="scope">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 05 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 10 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Tentukan scope</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Scope membatasi apa yang akan dikerjakan dan apa yang ditunda untuk menjaga fokus tim.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Daftar pesanan membantu menghindari pekerjaan yang terus bertambah liar.</p>
+            </div>
+          </article>
+
+          <!-- Langkah 06: Data Master vs Transaksi Detail -->
+          <article class="arch-card p-6 sm:p-8 border-blue-500/40" id="data">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs uppercase tracking-wider text-zinc-800 dark:text-zinc-200 font-bold bg-zinc-200/70 dark:bg-white/10 px-2.5 py-1 rounded">
+                LANGKAH 06 / 09 · PILAR UTAMA
+              </span>
+              <span class="text-xs font-mono text-blue-600 dark:text-blue-400 font-semibold">★ Core Concept</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold text-zinc-950 dark:text-white tracking-tight">Pisahkan master dan transaksi</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Master adalah data acuan yang jarang berubah dan bisa masuk antar-master; transaksi adalah pencatatan kejadian yang isi datanya pasti berubah-ubah.
+            </p>
+            
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">
+                Empat kotak di meja: kotak kategori, barang, dan pelanggan adalah master yang datanya jarang berubah; kotak transaksi berisi nota belanja yang isinya pasti berubah-ubah setiap menit.
+              </p>
+            </div>
+
+            <!-- Table Comparison -->
+            <div class="mt-6 overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                    <th class="p-3">Aspek Pembeda</th>
+                    <th class="p-3">Entitas Master (Katalog)</th>
+                    <th class="p-3">Entitas Transaksi (Nota Belanja)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Sifat Data</td><td>Jarang Berubah (statis, acuan paten)</td><td>Pasti Berubah-Ubah (dinamis, bertambah terus)</td></tr>
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Relasi</td><td>Bisa saling terhubung (Kategori ➔ Produk)</td><td>Meminjam ID produk dari master (Foreign Key)</td></tr>
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Aktor Pengubah</td><td>Pemilik toko / admin katalog</td><td>Kasir yang melayani pembeli di mesin kasir</td></tr>
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Operasi File C</td><td>Dibaca ("r"/"rb"), diperbarui saat mutasi</td><td>Ditambah di akhir file mode append ("a"/"ab")</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- C Code Pattern -->
+            <div class="mt-6 rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
+              <div class="text-zinc-400 text-[11px] mb-2">// Pola Struct C: Master vs Transaksi</div>
+              <pre><code><span class="text-purple-400">typedef struct</span> {
+    <span class="text-blue-400">char</span> id_category[<span class="text-amber-400">21</span>];  <span class="text-zinc-500">// K01 (Primary Key Kategori)</span>
+    <span class="text-blue-400">char</span> name[<span class="text-amber-400">64</span>];         <span class="text-zinc-500">// Alat Tulis</span>
+} CategoryMaster;
+
+<span class="text-purple-400">typedef struct</span> {
+    <span class="text-blue-400">char</span> id_product[<span class="text-amber-400">21</span>];   <span class="text-zinc-500">// P001 (Primary Key Produk)</span>
+    <span class="text-blue-400">char</span> id_category[<span class="text-amber-400">21</span>];  <span class="text-zinc-500">// K01 (FK: Master ke Master!)</span>
+    <span class="text-blue-400">char</span> name[<span class="text-amber-400">128</span>];        <span class="text-zinc-500">// Buku Tulis A5</span>
+    <span class="text-blue-400">int</span> price;             <span class="text-zinc-500">// 12000</span>
+    <span class="text-blue-400">int</span> stock;             <span class="text-zinc-500">// 20</span>
+} ProductMaster;</code></pre>
+            </div>
+          </article>
+
+          <!-- Langkah 07: Atribut -->
+          <article class="arch-card p-6 sm:p-8" id="atribut">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 07 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 12 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Temukan atribut dari kebutuhan</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Cari data yang diperlukan dari formulir, nota, laporan, dan aturan bisnis. Kelompokkan atribut ke entitas mandiri.
+            </p>
+          </article>
+
+          <!-- Langkah 08: Probis -->
+          <article class="arch-card p-6 sm:p-8" id="probis">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 08 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 15 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Pahami dan gunakan Probis</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Probis menghubungkan aktivitas nyata menjadi input, proses, dan output yang bernilai bagi pemilik dan kasir.
+            </p>
+            <div class="mt-4">
+              <a href="probis.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-xs font-medium hover:opacity-90 transition-opacity">
+                Buka Materi Probis Lengkap ➔
+              </a>
+            </div>
+          </article>
+
+          <!-- Langkah 09: Activity Plan -->
+          <article class="arch-card p-6 sm:p-8" id="activity-plan">
+            <span id="activity" class="sr-only"></span>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 09 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 10 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Susun Activity Plan</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Activity Plan merencanakan kegiatan, penanggung jawab, waktu, hasil, dan status project sebelum memulai coding.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti jadwal kerja toko yang menetapkan pekerjaan, petugas, dan waktu.</p>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ACT 05 · COMMITMENT: RESOLVED CLOSE (PINNED + SPOTLIGHT) ================= -->
+    <section id="close-section" data-sc-act="pin" data-sc-span="1.25" class="relative">
+      <div data-sc-stage class="sc-stage flex items-center justify-center px-6" data-sc-spotlight>
+        <div class="w-full max-w-xl mx-auto flex flex-col items-center text-center p-8 rounded-3xl border border-zinc-300 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-2xl">
+          
+          <!-- Terminal Status Card -->
+          <div class="w-full bg-zinc-950 text-left rounded-xl p-4 font-mono text-xs text-zinc-300 border border-zinc-800 mb-6 shadow-inner" data-sc-cue="0.05">
+            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-zinc-800">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+              <span class="text-[11px] text-zinc-500 ml-2">kasirkita-audit.exe</span>
+            </div>
+            <div class="space-y-1 text-emerald-400">
+              <p>✔ [SDLC] Scope &amp; Probis Toko: Terverifikasi</p>
+              <p>✔ [MASTER] Relasi Kategori &amp; Produk P001: Siap</p>
+              <p>✔ [TRANSAKSI] Append-only Nota Belanja: Valid</p>
+              <p class="text-zinc-400 mt-2">&gt; Status Modul 01: LULUS. Siap melanjutkan ke Modul 02.</p>
+            </div>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-950 dark:text-white tracking-tight" data-sc-cue="0.08" data-sc-kinetic="lines">
+            Fondasi Selesai. Saatnya Menulis Kode.
+          </h2>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2 max-w-md">
+            Anda telah menyelesaikan 9 langkah persiapan dokumen. Lanjutkan ke modul berikutnya atau telaah daftar materi lengkap.
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 mt-6" data-sc-cue="0.10">
+            <a href="daftarModul.html" class="inline-flex items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 px-6 py-3 text-sm font-semibold hover:opacity-90 transition-opacity" data-sc-magnet="0.2">
+              Buka Daftar Modul ↗
+            </a>
+            <a href="project.html" class="inline-flex items-center justify-center rounded-full border border-zinc-300 dark:border-white/20 bg-white/60 dark:bg-zinc-800/60 px-6 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors">
+              Lihat Versi Klasik ↺
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= SCRIPTS ================= -->
+  <!-- 1. Scroll-Craft Runtime Engine -->
+  <script src="assets/scrollcraft/scrollcraft.js"></script>
+
+  <!-- 2. Main Page Orchestration & Signature Move Logic -->
+  <script>
+    // Initialize ScrollCraft Runtime
+    const sc = ScrollCraft.mount(document.body);
+
+    // Theme Management (Zero-FOUC & Reactive)
+    (function initThemeToggle() {
+      const btnLight = document.getElementById('theme-btn-light');
+      const btnDark = document.getElementById('theme-btn-dark');
+
+      function updateButtons(isDark) {
+        if (isDark) {
+          btnDark.classList.add('bg-zinc-800', 'text-white', 'shadow-sm');
+          btnDark.classList.remove('text-zinc-400');
+          btnLight.classList.remove('bg-zinc-200', 'text-zinc-900', 'shadow-sm');
+          btnLight.classList.add('text-zinc-400');
+        } else {
+          btnLight.classList.add('bg-zinc-200', 'text-zinc-900', 'shadow-sm');
+          btnLight.classList.remove('text-zinc-600');
+          btnDark.classList.remove('bg-zinc-800', 'text-white', 'shadow-sm');
+          btnDark.classList.add('text-zinc-600');
+        }
+      }
+
+      function setTheme(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('kasirkita-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('kasirkita-theme', 'light');
+        }
+        updateButtons(isDark);
+        if (window.updateThreeColor) window.updateThreeColor(isDark);
+      }
+
+      const initialDark = document.documentElement.classList.contains('dark');
+      updateButtons(initialDark);
+
+      if (btnLight) btnLight.addEventListener('click', () => setTheme(false));
+      if (btnDark) btnDark.addEventListener('click', () => setTheme(true));
+    })();
+
+    // Three.js Ambient Particles (Anti-Slop: Restrained, Non-Neon)
+    (function initThreeParticles() {
+      const container = document.getElementById('three-particles');
+      if (!container || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+      camera.position.z = 400;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+
+      const particleCount = 35;
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 800;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 800;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 400;
+      }
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const isDarkInit = document.documentElement.classList.contains('dark');
+      const material = new THREE.PointsMaterial({
+        size: 2,
+        color: isDarkInit ? 0xd4d4d8 : 0x71717a,
+        transparent: true,
+        opacity: isDarkInit ? 0.3 : 0.2,
+      });
+
+      const particles = new THREE.Points(geometry, material);
+      scene.add(particles);
+
+      window.updateThreeColor = function(isDark) {
+        material.color.setHex(isDark ? 0xd4d4d8 : 0x71717a);
+        material.opacity = isDark ? 0.3 : 0.2;
+      };
+
+      function animate() {
+        requestAnimationFrame(animate);
+        particles.rotation.y += 0.0003;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
+
+    // Bespoke Signature Move: Live Blueprint Stroke-Build & Stock Flux
+    (function initSignatureMove() {
+      const act = document.getElementById('act-signature-move');
+      const flowPath = document.getElementById('signature-flow-path');
+      const stockText = document.getElementById('stock-text');
+      const stockDelta = document.getElementById('stock-delta');
+      const itemRow = document.getElementById('row-item-highlight');
+      const pin1 = document.getElementById('pin-1-circle');
+      const pin1Num = document.getElementById('pin-1-num');
+      const pin2 = document.getElementById('pin-2-circle');
+      const pin2Num = document.getElementById('pin-2-num');
+      const pin3 = document.getElementById('pin-3-circle');
+      const pin3Num = document.getElementById('pin-3-num');
+      const pin4 = document.getElementById('pin-4-circle');
+      const leg1 = document.getElementById('legend-1');
+      const leg2 = document.getElementById('legend-2');
+      const leg3 = document.getElementById('legend-3');
+      const leg4 = document.getElementById('legend-4');
+
+      if (!act || !flowPath) return;
+
+      function updateBlueprint() {
+        // Read progress --sc-p from the act (published by scrollcraft.js)
+        const pRaw = parseFloat(getComputedStyle(act).getPropertyValue('--sc-p') || '0');
+        const p = Math.max(0, Math.min(1, pRaw));
+
+        // Stage 1: Primary Key (p: 0.1 - 0.3)
+        if (p >= 0.1) {
+          leg1.classList.add('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (pin1) pin1.classList.add('stroke-2', 'stroke-white');
+        } else {
+          leg1.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (pin1) pin1.classList.remove('stroke-2', 'stroke-white');
+        }
+
+        // Stage 2: Master-to-Master Product (p: 0.3 - 0.5)
+        if (p >= 0.3) {
+          leg2.classList.add('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (pin2) pin2.classList.add('stroke-2', 'stroke-white');
+        } else {
+          leg2.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (pin2) pin2.classList.remove('stroke-2', 'stroke-white');
+        }
+
+        // Stage 3: Foreign Key in Transaction (p: 0.5 - 0.75)
+        if (p >= 0.5) {
+          flowPath.classList.add('flow-line-active');
+          if (pin3) pin3.classList.add('stroke-2', 'stroke-white');
+          leg3.classList.add('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (itemRow) {
+            itemRow.classList.add('fill-blue-100', 'dark:fill-blue-900/60');
+          }
+        } else {
+          flowPath.classList.remove('flow-line-active');
+          if (pin3) pin3.classList.remove('stroke-2', 'stroke-white');
+          leg3.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (itemRow) {
+            itemRow.classList.remove('fill-blue-100', 'dark:fill-blue-900/60');
+          }
+        }
+
+        // Stage 4: Stock Mutation Flux (p: 0.75 - 1.0)
+        if (p >= 0.75) {
+          leg4.classList.add('ring-2', 'ring-red-500', 'bg-red-500/10');
+          if (pin4) pin4.classList.add('stroke-2', 'stroke-white');
+        } else {
+          leg4.classList.remove('ring-2', 'ring-red-500', 'bg-red-500/10');
+          if (pin4) pin4.classList.remove('stroke-2', 'stroke-white');
+        }
+
+        requestAnimationFrame(updateBlueprint);
+      }
+
+      requestAnimationFrame(updateBlueprint);
+    })();
+  </script>
+</body>
+</html>

@@ -3,5 +3,6 @@
   "testing": "files/CONTOH USER TESTING-95-100.pdf",
   "product_documentation": "files/Product Documentation.docx",
   "user_guide": "files/[Template] User Manual.docx",
-  "lib": "files/lib.h"
+  "lib": "files/lib.h",
+  "probis": "files/Contoh_Probis_KasirKita.md"
 }

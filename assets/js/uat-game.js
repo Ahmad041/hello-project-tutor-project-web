@@ -316,15 +316,16 @@
       if (statusCell) {
         statusCell.innerHTML = `<span class="uat-badge-status pass">✓ LULUS</span>`;
       }
-      const actualCell = targetRow.querySelector('.col-actual');
+      const actualCell = targetRow.querySelector('.col-tester-result') || targetRow.querySelector('.col-actual');
       if (actualCell) {
         const scenario = engine.SCENARIOS.find(s => s.id === scenarioId);
-        actualCell.textContent = scenario.expectedMessage;
+        actualCell.textContent = '✓ ' + scenario.expectedMessage;
         actualCell.style.color = '#34d399';
       }
       const dateCell = targetRow.querySelector('.col-date');
       if (dateCell) {
         dateCell.textContent = '16/10/2026';
+        dateCell.style.color = '#cbd5e1';
       }
 
       saveProgress();
@@ -352,7 +353,7 @@
         }, 800);
       } else {
         setTimeout(() => {
-          alert('🏆 LUAR BIASA! Seluruh 18 Misi UAT KasirKita Lulus 100%! Sistem siap rilis ke Toko Rani.');
+          alert('🏆 LUAR BIASA! Seluruh 18 Misi User Testing (UT) KasirKita Lulus 100%! Sistem siap rilis ke Toko Rani.');
         }, 800);
       }
     }
@@ -513,38 +514,85 @@
     });
   }
 
-  // Render Official Table Rows based on PDF Lampiran C
+  const CATEGORY_BANNERS = [
+    { group: 'login', title: 'LOGIN ADMIN (LG / MS)' },
+    { group: 'product_add', title: 'TAMBAH DATA PRODUK (PRD)' },
+    { group: 'product_view', title: 'LIHAT DATA PRODUK (PRD)' },
+    { group: 'product_edit_delete', title: 'EDIT & HAPUS DATA PRODUK (PRD)' }
+  ];
+
+  function formatProcedure(procText) {
+    if (!procText) return '-';
+    return procText.split('\n').map(line => {
+      const trimmed = line.trim();
+      return `<div class="ut-proc-step">${trimmed}</div>`;
+    }).join('');
+  }
+
+  // Render Official Table Rows based on Dokumen User Testing (UT)
   function renderTableRows() {
     const tbody = document.getElementById('uatTableBody');
     if (!tbody) return;
 
     tbody.innerHTML = '';
-    engine.SCENARIOS.forEach((sc, idx) => {
-      const isPassed = session.isScenarioPassed(sc.id);
-      const tr = document.createElement('tr');
-      tr.id = `row-${sc.id}`;
-      tr.className = isPassed ? 'row-passed' : '';
-      tr.style.cursor = 'pointer';
+    let globalIndex = 1;
 
-      tr.onclick = () => {
-        selectGroup(sc.group);
-        selectScenario(sc.id);
-      };
-
-      tr.innerHTML = `
-        <td style="font-weight:700;color:#94a3b8">${idx + 1}</td>
-        <td style="font-family:monospace;font-weight:700;color:var(--accent-cyan)">${sc.id}</td>
-        <td><strong>${sc.funcName}</strong></td>
-        <td><span style="font-size:10px;color:${sc.type === 'negative' ? '#f59e0b' : '#34d399'}">${sc.testType}</span></td>
-        <td style="font-size:10.5px">${sc.expected}</td>
-        <td class="col-actual" style="font-size:10.5px;color:${isPassed ? '#34d399' : '#64748b'}">${isPassed ? sc.expectedMessage : 'Belum diuji'}</td>
-        <td class="col-status">
-          <span class="uat-badge-status ${isPassed ? 'pass' : 'pending'}">${isPassed ? '✓ LULUS' : 'PENDING'}</span>
+    CATEGORY_BANNERS.forEach(cat => {
+      // Category banner row spanning all 9 columns matching Image 2
+      const bannerTr = document.createElement('tr');
+      bannerTr.className = 'ut-category-banner';
+      bannerTr.title = `Kategori: ${cat.title} (Klik untuk beralih level)`;
+      bannerTr.innerHTML = `
+        <td colspan="9">
+          <strong>${cat.title}</strong>
         </td>
-        <td style="font-size:10px;font-weight:700;color:#cbd5e1">${sc.tester}</td>
-        <td class="col-date" style="font-size:10px;color:#94a3b8">${isPassed ? '16/10/2026' : '-'}</td>
       `;
-      tbody.appendChild(tr);
+      bannerTr.onclick = () => {
+        selectGroup(cat.group);
+      };
+      tbody.appendChild(bannerTr);
+
+      // Scenarios in this category
+      const groupScenarios = engine.SCENARIOS.filter(s => s.group === cat.group);
+      groupScenarios.forEach(sc => {
+        const isPassed = session.isScenarioPassed(sc.id);
+        const tr = document.createElement('tr');
+        tr.id = `row-${sc.id}`;
+        tr.className = isPassed ? 'row-passed' : '';
+        tr.style.cursor = 'pointer';
+
+        tr.onclick = () => {
+          selectGroup(sc.group);
+          selectScenario(sc.id);
+        };
+
+        const caseBadge = sc.type === 'positive'
+          ? '<span class="ut-badge-case normal">Normal</span>'
+          : '<span class="ut-badge-case error">Error</span>';
+
+        tr.innerHTML = `
+          <td style="font-weight:700;color:#94a3b8;text-align:center;">${globalIndex++}</td>
+          <td style="font-family:monospace;font-weight:700;color:var(--accent-cyan);text-align:center;">${sc.id}</td>
+          <td><strong style="color:#f8fafc;">${sc.funcName}</strong></td>
+          <td style="text-align:center;">${caseBadge}</td>
+          <td>
+            <div class="ut-proc-container">${formatProcedure(sc.procedure)}</div>
+          </td>
+          <td>
+            <div class="ut-expected">${sc.expected}</div>
+          </td>
+          <td class="col-tester-result" style="color:${isPassed ? '#34d399' : '#64748b'};font-weight:600;">
+            ${isPassed ? '✓ ' + sc.expectedMessage : 'Belum diuji'}
+          </td>
+          <td class="col-date" style="font-size:10.5px;color:${isPassed ? '#cbd5e1' : '#64748b'};text-align:center;">
+            ${isPassed ? '16/10/2026' : '-'}
+          </td>
+          <td class="col-status" style="text-align:center;">
+            <span class="uat-badge-status ${isPassed ? 'pass' : 'pending'}">${isPassed ? '✓ LULUS' : 'PENDING'}</span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
     });
   }
 
@@ -580,7 +628,7 @@
 
     if (btnReset) {
       btnReset.onclick = () => {
-        if (confirm('Ulangi seluruh progres pengujian UAT dari awal?')) {
+        if (confirm('Ulangi seluruh progres pengujian User Testing (UT) dari awal?')) {
           session.reset();
           localStorage.removeItem(STORAGE_KEY);
           renderTableRows();

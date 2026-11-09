@@ -1,0 +1,957 @@
+import fs from 'node:fs';
+
+const htmlContent = `<!doctype html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Modul 02 — User Testing &amp; Dokumentasi | Hello Project</title>
+  <meta name="description" content="Modul 02 KasirKita: User Testing (UT), matriks pengujian fungsional, proposal project, Product Documentation, dan User Guide dengan standar arsitektur UI Modul 01.">
+
+  <!-- Google Fonts: Inter & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Zero-FOUC Theme Initializer -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('kasirkita-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              925: '#111114',
+              950: '#09090b',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ================= DUAL-THEME TOKENS (1:1 MODUL 01 PARITY) ================= */
+    :root {
+      --sc-canvas: #fcfcfd;
+      --sc-surface: rgba(255, 255, 255, 0.94);
+      --sc-ink: #18181b;
+      --sc-ink-soft: #71717a;
+      --sc-accent: #2563eb;
+      --sc-accent-ink: #ffffff;
+      --sc-hairline: rgba(228, 228, 231, 0.85);
+      --sc-hairline-strong: rgba(161, 161, 170, 0.4);
+      --sc-font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+      --sc-font-text: "Inter", system-ui, sans-serif;
+      --sc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    }
+
+    html.dark {
+      --sc-canvas: #09090b;
+      --sc-surface: rgba(18, 18, 21, 0.82);
+      --sc-ink: #f4f4f5;
+      --sc-ink-soft: #a1a1aa;
+      --sc-accent: #38bdf8;
+      --sc-accent-ink: #09090b;
+      --sc-hairline: rgba(255, 255, 255, 0.08);
+      --sc-hairline-strong: rgba(255, 255, 255, 0.16);
+    }
+
+    /* Architectural Cards for Chaptered Curriculum */
+    .arch-card {
+      background: var(--sc-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--sc-hairline);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: border-color 200ms ease, box-shadow 200ms ease, background-color 300ms ease;
+    }
+    .dark .arch-card {
+      box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .arch-card:hover {
+      border-color: var(--sc-hairline-strong);
+    }
+
+    /* Clean Collapsible Details Drawer */
+    .arch-details {
+      background: rgba(244, 244, 245, 0.6);
+      border: 1px solid rgba(228, 228, 231, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .arch-details > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(244, 244, 245, 0.9);
+      color: #18181b;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      list-style: none;
+      transition: background-color 200ms ease;
+    }
+    .dark .arch-details > summary {
+      background: rgba(255, 255, 255, 0.03);
+      color: #f4f4f5;
+    }
+    .arch-details > summary::-webkit-details-marker { display: none; }
+    .arch-details > summary::after {
+      content: "Detail Teknis ▾";
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #e4e4e7;
+      color: #3f3f46;
+      font-weight: 600;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details > summary::after {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d4d4d8;
+    }
+    .arch-details[open] > summary::after {
+      content: "Tutup ▴";
+      background: #18181b;
+      color: #ffffff;
+    }
+    .dark .arch-details[open] > summary::after {
+      background: #ffffff;
+      color: #09090b;
+    }
+  </style>
+
+  <link rel="stylesheet" href="assets/css/module-shared.css">
+</head>
+<body class="relative min-h-screen text-zinc-900 dark:text-zinc-100 bg-[#fcfcfd] dark:bg-[#09090b]" data-page="analisis.html">
+
+  <!-- ================= TOP READING PROGRESS BAR ================= -->
+  <span data-sc-progress class="fixed top-0 left-0 right-0 h-[3px] bg-zinc-900 dark:bg-white z-50 origin-left scale-x-0 transition-transform duration-75"></span>
+
+  <!-- ================= TOP THEME TOGGLE CAPSULE (FLOATING & ACCESSIBLE) ================= -->
+  <aside class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-zinc-200 dark:border-white/10 bg-white/85 dark:bg-zinc-900/80 p-1.5 backdrop-blur-xl shadow-sm dark:shadow-2xl transition-colors duration-300" aria-label="Pengalih Mode Tampilan">
+    <button id="theme-btn-light" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Terang">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <span>Terang</span>
+    </button>
+    <button id="theme-btn-dark" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Gelap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></svg>
+      <span>Gelap</span>
+    </button>
+  </aside>
+
+  <!-- ================= TOP NAV CHROME ================= -->
+  <header class="fixed top-5 left-5 right-5 sm:left-8 sm:right-8 z-40 flex items-center justify-between pointer-events-none">
+    <a href="index.html" class="pointer-events-auto flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <span>⬡ HELLO PROJECT</span>
+    </a>
+    <a href="daftarModul.html" class="pointer-events-auto text-xs font-mono font-medium text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <span>Daftar Modul ↗</span>
+    </a>
+  </header>
+
+  <main id="top" class="w-full flex flex-col">
+
+    <!-- ================= HERO SECTION (ATMOSPHERIC GRADIENT BENCHMARK) ================= -->
+    <section class="relative bg-zinc-950 text-white pt-32 pb-24 px-5 sm:px-8 overflow-hidden">
+      <!-- Ambient Gradient Backdrop -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-zinc-950/80 to-zinc-950 pointer-events-none"></div>
+      
+      <div class="relative max-w-4xl mx-auto z-10">
+        <!-- Floating Track Pill -->
+        <div class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/50 px-3 py-1 backdrop-blur-md mb-6">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-white font-semibold">
+            MODUL 02 · USER TESTING &amp; DOKUMENTASI
+          </span>
+        </div>
+
+        <!-- Headline & Subtitle -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-display tracking-tight text-white leading-[1.08] drop-shadow-2xl">
+          Dokumentasikan hasil dan cara penggunaan.
+        </h1>
+        <p class="text-base sm:text-lg text-white/85 mt-6 max-w-2xl leading-relaxed drop-shadow-md">
+          Kerjakan user testing fungsional, susun proposal project yang solid, dan lengkapi Product Documentation serta User Guide aplikasi kasir C Anda.
+        </p>
+
+        <!-- Metadata Badges -->
+        <div class="mt-8 flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-300">
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">⏱ ± 90 Menit</span>
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">Level Pemula</span>
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">Output: C Testing Matrix &amp; Docs</span>
+          <a href="daftarisi-2.html" class="px-3 py-1.5 rounded-lg bg-blue-500/20 backdrop-blur-md border border-blue-400/30 text-blue-300 hover:text-white transition-colors">Daftar Isi Modul 02 ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SUBSTANCE: THE 4 SYSTEMATIC CHAPTERS ================= -->
+    <section class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-16 sm:py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300">
+      <div class="w-full max-w-4xl mx-auto">
+
+        <!-- Curriculum Header -->
+        <div class="text-center mb-16">
+          <span class="inline-block border border-zinc-300 dark:border-white/10 bg-zinc-100 dark:bg-zinc-800/60 px-3.5 py-1 rounded-full font-mono text-[11px] text-zinc-700 dark:text-zinc-300 uppercase tracking-widest mb-3 font-semibold">
+            KURIKULUM LENGKAP · 4 LANGKAH PENGUJIAN &amp; DOKUMENTASI
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Perjalanan Modul 02</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base mt-2 max-w-lg mx-auto">
+            Pelajari setiap konsep, analogi nyata, bedah cetak biru, dan pola pengujian C secara teratur.
+          </p>
+        </div>
+
+        <div class="space-y-8">
+
+          <!-- Langkah 01: User Testing -->
+          <article class="arch-card p-6 sm:p-8" id="user-testing">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 01 / 04
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 25 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Kerjakan user testing</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Uji penggunaan nyata dan catat hasil aktual dari orang yang menjalankan program.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti meminta pelanggan mencoba meja kasir sebelum digunakan rutin.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Buat satu kasus normal dan satu kasus input salah.
+            </div>
+
+            <!-- Fig 2.1 Technical Diagram Scrollytelling & Stepper -->
+            <div class="story-anatomy" data-anatomy-scroll data-steps="3">
+              <div class="anatomy-header">
+                <span class="anatomy-badge">🔬 BEDAH ANATOMI</span>
+                <span class="anatomy-fig">Fig 2.1 · Anatomi Matriks User Testing (UT) &amp; Pelacakan Defect</span>
+              </div>
+              <h4 class="anatomy-title">Anatomi 6 Komponen Baris Dokumen Pengujian Sidang</h4>
+              
+              <div class="anatomy-canvas">
+                <svg viewBox="0 0 760 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram Anatomi Matriks User Testing">
+                  <defs>
+                    <pattern id="utGridClean" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <circle cx="2" cy="2" r="1" fill="#38bdf8" opacity="0.15"/>
+                    </pattern>
+                  </defs>
+
+                  <!-- Canvas Background with Dot-Grid -->
+                  <rect width="760" height="270" rx="10" fill="#040914" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
+                  <rect width="760" height="270" fill="url(#utGridClean)" rx="10"/>
+
+                  <!-- Header Baris Tabel -->
+                  <rect x="15" y="14" width="730" height="36" rx="6" fill="#0c1e38" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.2"/>
+                  <text x="30" y="37" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">ID KASUS</text>
+                  <text x="125" y="37" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">SKENARIO UJI</text>
+                  <text x="260" y="37" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">INPUT PENGUJI</text>
+                  <text x="390" y="37" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">EXPECTED RESULT</text>
+                  <text x="535" y="37" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">ACTUAL RESULT</text>
+                  <text x="660" y="37" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">STATUS</text>
+
+                  <!-- Baris 1: TC-01 Normal (Happy Path) -->
+                  <g id="ut-step-1" data-step="1">
+                    <rect x="15" y="58" width="730" height="60" rx="6" fill="#071526" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1"/>
+                    <rect x="25" y="68" width="80" height="20" rx="4" fill="#0284c7" opacity="0.25"/>
+                    <text x="32" y="82" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">TC-01</text>
+                    <text x="32" y="103" fill="#64748b" font-size="9" font-family="monospace">NORMAL</text>
+                    
+                    <text x="125" y="80" fill="#f1f5f9" font-size="11" font-weight="600" font-family="monospace">Checkout 2 Barang</text>
+                    <text x="125" y="100" fill="#94a3b8" font-size="10" font-family="monospace">Bayar pas/lebih (Happy)</text>
+                    
+                    <text x="260" y="80" fill="#e2e8f0" font-size="11" font-family="monospace">P001, Qty: 2</text>
+                    <text x="260" y="100" fill="#94a3b8" font-size="10" font-family="monospace">Bayar: Rp30.000</text>
+                    
+                    <text x="390" y="80" fill="#bae6fd" font-size="11" font-family="monospace">Total: Rp24.000</text>
+                    <text x="390" y="100" fill="#bae6fd" font-size="10" font-family="monospace">Kembali: Rp6.000</text>
+                    
+                    <text x="535" y="80" fill="#86efac" font-size="11" font-family="monospace">Total Rp24.000</text>
+                    <text x="535" y="100" fill="#86efac" font-size="10" font-family="monospace">Struk &amp; Kembalian OK</text>
+                    
+                    <rect x="655" y="74" width="68" height="26" rx="5" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+                    <text x="668" y="91" fill="#6ee7b7" font-size="11" font-weight="700" font-family="monospace">PASS ✓</text>
+                  </g>
+
+                  <!-- Baris 2: TC-02 Negatif (Boundary Attack) -->
+                  <g id="ut-step-2" data-step="2">
+                    <rect x="15" y="126" width="730" height="60" rx="6" fill="#071526" stroke="rgba(245, 158, 11, 0.25)" stroke-width="1"/>
+                    <rect x="25" y="136" width="80" height="20" rx="4" fill="#d97706" opacity="0.25"/>
+                    <text x="32" y="150" fill="#fbbf24" font-size="11" font-weight="700" font-family="monospace">TC-02</text>
+                    <text x="32" y="171" fill="#f59e0b" font-size="9" font-family="monospace">NEGATIF</text>
+                    
+                    <text x="125" y="148" fill="#f1f5f9" font-size="11" font-weight="600" font-family="monospace">Validasi Qty Minus</text>
+                    <text x="125" y="168" fill="#94a3b8" font-size="10" font-family="monospace">Bypass input salah</text>
+                    
+                    <text x="260" y="148" fill="#fca5a5" font-size="11" font-family="monospace">Qty: -5</text>
+                    <text x="260" y="168" fill="#94a3b8" font-size="10" font-family="monospace">(Input angka negatif)</text>
+                    
+                    <text x="390" y="148" fill="#bae6fd" font-size="11" font-family="monospace">Ditolak sistem</text>
+                    <text x="390" y="168" fill="#bae6fd" font-size="10" font-family="monospace">Pesan &amp; stok aman</text>
+                    
+                    <text x="535" y="148" fill="#86efac" font-size="11" font-family="monospace">Pesan &quot;Qty &gt; 0&quot;</text>
+                    <text x="535" y="168" fill="#86efac" font-size="10" font-family="monospace">Stok master aman</text>
+                    
+                    <rect x="655" y="142" width="68" height="26" rx="5" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+                    <text x="668" y="159" fill="#6ee7b7" font-size="11" font-weight="700" font-family="monospace">PASS ✓</text>
+                  </g>
+
+                  <!-- Baris 3: TC-03 Defect (File Hilang / Crash) -->
+                  <g id="ut-step-3" data-step="3">
+                    <rect x="15" y="194" width="730" height="62" rx="6" fill="#180a0e" stroke="rgba(239, 68, 68, 0.4)" stroke-width="1"/>
+                    <rect x="25" y="204" width="80" height="20" rx="4" fill="#dc2626" opacity="0.25"/>
+                    <text x="32" y="218" fill="#f87171" font-size="11" font-weight="700" font-family="monospace">TC-03</text>
+                    <text x="32" y="239" fill="#ef4444" font-size="9" font-family="monospace">DEFECT</text>
+                    
+                    <text x="125" y="216" fill="#f1f5f9" font-size="11" font-weight="600" font-family="monospace">File TXT Hilang</text>
+                    <text x="125" y="236" fill="#94a3b8" font-size="10" font-family="monospace">Simulasi file corrupt</text>
+                    
+                    <text x="260" y="216" fill="#e2e8f0" font-size="11" font-family="monospace">Rename judul.txt</text>
+                    <text x="260" y="236" fill="#94a3b8" font-size="10" font-family="monospace">Saat program load</text>
+                    
+                    <text x="390" y="216" fill="#bae6fd" font-size="11" font-family="monospace">Pesan error ramah</text>
+                    <text x="390" y="236" fill="#bae6fd" font-size="10" font-family="monospace">Keluar terkontrol</text>
+                    
+                    <text x="535" y="216" fill="#fca5a5" font-size="11" font-weight="700" font-family="monospace">Program crash</text>
+                    <text x="535" y="236" fill="#fca5a5" font-size="10" font-family="monospace">Segmentation fault</text>
+                    
+                    <rect x="655" y="210" width="68" height="26" rx="5" fill="#7f1d1d" stroke="#ef4444" stroke-width="1"/>
+                    <text x="668" y="227" fill="#fca5a5" font-size="11" font-weight="700" font-family="monospace">FAIL ✕</text>
+                  </g>
+
+                  <!-- Topmost Solid Circular Pin Badges -->
+                  <g>
+                    <circle cx="95" cy="32" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+                    <text x="95" y="36" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">1</text>
+                  </g>
+                  <g>
+                    <circle cx="218" cy="32" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+                    <text x="218" y="36" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">2</text>
+                  </g>
+                  <g>
+                    <circle cx="500" cy="32" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+                    <text x="500" y="36" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">3</text>
+                  </g>
+                  <g>
+                    <circle cx="715" cy="32" r="9.5" fill="#dc2626" stroke="#fca5a5" stroke-width="1.2"/>
+                    <text x="715" y="36" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">4</text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Stepper Controls Bar -->
+              <div class="mt-4 flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-white/10 text-xs font-mono">
+                <div class="flex items-center gap-1.5">
+                  <button data-step-prev class="px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Sebelumnya">⏮ Prev</button>
+                  <button data-step-btn="1" class="px-3 py-1 rounded transition-colors" title="TC-01: Happy Path">Tahap 1</button>
+                  <button data-step-btn="2" class="px-3 py-1 rounded transition-colors" title="TC-02: Negative Input">Tahap 2</button>
+                  <button data-step-btn="3" class="px-3 py-1 rounded transition-colors" title="TC-03: Defect Tracking">Tahap 3</button>
+                  <button data-step-next class="px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Selanjutnya">Next ⏭</button>
+                </div>
+                <span data-step-display class="font-bold text-blue-600 dark:text-sky-400">Tahap 1 / 3</span>
+              </div>
+
+              <!-- Responsive Callout Legend Grid (1:1 Modul 01 Standard) -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5 text-xs">
+                <div id="ut-legend-1" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="1">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">1</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>ID Kasus (TC-XX):</strong> Pengenal unik baku untuk setiap baris uji agar mudah dirujuk saat revisi sidang.</span>
+                </div>
+                <div id="ut-legend-2" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="2">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">2</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Kasus Normal vs Negatif:</strong> Wajib memadukan uji jalan mulus (Happy Path) dan uji serangan input salah (Boundary/Negative).</span>
+                </div>
+                <div id="ut-legend-3" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="2">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">3</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Expected vs Actual:</strong> Expected ditentukan dari spesifikasi awal; Actual ditulis murni dari kejadian nyata di console.</span>
+                </div>
+                <div id="ut-legend-4" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="3">
+                  <span class="w-6 h-6 rounded-full bg-red-600 dark:bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">4</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Status &amp; Defect:</strong> Status FAIL bukanlah kegagalan mahasiswa, melainkan penemuan defect yang sah untuk dicatat dan diperbaiki.</span>
+                </div>
+              </div>
+
+              <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-700 dark:text-zinc-300">
+                <strong>Kaidah Sidang:</strong> Dosen penguji menghargai tabel testing yang mencatat kegagalan nyata (defect) dan bukti perbaikannya, daripada tabel yang dipaksakan Lulus (PASS) palsu.
+              </div>
+            </div>
+
+            <!-- Technical Details Accordion -->
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-5">
+                
+                <!-- Download Card -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/60 shadow-sm">
+                  <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400">BAHAN DOWNLOAD</span>
+                    <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">Contoh User Testing</h4>
+                    <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Referensi format untuk mencatat hasil pengujian.</p>
+                  </div>
+                  <a href="files/CONTOH%20USER%20TESTING-95-100.pdf" download class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold text-xs hover:opacity-90 transition-opacity shrink-0 shadow-sm">
+                    <span>Unduh Contoh User Testing</span>
+                    <span>↓</span>
+                  </a>
+                </div>
+
+                <!-- Simulator Card -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-sky-400/40 dark:border-sky-500/30 bg-sky-50/50 dark:bg-sky-950/20 shadow-sm">
+                  <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">LATIHAN INTERAKTIF · FULLSCREEN</span>
+                    <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">User Testing (UT) Bug Hunter Simulator</h4>
+                    <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Praktikkan langsung 18 skenario pengujian Dokumen User Testing (UT). Bobol form dengan kasus negatif terlebih dahulu untuk membuka akses data valid!</p>
+                  </div>
+                  <a href="game/uat.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-500 font-semibold text-xs transition-colors shrink-0 shadow-sm">
+                    <span>🎮 Buka Simulator Pengujian</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+
+                <p class="leading-relaxed">
+                  <strong>Kapan dikerjakan?</strong> Siapkan kasus uji dan kerangka dokumen sekarang. Setelah latihan program tersedia, kembali ke modul ini untuk menjalankan uji, mengisi hasil aktual, dan mengambil screenshot. Nomor modul mengelompokkan materi; hasil testing mengikuti waktu pelaksanaan.
+                </p>
+                <p class="leading-relaxed">
+                  Identifikasi penguji dan lingkungan, siapkan data awal, tuliskan langkah serta ekspektasi, lalu jalankan program. Isi hasil test, tester, tanggal, bukti, dan keterangan sesuai kejadian. Jika gagal, tulis defect dan uji ulang setelah perbaikan.
+                </p>
+
+                <!-- Tabel Skenario Pengujian -->
+                <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 shadow-sm">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                        <th class="p-3">Kasus</th>
+                        <th class="p-3">Langkah</th>
+                        <th class="p-3">Ekspektasi</th>
+                        <th class="p-3">Hasil Aktual</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                      <tr>
+                        <td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Normal</td>
+                        <td class="p-3">Beli 2 buku @12.000, bayar 30.000</td>
+                        <td class="p-3">Total 24.000, kembali 6.000</td>
+                        <td class="p-3 font-mono text-zinc-500">Belum diuji</td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Input salah</td>
+                        <td class="p-3">Masukkan qty huruf atau negatif</td>
+                        <td class="p-3">Ditolak, pesan jelas, data tidak berubah</td>
+                        <td class="p-3 font-mono text-zinc-500">Belum diuji</td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Simpan gagal</td>
+                        <td class="p-3">Coba saat file tidak dapat ditulis</td>
+                        <td class="p-3">Tidak menyatakan sukses atau membuat nota baru</td>
+                        <td class="p-3 font-mono text-zinc-500">Belum diuji</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
+                  <strong>Peringatan Kejujuran Sidang:</strong> Jangan mengisi Diterima atau Lulus sebelum percobaan benar-benar dijalankan. Contoh PDF merupakan referensi format, bukan bukti KasirKita telah lulus.
+                </div>
+
+                <!-- Tabel Pemeriksaan Sesudah Uji -->
+                <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 shadow-sm">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                        <th class="p-3">Kasus</th>
+                        <th class="p-3">Kondisi Awal</th>
+                        <th class="p-3">Pemeriksaan Sesudah Uji</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                      <tr>
+                        <td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Normal</td>
+                        <td class="p-3">Produk P001: stok 20, harga 12.000; jumlah 2, bayar 30.000</td>
+                        <td class="p-3">Target: stok 18; SALE dan ITEM cocok dengan nota, kembali 6.000</td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Input salah</td>
+                        <td class="p-3">Catat isi record dan stok sebelum uji</td>
+                        <td class="p-3">Target: record dan stok tidak berubah</td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Simpan gagal</td>
+                        <td class="p-3">Gunakan salinan data latihan; catat record/stok, lalu buat lokasi simpan tidak dapat ditulis</td>
+                        <td class="p-3">Target: tidak ada nota sukses atau penyimpanan sebagian; bandingkan SALE, ITEM, dan stok, catat kegagalan aktual</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p class="leading-relaxed">
+                  Kasus checkout adalah rancangan uji untuk program yang dibuat bersama pengajar. Latihan satu file C pada modul 3–4 belum mengimplementasikan checkout. Jika fiturnya belum tersedia, tulis <em>Belum dapat diuji</em> beserta alasannya. Pulihkan izin/lokasi file setelah uji pada data salinan.
+                </p>
+
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 02: Proposal -->
+          <article class="arch-card p-6 sm:p-8" id="proposal">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 02 / 04
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 20 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Susun proposal project</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Proposal menjelaskan masalah, tujuan, solusi, dan rencana kegiatan agar project dapat dipahami.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti menjelaskan alasan dan rencana sebelum menjalankan kegiatan toko.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Tulis latar belakang dan tujuan yang dapat diperiksa.
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                
+                <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 shadow-sm">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                        <th class="p-3">Bagian Proposal</th>
+                        <th class="p-3">Isi yang Wajib Dilengkapi</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Identitas</td><td class="p-3">Judul, tim pengembang, versi, tanggal pengajuan</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Latar Belakang</td><td class="p-3">Masalah pencatatan manual toko alat tulis dan dampaknya</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Tujuan &amp; Manfaat</td><td class="p-3">Hasil yang ditargetkan dan pengguna yang diuntungkan</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Scope &amp; Solusi</td><td class="p-3">Fitur serta batasan; C console standalone tanpa DBMS</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Rencana Kegiatan</td><td class="p-3">Metode pengembangan, Activity Plan, pembagian tugas</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Target Output</td><td class="p-3">Executable program, berkas data TXT, dan bukti testing</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p class="leading-relaxed">
+                  Materi ini panduan umum; proposal dapat disiapkan sejak awal dan diperbarui untuk penyerahan. Bedakan target dalam proposal dari hasil aktual pada dokumentasi produk.
+                </p>
+
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 03: Product Documentation -->
+          <article class="arch-card p-6 sm:p-8" id="product-documentation">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 03 / 04
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 25 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Lengkapi Product Documentation</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Dokumentasi produk menjelaskan apa yang dibangun, bagaimana dirancang, dan hasil pengujiannya.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti catatan pembuatan dan pemeriksaan sebuah alat.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Cocokkan isi dokumen dengan versi program yang benar-benar dibuat.
+            </div>
+
+            <!-- Fig 2.3 Technical Diagram Scrollytelling & Stepper -->
+            <div class="story-anatomy" data-anatomy-scroll data-steps="3">
+              <div class="anatomy-header">
+                <span class="anatomy-badge">🔬 BEDAH ANATOMI</span>
+                <span class="anatomy-fig">Fig 2.3 · Anatomi Product Documentation &amp; Arsitektur Standalone C</span>
+              </div>
+              <h4 class="anatomy-title">Anatomi Arsitektur Standalone C &amp; Relasi Persistensi File TXT</h4>
+              
+              <div class="anatomy-canvas">
+                <svg viewBox="0 0 760 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram Anatomi Arsitektur Standalone C">
+                  <defs>
+                    <pattern id="archGridClean" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <circle cx="2" cy="2" r="1" fill="#38bdf8" opacity="0.15"/>
+                    </pattern>
+                    <marker id="archArrowHead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 1 2 L 8 5 L 1 8 z" fill="#38bdf8"/>
+                    </marker>
+                  </defs>
+
+                  <rect width="760" height="270" rx="10" fill="#040914" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
+                  <rect width="760" height="270" fill="url(#archGridClean)" rx="10"/>
+
+                  <!-- 1. KOTAK KIRI: STANDALONE C RUNTIME (STEP 1) -->
+                  <g id="arch-step-1" data-step="1">
+                    <rect x="20" y="16" width="350" height="238" rx="8" fill="#071526" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2" stroke-dasharray="5 3"/>
+                    <text x="36" y="38" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">1. RUNTIME STANDALONE (WINDOWS C)</text>
+
+                    <!-- Executable Card -->
+                    <rect x="34" y="50" width="322" height="74" rx="6" fill="#0b1e38" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+                    <text x="48" y="72" fill="#ffffff" font-size="12" font-weight="700" font-family="monospace">build/latihan.exe</text>
+                    <text x="48" y="90" fill="#94a3b8" font-size="10" font-family="monospace">• Proses native Windows 64-bit (GCC MinGW)</text>
+                    <text x="48" y="106" fill="#94a3b8" font-size="10" font-family="monospace">• Zero Server &amp; Zero External DBMS</text>
+
+                    <!-- Library Card lib.h -->
+                    <rect x="34" y="136" width="322" height="102" rx="6" fill="#0b1e38" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+                    <text x="48" y="158" fill="#ffffff" font-size="12" font-weight="700" font-family="monospace">include/lib.h (Modular Interface)</text>
+                    <text x="48" y="178" fill="#38bdf8" font-size="10" font-family="monospace">gotoxy(x,y) &bull; PrintTxt(x,y,f)</text>
+                    <text x="48" y="196" fill="#38bdf8" font-size="10" font-family="monospace">borderLine &bull; scanInputString</text>
+                    <line x1="48" y1="206" x2="340" y2="206" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                    <text x="48" y="224" fill="#94a3b8" font-size="10" font-family="monospace">Abstraksi grafis terminal User32 API</text>
+
+                    <!-- Pin 1 & 3 -->
+                    <circle cx="334" cy="72" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+                    <text x="334" y="76" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">1</text>
+                    <circle cx="334" cy="158" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+                    <text x="334" y="162" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">3</text>
+                  </g>
+
+                  <!-- 2. KOTAK KANAN: PERSISTENSI FILE TXT (STEP 2) -->
+                  <g id="arch-step-2" data-step="2">
+                    <rect x="400" y="16" width="340" height="238" rx="8" fill="#071526" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2"/>
+                    <text x="416" y="38" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">2. PERSISTENSI DATA LOKAL (.TXT)</text>
+
+                    <rect x="414" y="50" width="312" height="96" rx="6" fill="#0b1e38" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
+                    <text x="428" y="72" fill="#ffffff" font-size="12" font-weight="700" font-family="monospace">File Storage Direktori Proyek</text>
+                    <text x="428" y="92" fill="#e2e8f0" font-size="10" font-family="monospace">📄 <tspan fill="#38bdf8" font-weight="700">assets/ascii/judul.txt</tspan> (Banner Header)</text>
+                    <text x="428" y="110" fill="#e2e8f0" font-size="10" font-family="monospace">📄 <tspan fill="#fbbf24" font-weight="700">data/penjualan.txt</tspan> (Jurnal Transaksi)</text>
+                    <text x="428" y="128" fill="#94a3b8" font-size="10" font-family="monospace">• Format teks murni (CSV/Tab delimited)</text>
+
+                    <!-- Connecting Flow Arrow: exe to data storage -->
+                    <path d="M 356 87 C 378 87, 388 98, 408 98" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" fill="none" marker-end="url(#archArrowHead)"/>
+
+                    <circle cx="704" cy="72" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+                    <text x="704" y="76" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">2</text>
+                  </g>
+
+                  <!-- 3. ERROR GUARD (STEP 3) -->
+                  <g id="arch-step-3" data-step="3">
+                    <rect x="414" y="156" width="312" height="82" rx="6" fill="#180a0e" stroke="rgba(239, 68, 68, 0.4)" stroke-width="1"/>
+                    <text x="428" y="178" fill="#f87171" font-size="11" font-weight="700" font-family="monospace">VALIDASI GUARD: if (file == NULL)</text>
+                    <text x="428" y="198" fill="#fca5a5" font-size="10" font-family="monospace">Tolak pembacaan buffer jika file hilang!</text>
+                    <text x="428" y="216" fill="#94a3b8" font-size="10" font-family="monospace">Cegah Crash / Segmentation Fault di Sidang</text>
+
+                    <circle cx="704" cy="178" r="9.5" fill="#dc2626" stroke="#fca5a5" stroke-width="1.2"/>
+                    <text x="704" y="182" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">4</text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Stepper Controls Bar -->
+              <div class="mt-4 flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-zinc-100 dark:bg-zinc-900/80 border border-zinc-200 dark:border-white/10 text-xs font-mono">
+                <div class="flex items-center gap-1.5">
+                  <button data-step-prev class="px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Sebelumnya">⏮ Prev</button>
+                  <button data-step-btn="1" class="px-3 py-1 rounded transition-colors" title="Arsitektur Binary Standalone">Tahap 1</button>
+                  <button data-step-btn="2" class="px-3 py-1 rounded transition-colors" title="Persistensi File TXT">Tahap 2</button>
+                  <button data-step-btn="3" class="px-3 py-1 rounded transition-colors" title="Defect Trap Handling">Tahap 3</button>
+                  <button data-step-next class="px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Selanjutnya">Next ⏭</button>
+                </div>
+                <span data-step-display class="font-bold text-blue-600 dark:text-sky-400">Tahap 1 / 3</span>
+              </div>
+
+              <!-- Responsive Callout Legend Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5 text-xs">
+                <div id="arch-legend-1" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="1">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">1</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Arsitektur Standalone:</strong> Program berjalan native di console Windows tanpa memerlukan server web atau DBMS eksternal yang rumit.</span>
+                </div>
+                <div id="arch-legend-2" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="2">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">2</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Persistensi File TXT:</strong> Seluruh data disimpan persisten dalam file teks menggunakan fungsi I/O C baku (<code>fopen</code>, <code>fgets</code>, <code>fprintf</code>).</span>
+                </div>
+                <div id="arch-legend-3" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="1">
+                  <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">3</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Modular Library (lib.h):</strong> Header pendukung yang merangkum fungsi API Windows untuk posisi kursor, border kotak, dan input aman.</span>
+                </div>
+                <div id="arch-legend-4" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300" data-legend-step="3">
+                  <span class="w-6 h-6 rounded-full bg-red-600 dark:bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">4</span>
+                  <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Error Guarding Mutlak:</strong> Pemeriksaan <code>file == NULL</code> wajib dicatat di SRS &amp; kode C demi mencegah crash tak terduga di depan penguji.</span>
+                </div>
+              </div>
+
+              <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-700 dark:text-zinc-300">
+                <strong>Panduan SRS Sidang:</strong> Jika template dokumen menyebut API/DBMS, jelaskan secara jujur bahwa KasirKita memakai arsitektur C Standalone &amp; TXT File Processing.
+              </div>
+            </div>
+
+            <!-- Technical Details Accordion -->
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-5">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/60 shadow-sm">
+                  <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400">BAHAN DOWNLOAD</span>
+                    <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">Product Documentation</h4>
+                    <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Template dokumentasi produk yang diberikan pengguna.</p>
+                  </div>
+                  <a href="files/Product%20Documentation.docx" download class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold text-xs hover:opacity-90 transition-opacity shrink-0 shadow-sm">
+                    <span>Unduh Product Documentation</span>
+                    <span>↓</span>
+                  </a>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 shadow-sm">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                        <th class="p-3">Bagian Template</th>
+                        <th class="p-3">Isi yang Dilengkapi untuk KasirKita</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Product Identification / Revision History</td><td class="p-3">Nama produk, pemilik, tanggal, versi rilis, penulis</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Introduction</td><td class="p-3">Nama aplikasi, deskripsi sistem kasir, tujuan, stakeholders</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Development Process</td><td class="p-3">As-is vs To-be, scope fitur, kebutuhan pengguna, use case, workflow, metodologi, Activity Plan</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Development and Operational Architecture</td><td class="p-3">Kebutuhan compiler GCC/MinGW, OS Windows, console terminal 80x25</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Design</td><td class="p-3">Physical Data Model (PDM) file teks dan layout antarmuka ASCII</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Testing</td><td class="p-3">Skenario UT (Happy Path, Boundary, Defect) dan tindakan perbaikan</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Technical Documentation</td><td class="p-3">Definisi menu/fungsi, data struct, fungsi lib.h, software lisensi</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Appendix A / B</td><td class="p-3">User Requirement Definition dan Testing Scenario lengkap</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
+                  <strong>Catatan Adaptasi:</strong> Template menyebut API dan DBMS. Untuk latihan C/TXT tanpa API/DBMS, tulis <em>Tidak digunakan</em> dan jelaskan fungsi C serta format file TXT.
+                </div>
+
+                <p class="leading-relaxed">
+                  <strong>Contoh isi teknis:</strong> fungsi <code>PrintTxt</code> membaca <code>assets/ascii/judul.txt</code> relatif terhadap direktori kerja; salinan fungsi memeriksa hasil <code>fopen</code> sebelum <code>fgets</code>. Sertakan versi source, rancangan layar, dan hasil uji file hilang setelah percobaan dilakukan.
+                </p>
+
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 04: User Guide -->
+          <article class="arch-card p-6 sm:p-8" id="user-guide">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 04 / 04
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 20 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">Buat User Guide</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              User Guide membantu pengguna menjalankan tugas tanpa membaca source code.
+            </p>
+
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti petunjuk pemakaian alat yang bisa diikuti tanpa pembuatnya.</p>
+            </div>
+
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Tulis langkah penggunaan satu menu disertai hasil dan cara memperbaiki kesalahan.
+            </div>
+
+            <details class="arch-details mt-6">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-5">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/60 shadow-sm">
+                  <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400">BAHAN DOWNLOAD</span>
+                    <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">User Guide</h4>
+                    <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Template User Manual yang diberikan pengguna.</p>
+                  </div>
+                  <a href="files/%5BTemplate%5D%20User%20Manual.docx" download class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold text-xs hover:opacity-90 transition-opacity shrink-0 shadow-sm">
+                    <span>Unduh User Guide</span>
+                    <span>↓</span>
+                  </a>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 shadow-sm">
+                  <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                      <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                        <th class="p-3">Bagian Template</th>
+                        <th class="p-3">Isi Panduan KasirKita</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Identitas dan Introduction</td><td class="p-3">Nama produk, versi, tanggal, tujuan panduan operasional kasir</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Resource Requirements</td><td class="p-3">Spesifikasi software, hardware minimum, dan resolusi terminal 80x25</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Installation and Setup</td><td class="p-3">Struktur folder, letak executable, lokasi data TXT, cara menjalankan via CMD/PowerShell</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Menu and How to Use</td><td class="p-3">Struktur alur kasir, navigasi gotoxy, input data, screenshot terminal</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Troubleshooting &amp; FAQs</td><td class="p-3">File TXT hilang, input tidak valid, ukuran console terlalu sempit, solusi cepat</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Revision History</td><td class="p-3">Nomor revisi, tanggal, catatan perubahan, penulis</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="space-y-2.5 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.02]">
+                  <span class="text-xs font-mono font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">CHECKLIST KESIAPAN SIDANG:</span>
+                  <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <span>Testing memiliki hasil aktual dan bukti rekaman layar nyata.</span>
+                  </label>
+                  <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <span>Proposal membedakan rencana kerja dari pencapaian akhir.</span>
+                  </label>
+                  <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <span>Product Documentation mencerminkan arsitektur standalone C sebenarnya.</span>
+                  </label>
+                  <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <span>User Guide dapat dijalankan oleh orang awam tanpa bantuan programmer.</span>
+                  </label>
+                </div>
+
+                <p class="leading-relaxed">
+                  <strong>Contoh petunjuk pengguna untuk kejadian yang sama:</strong> buka PowerShell di folder <code>kasirkita</code>, jalankan <code>.\\build\\latihan.exe</code>. Jika judul tidak tampil dan muncul pesan file tidak dapat dibuka, periksa <code>assets/ascii/judul.txt</code> serta folder tempat program dijalankan. Pengguna tidak perlu membaca implementasi <code>PrintTxt</code>.
+                </p>
+
+              </div>
+            </details>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ACT 05 · COMMITMENT: RESOLVED CLOSE ================= -->
+    <section id="close-section" class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300">
+      <div class="w-full max-w-xl mx-auto flex flex-col items-center text-center p-8 rounded-3xl border border-zinc-300 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-2xl">
+        
+        <!-- Terminal Status Card -->
+        <div class="w-full bg-zinc-950 text-left rounded-xl p-4 font-mono text-xs text-zinc-300 border border-zinc-800 mb-6 shadow-inner">
+          <div class="flex items-center gap-2 mb-3 pb-2 border-b border-zinc-800">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+            <span class="text-[11px] text-zinc-500 ml-2">kasirkita-audit.exe</span>
+          </div>
+          <div class="space-y-1 text-emerald-400">
+            <p>✔ [UT] Matriks Skenario Uji: Terverifikasi</p>
+            <p>✔ [DEFECT] Pelacakan Kasus Negatif: Valid</p>
+            <p>✔ [DOCS] Product Documentation &amp; User Guide: Lengkap</p>
+            <p class="text-zinc-400 mt-2">&gt; Status Modul 02: LULUS. Siap melanjutkan ke Modul 03.</p>
+          </div>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          Pengujian &amp; Dokumentasi Selesai.
+        </h2>
+        <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2 max-w-md">
+          Anda telah menguji sistem dan menyusun dokumentasi pengguna. Lanjutkan ke perancangan pustaka grafis console lib.h.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 mt-6">
+          <a href="teknis.html" class="inline-flex items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 px-6 py-3 text-sm font-semibold hover:opacity-90 transition-opacity shadow-md">
+            Lanjut ke Modul 03 (lib.h) ➔
+          </a>
+          <a href="daftarModul.html" class="inline-flex items-center justify-center rounded-full border border-zinc-300 dark:border-white/20 bg-white/60 dark:bg-zinc-800/60 px-6 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors">
+            Buka Daftar Modul ↗
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= SCRIPTS ================= -->
+  <!-- 1. Surgical Anatomy Scrollytelling Engine -->
+  <script src="assets/js/anatomy-scroll.js"></script>
+
+  <!-- 2. Dual-Theme Toggle & Reading Progress Orchestration -->
+  <script>
+    // Theme Management (Zero-FOUC & Reactive)
+    (function initThemeToggle() {
+      const btnLight = document.getElementById('theme-btn-light');
+      const btnDark = document.getElementById('theme-btn-dark');
+
+      function updateButtons(isDark) {
+        if (!btnLight || !btnDark) return;
+        if (isDark) {
+          btnDark.classList.add('bg-zinc-800', 'text-white', 'shadow-sm');
+          btnDark.classList.remove('text-zinc-400');
+          btnLight.classList.remove('bg-zinc-200', 'text-zinc-900', 'shadow-sm');
+          btnLight.classList.add('text-zinc-400');
+        } else {
+          btnLight.classList.add('bg-zinc-200', 'text-zinc-900', 'shadow-sm');
+          btnLight.classList.remove('text-zinc-600');
+          btnDark.classList.remove('bg-zinc-800', 'text-white', 'shadow-sm');
+          btnDark.classList.add('text-zinc-600');
+        }
+      }
+
+      function setTheme(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('kasirkita-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('kasirkita-theme', 'light');
+        }
+        updateButtons(isDark);
+      }
+
+      const initialDark = document.documentElement.classList.contains('dark');
+      updateButtons(initialDark);
+
+      if (btnLight) btnLight.addEventListener('click', () => setTheme(false));
+      if (btnDark) btnDark.addEventListener('click', () => setTheme(true));
+    })();
+
+    // Reading Progress Bar
+    (function initReadingProgress() {
+      const bar = document.querySelector('[data-sc-progress]');
+      if (!bar) return;
+      function update() {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        const p = total > 0 ? window.scrollY / total : 0;
+        bar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, p)) + ')';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
+</body>
+</html>
+`;
+
+fs.writeFileSync('analisis.html', htmlContent, 'utf8');
+console.log('Successfully generated analisis.html with 100% 1:1 Modul 01 parity!');

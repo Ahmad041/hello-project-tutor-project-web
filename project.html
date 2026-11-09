@@ -1,75 +1,953 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="description" content="Tutorial KasirKita: bangun aplikasi kasir desktop IntelliJ dengan file processing dari dokumen persiapan hingga lib.h dan UI ASCII art."><title>Dokumen Persiapan — Hello Project</title><link rel="stylesheet" href="assets/css/site.css?v=20261016-clean"></head><body class="docs" data-page="project.html"><video class="art" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/130837c4-0244-4f37-9c61-8d801d93fd29.jpg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260912_104303_0c6d60b2-9353-408e-9449-585108a22fb5.mp4"></video><div class="veil"></div><a class="skip" href="#main">Lewati navigasi</a><header class="bar"><a class="brand" href="index.html" aria-label="Hello Project beranda"><svg viewBox="0 0 23 17" aria-hidden="true"><path d="M8.15 .9H4.55L.5 9.3h3.6Z"/><path d="M17 0h-3.6L6.15 16.4h3.6Z"/><path d="M22.9 0h-3.6L15 7.6h3.6Z"/><path d="M22.6 6.9H19l-4.95 9.5h3.6Z"/></svg>Hello Project</a></header><div class="layout module-content"><main class="article" id="main"><div class="breadcrumb"><a href="index.html">Beranda</a> &nbsp; / &nbsp; KasirKita &nbsp; / &nbsp; Modul 01</div><div class="eyebrow"><span class="dot"></span> MODUL 01 · DOKUMEN PERSIAPAN</div><h1>Siapkan dokumen sebelum membuat program.</h1><p class="lead">Pilih tema, tetapkan scope, temukan atribut, lalu susun Probis dan Activity Plan.</p><div class="chapter-meta"><span>◷ ± 60 menit</span><span>Level pemula</span><span>Project KasirKita</span></div><p><a class="pill" href="daftarisi.html">Daftar isi modul 01</a></p><div class="story-guide" aria-hidden="true"><span>PERJALANAN RANI</span><strong data-story-title>Mulai dari satu langkah kecil.</strong><span data-story-count>Gulir untuk mengikuti cerita ↓</span></div><div class="story-chapters"><section class="story-step" id="sdlc" data-story-title="Lihat perjalanan SDLC"><p class="story-kicker">LANGKAH 01 / 09</p><h2>Lihat perjalanan SDLC</h2><p class="story-explanation">SDLC menggambarkan siklus pengembangan project, bukan urutan membaca modul. Tahap pengujian bisa mengembalikan pekerjaan ke implementasi.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti merancang, membuat, mencoba, dan merawat sebuah rak.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Temukan jalur perbaikan dari pengujian kembali ke implementasi.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Gambaran SDLC</h3><p>SDLC adalah siklus pengembangan project, bukan urutan membaca modul. Gunakan zoom atau pilih simpul untuk menelusuri tahapan dan jalur perbaikan.</p><iframe class="workflow-viewer" src="diagrams/sdlc.html" title="SDLC KasirKita — Archify" loading="lazy"></iframe><p><a class="pill" href="diagrams/sdlc.html" target="_blank" rel="noopener">Buka SDLC ukuran penuh</a> <a class="pill" href="diagrams/sdlc.json" download>Unduh source JSON Archify</a></p><p class="viewer-note">Isi berbahasa Indonesia; kontrol bawaan viewer Archify berbahasa Inggris.</p></div></details></section><section class="story-step" id="tema" data-story-title="Tentukan tema project"><p class="story-kicker">LANGKAH 02 / 09</p><h2>Tentukan tema project</h2><p class="story-explanation">Mulai dari masalah nyata. KasirKita membantu toko alat tulis mencatat produk, penjualan, dan nota.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti memilih tujuan perjalanan sebelum menentukan kendaraan.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Tuliskan masalah, pengguna, dan hasil yang dibutuhkan.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Tentukan tema project</h3><p>Pilih tema yang dapat diamati: toko, perpustakaan, atau administrasi kursus. Untuk latihan ini gunakan KasirKita: satu toko alat tulis dengan pemilik dan kasir. Rumuskan masalah, pengguna, tujuan, dan contoh kejadian sebelum memilih teknologi.</p><div class="table-wrap"><table><thead><tr><th>Bagian</th><th>Contoh KasirKita</th></tr></thead><tbody><tr><td>Masalah</td><td>Stok dan nota manual sulit dicocokkan</td></tr><tr><td>Pengguna</td><td>Kasir dan pemilik</td></tr><tr><td>Tujuan</td><td>Mencatat barang serta penjualan dengan hasil yang dapat diperiksa</td></tr><tr><td>Contoh</td><td>2 Buku A5 @12.000, bayar 30.000: total 24.000, kembali 6.000</td></tr></tbody></table></div></div></details></section><section class="story-step" id="platform" data-story-title="Bedakan desktop dan website"><p class="story-kicker">LANGKAH 03 / 09</p><h2>Bedakan desktop dan website</h2><p class="story-explanation">Program latihan berjalan di console Windows; website Hello Project menjadi buku panduannya.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Buku di meja dan buku yang dibuka lewat browser sama-sama menyampaikan isi dengan cara berbeda.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Pilih platform dan jelaskan alasannya.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Bedakan desktop dan website</h3><div class="table-wrap"><table><thead><tr><th>Aspek</th><th>Desktop / console</th><th>Website</th></tr></thead><tbody><tr><td>Cara akses</td><td>Executable pada komputer pengguna</td><td>Halaman melalui browser</td></tr><tr><td>Antarmuka</td><td>Jendela atau console terminal</td><td>HTML/CSS dan interaksi browser</td></tr><tr><td>Pembaruan</td><td>Distribusi program ke perangkat</td><td>Pembaruan aplikasi/server</td></tr><tr><td>Koneksi</td><td>Dapat bekerja lokal</td><td>Bergantung arsitektur; website juga dapat dijalankan lokal</td></tr></tbody></table></div><div class="callout">KasirKita yang diajarkan adalah program C console Windows dengan lib.h. Website ini menyampaikan materi, bukan aplikasi kasirnya.</div></div></details></section><section class="story-step" id="standalone" data-story-title="Standalone atau terintegrasi?"><p class="story-kicker">LANGKAH 04 / 09</p><h2>Standalone atau terintegrasi?</h2><p class="story-explanation">Tentukan apakah program bekerja sendiri atau bertukar data dengan sistem lain.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Warung mandiri dapat mencatat sendiri; jaringan toko berbagi catatan antar-cabang.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Catat sistem lain yang diperlukan, atau nyatakan tidak ada.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Standalone atau terintegrasi?</h3><p>Standalone berarti alur utama berdiri sendiri dengan data lokal. Terintegrasi berarti ada pertukaran data dengan layanan lain, misalnya payment gateway atau inventori pusat. Standalone tidak selalu berarti tidak pernah memakai internet.</p><p>Latihan KasirKita berdiri sendiri: satu proses aktif, penyimpanan TXT lokal, pembayaran tunai, dan tidak ada integrasi pihak luar.</p></div></details></section><section class="story-step" id="scope" data-story-title="Tentukan scope"><p class="story-kicker">LANGKAH 05 / 09</p><h2>Tentukan scope</h2><p class="story-explanation">Scope membatasi apa yang akan dikerjakan dan apa yang ditunda.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Daftar pesanan membantu menghindari pekerjaan yang terus bertambah.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Tuliskan fitur wajib dan fitur di luar versi pertama.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Tentukan scope</h3><div class="table-wrap"><table><thead><tr><th>Termasuk</th><th>Di luar latihan</th></tr></thead><tbody><tr><td>Master kategori, produk, pelanggan</td><td>Multi-cabang dan sinkronisasi cloud</td></tr><tr><td>Penjualan tunai, nota, rekap</td><td>Payment gateway, pajak, retur</td></tr><tr><td>UI console dan validasi</td><td>Autentikasi produksi</td></tr></tbody></table></div><div class="callout"><strong>Validasi wajib pada setiap fitur.</strong> Periksa tipe data, input kosong, panjang teks, rentang angka, ID ganda, dan referensi data. Tampilkan pesan kesalahan yang bisa dipahami; jangan menyimpan perubahan sebelum input valid. Validasi keyboard saja belum menggantikan pemeriksaan nilai dan aturan bisnis.</div></div></details></section><section class="story-step" id="data" data-story-title="Pisahkan master dan transaksi"><p class="story-kicker">LANGKAH 06 / 09</p><h2>Pisahkan master dan transaksi</h2><p class="story-explanation">Master adalah data acuan yang jarang berubah dan bisa masuk antar-master; transaksi adalah pencatatan kejadian yang isi datanya pasti berubah-ubah.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Empat kotak di meja: kotak kategori, barang, dan pelanggan adalah master yang datanya jarang berubah; kotak transaksi berisi nota belanja yang isinya pasti berubah-ubah setiap menit.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Pahami perbedaan sifat master (statis) dan transaksi (dinamis) di bawah, atau buka simulasi 3D interaktif untuk mencoba langsung.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Pisahkan master dan transaksi</h3><div class="representation-mode-bar" role="region" aria-label="Pilihan Representasi Master & Transaksi 2D / 3D"><div class="mode-bar-header"><div class="mode-bar-tag"><span class="dot"></span> REPRESENTASI DATA KASIRKITA</div><h3>Pilih Mode Simulasi: Mode 2D vs Mode 3D</h3><p>Pahami perbedaan mendasar antara data acuan (<strong>Master</strong>) dan data pencatatan peristiwa (<strong>Transaksi</strong>) melalui simulasi interaktif:</p></div><div class="mode-switch-actions"><a href="game/boxes-2d.html" class="mode-switch-btn" title="Buka mode 2D simulasi kotak kardus interaktif"><span class="btn-icon">📦🎨</span><div class="btn-body"><strong>Mode 2D</strong><small>Simulasi Interaktif Vektor 2D · Ringan &amp; Cepat</small></div><span class="btn-badge highlight">Buka mode 2D ↗</span></a><a href="game/boxes-analogy.html" class="mode-switch-btn mode-switch-3d" title="Buka mode 3D simulasi kotak kardus WebGL di halaman terpisah"><span class="btn-icon">📦✨</span><div class="btn-body"><strong>Mode 3D</strong><small>Simulasi Tiga Dimensi WebGL · Orbit Kamera &amp; Fisika</small></div><span class="btn-badge highlight">Buka mode 3D ↗</span></a></div></div><h3>Penjelasan Konsep: Empat Kotak di Meja Kasir</h3><p>Bayangkan kamu punya empat buah kotak di mejamu: tiga <strong>"Kotak Master (Kategori, Barang, Pelanggan)"</strong> dan satu <strong>"Kotak Transaksi (Penjualan / Nota Belanja)"</strong>.</p><div class="cards"><div class="card"><h3>1. Kotak-Kotak Master (Entitas Master)</h3><p><strong>Fungsi:</strong> Kotak ini berisi tumpukan kartu katalog paten: Kode Kategori, Kode Barang, Nama Barang, Harga Satuan, dan Profil Pelanggan.<br><br><strong>Sifat Data:</strong> Kotak master ini <strong>datanya jarang berubah</strong>. Kamu hanya memasukkan kartu baru ketika ada produk baru dari distributor, atau mengganti kartu jika harga resmi naik. Kartu di kotak ini adalah <strong>sumber kebenaran utama</strong> (<em>single source of truth</em>).<br><br><strong>Bisa Masuk Antar-Master:</strong> Barang dari kotak master <strong>bisa dimasukkan ke dalam kotak master juga</strong>! Contohnya, kartu Kategori <code>Alat Tulis (K01)</code> dimasukkan ke dalam Kotak Barang untuk melabeli <code>Buku Tulis A5 (P001)</code>. Hubungan master-ke-master ini sah dan sering digunakan dalam database.<br><br><strong>Penerapan di C:</strong> Kotak ini disimpan di file master seperti <code>data/kategori.txt</code> dan <code>data/produk.txt</code> dengan struct seperti <code>CategoryMaster</code> dan <code>ProductMaster</code>.</p></div><div class="card"><h3>2. Kotak Transaksi (Entitas Transaksi)</h3><p><strong>Fungsi:</strong> Kotak ini adalah tempat penampungan nota atau struk belanja dari pelanggan setiap kali terjadi penjualan.<br><br><strong>Sifat Data:</strong> Kotak ini <strong>isi datanya PASTI BERUBAH-UBAH dan bertambah terus</strong>. Setiap kali ada yang beli, kasir menulis nota baru lalu menjatuhkannya ke dalam kotak ini sepanjang hari (bertambah terus / <em>append-only</em>). Nomor nota melonjak, barang belanja berganti, dan nominal pembayaran berubah.<br><br><strong>Cara Kerja Relasi:</strong> Di lembar nota pesanan, kamu <strong>tidak perlu menulis nama barang atau harganya secara panjang lebar berulang kali</strong>. Cukup menulis <code>"Kode Barang: P001, Jumlah Beli: 2"</code>. Ketika harus menghitung total bayar, kasir memegang nota tersebut lalu mencari kartu <code>"P001"</code> di Kotak Barang untuk melihat harganya.<br><br><strong>Penerapan di C:</strong> File <code>transaksi.dat</code> (atau <code>data/penjualan.txt</code>). Isinya adalah tumpukan data <code>struct SaleTransaction</code> yang disimpan dengan mode append (<code>fopen("transaksi.dat", "ab")</code> atau <code>"a"</code>), lalu menggunakan <em>looping</em> untuk mencocokkan kode barang di transaksi dengan master agar bisa mencetak total harga.</p></div></div><h3>Tabel Perbandingan: Master vs Transaksi</h3><div class="table-wrap"><table><thead><tr><th>Aspek Pembeda</th><th>Entitas Master (Kategori, Barang, Pelanggan)</th><th>Entitas Transaksi (Penjualan & Nota Belanja)</th></tr></thead><tbody><tr><td>Definisi</td><td>Data acuan dasar yang dipakai berulang kali sebagai patokan.</td><td>Catatan histori peristiwa/kejadian bisnis pada waktu tertentu.</td></tr><tr><td>Sifat Perubahan Isi</td><td>Jarang Berubah (statis, hanya saat pembaruan katalog).</td><td>Pasti Berubah-Ubah (sangat dinamis, setiap kali ada pembeli).</td></tr><tr><td>Hubungan Antar-Kotak</td><td>Bisa masuk ke sesama master (contoh: Kategori ➔ Barang).</td><td>Meminjam referensi ID dari kotak master untuk nota belanja.</td></tr><tr><td>Contoh di KasirKita</td><td>CATEGORY, PRODUCT, CUSTOMER</td><td>SALE (Header Nota), ITEM (Detail Belanja)</td></tr><tr><td>Aktor Pengubah</td><td>Pemilik toko / admin pengelola katalog barang.</td><td>Kasir yang melayani pembeli di meja kasir.</td></tr><tr><td>Peran Kunci</td><td>Menyediakan Primary Key (PK) seperti id_category, id_product.</td><td>Menyimpan Foreign Key (FK) yang merujuk ke PK Master.</td></tr><tr><td>Operasi File di C</td><td>Dibaca berulang kali ("r" / "rb"); diperbarui jika stok berkurang.</td><td>Ditambah di akhir file ("a" / "ab") secara terus-menerus.</td></tr><tr><td>Jika File Kosong</td><td>Aplikasi macet/tidak bisa jualan karena katalog kosong.</td><td>Aplikasi normal (berarti belum ada penjualan hari ini).</td></tr></tbody></table></div><div class="callout"><strong>Inti Pemahaman Analogi:</strong><br>Perbedaan utama bukan semata larangan fisik, melainkan <strong>dinamika stabilitas data</strong>. Data Master disiapkan sebagai fondasi acuan yang jarang berubah (bahkan sesama master bisa saling terhubung seperti Kategori ke Barang), sedangkan Data Transaksi isinya selalu bergerak, berubah, dan bertambah seiring kasir melayani transaksi.</div><h3>Pola Kode C: Struktur Data & Looping Pencocokan</h3><div class="codebar"><span>Pola C · Master vs Transaksi</span><button class="copy">Salin kode</button></div><pre><code>// 1. DATA MASTER: Disimpan di data/ (Jarang Berubah)
-typedef struct {
-    char id_category[21];  // K01 (Primary Key Kategori)
-    char name[64];         // Alat Tulis
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Modul 01 — Dokumen Persiapan | Hello Project</title>
+  <meta name="description" content="Edisi interaktif Scroll-Craft: Modul 01 KasirKita. Arsitektur data master vs transaksi, SDLC, dan Activity Plan dengan dimensional scrollytelling.">
+
+  <!-- Google Fonts: Inter & DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Zero-FOUC Theme Initializer -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('kasirkita-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              925: '#111114',
+              950: '#09090b',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Scroll-Craft Engine Stylesheet -->
+  <link rel="stylesheet" href="assets/scrollcraft/scrollcraft.css">
+
+  <!-- ThreeJS CDN for subtle ambient atmosphere -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    /* ================= SCROLL-CRAFT DUAL-THEME OVERRIDES ================= */
+    :root {
+      --sc-canvas: #fcfcfd;
+      --sc-surface: rgba(255, 255, 255, 0.94);
+      --sc-ink: #18181b;
+      --sc-ink-soft: #71717a;
+      --sc-accent: #2563eb;
+      --sc-accent-ink: #ffffff;
+      --sc-hairline: rgba(228, 228, 231, 0.85);
+      --sc-hairline-strong: rgba(161, 161, 170, 0.4);
+      --sc-font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+      --sc-font-text: "Inter", system-ui, sans-serif;
+      --sc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    }
+
+    html.dark {
+      --sc-canvas: #09090b;
+      --sc-surface: rgba(18, 18, 21, 0.82);
+      --sc-ink: #f4f4f5;
+      --sc-ink-soft: #a1a1aa;
+      --sc-accent: #38bdf8;
+      --sc-accent-ink: #09090b;
+      --sc-hairline: rgba(255, 255, 255, 0.08);
+      --sc-hairline-strong: rgba(255, 255, 255, 0.16);
+    }
+
+    /* Architectural Cards for Chaptered Curriculum */
+    .arch-card {
+      background: var(--sc-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--sc-hairline);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: border-color 200ms ease, box-shadow 200ms ease, background-color 300ms ease;
+    }
+    .dark .arch-card {
+      box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .arch-card:hover {
+      border-color: var(--sc-hairline-strong);
+    }
+
+    /* Clean Collapsible Details Drawer */
+    .arch-details {
+      background: rgba(244, 244, 245, 0.6);
+      border: 1px solid rgba(228, 228, 231, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .arch-details > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(244, 244, 245, 0.9);
+      color: #18181b;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      list-style: none;
+      transition: background-color 200ms ease;
+    }
+    .dark .arch-details > summary {
+      background: rgba(255, 255, 255, 0.03);
+      color: #f4f4f5;
+    }
+    .arch-details > summary::-webkit-details-marker { display: none; }
+    .arch-details > summary::after {
+      content: "Detail Teknis ▾";
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #e4e4e7;
+      color: #3f3f46;
+      font-weight: 600;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details > summary::after {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d4d4d8;
+    }
+    .arch-details[open] > summary::after {
+      content: "Tutup ▴";
+      background: #18181b;
+      color: #ffffff;
+    }
+    .dark .arch-details[open] > summary::after {
+      background: #ffffff;
+      color: #09090b;
+    }
+
+    /* Ambient ThreeJS Container */
+    #three-particles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Signature Move Flow Animation */
+    .flow-line-active {
+      stroke-dasharray: 8 4;
+      animation: dashMove 1.2s linear infinite;
+    }
+    @keyframes dashMove {
+      to {
+        stroke-dashoffset: -24;
+      }
+    }
+  </style>
+</head>
+<body class="relative min-h-screen text-zinc-900 dark:text-zinc-100">
+
+  <!-- ================= TOP READING PROGRESS BAR ================= -->
+  <span data-sc-progress class="fixed top-0 left-0 right-0 h-[3px] bg-zinc-900 dark:bg-white z-50 origin-left scale-x-0 transition-transform duration-75"></span>
+
+  <!-- ================= TOP THEME TOGGLE CAPSULE (FLOATING & ACCESSIBLE) ================= -->
+  <aside class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-zinc-200 dark:border-white/10 bg-white/85 dark:bg-zinc-900/80 p-1.5 backdrop-blur-xl shadow-sm dark:shadow-2xl transition-colors duration-300" aria-label="Pengalih Mode Tampilan">
+    <button id="theme-btn-light" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Terang">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <span>Terang</span>
+    </button>
+    <button id="theme-btn-dark" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Gelap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></svg>
+      <span>Gelap</span>
+    </button>
+  </aside>
+
+  <!-- ================= TOP NAV CHROME ================= -->
+  <header class="fixed top-5 left-5 right-5 sm:left-8 sm:right-8 z-40 flex items-center justify-between pointer-events-none">
+    <a href="index.html" class="pointer-events-auto flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>HELLO PROJECT</span>
+    </a>
+    <a href="daftarModul.html" class="pointer-events-auto text-xs font-mono font-medium text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <span>Daftar Modul</span><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+    </a>
+  </header>
+
+  <main id="top" class="w-full flex flex-col">
+
+    <!-- ================= ACT 01 · RECOGNITION: DIMENSIONAL SCRUB HERO ================= -->
+    <section data-sc-act="scrub" data-sc-span="2.5" data-sc-dwell="0.32" class="relative">
+      <div data-sc-stage class="sc-stage">
+        <!-- Live Poster Fallback -->
+        <img class="sc-stage__poster object-cover w-full h-full" src="assets/images/video_frame.jpg" alt="KasirKita 3D Abstract Architecture">
+        
+        <!-- Native Video Scrubber (Dense GOP Blob-accelerated) -->
+        <video data-sc-scrub data-sc-src="hf_bg_h264.mp4" playsinline muted class="absolute inset-0 w-full h-full object-cover"></video>
+        
+        <!-- Ambient Three.js Particles -->
+        <div id="three-particles"></div>
+
+        <!-- Scrim: Subtle Vignette + Lead Scrim to guarantee WCAG contrast -->
+        <div class="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none"></div>
+
+        <!-- Plane 2: Floating Track Pill (Parallax) -->
+        <div class="absolute top-24 left-5 sm:left-12 z-20" data-sc-parallax="0.12">
+          <div class="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/50 px-3 py-1 backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="font-mono text-[11px] uppercase tracking-[0.16em] text-white font-semibold">
+              MODUL 01 · DOKUMEN PERSIAPAN
+            </span>
+          </div>
+        </div>
+
+        <!-- Plane 3: Kinetic Headline (Greet Cue: Visible immediately on load) -->
+        <div class="sc-copy sc-copy--lead max-w-3xl z-20 pb-16 sm:pb-20" data-sc-cue="0 0.82 0">
+          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.06] drop-shadow-2xl" data-sc-kinetic="lines">
+            Siapkan dokumen sebelum membuat program.
+          </h1>
+          <p class="sc-body text-base sm:text-lg text-white/85 mt-6 max-w-xl leading-relaxed drop-shadow-md">
+            Pilih tema, tetapkan scope, temukan atribut, lalu susun Probis dan Activity Plan. Fondasi arsitektur perangkat lunak yang kokoh dimulai di sini.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ACT 02 · TENSION: THE ARCHITECTURAL DILEMMA (PINNED) ================= -->
+    <section data-sc-act="pin" data-sc-span="2.8" class="relative">
+      <div data-sc-stage class="sc-stage flex items-center justify-center px-6 sm:px-12">
+        <div class="w-full max-w-2xl mx-auto flex flex-col justify-center relative min-h-[360px]">
+          
+          <!-- Beat 2.1: Early Coding Trap -->
+          <div class="absolute inset-0 flex flex-col justify-center" data-sc-cue="0 0.34 0">
+            <span class="font-mono text-xs uppercase tracking-widest text-zinc-500 dark:text-zinc-400 font-semibold mb-3">
+              01 / DILEMA AWAL
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-950 dark:text-white tracking-tight leading-tight">
+              Godaan langsung mengetik kode di editor.
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              Banyak programmer pemula langsung membuka text editor dan mengetik <code>main()</code>. Hasilnya: struktur kode tambal-sulam, nama atribut tidak konsisten, dan logika buntu di tengah jalan.
+            </p>
+          </div>
+
+          <!-- Beat 2.2: The Cost of Dirty Data -->
+          <div class="absolute inset-0 flex flex-col justify-center" data-sc-cue="0.30 0.68">
+            <span class="font-mono text-xs uppercase tracking-widest text-amber-500 font-semibold mb-3">
+              02 / RISIKO FATAL
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-950 dark:text-white tracking-tight leading-tight">
+              Membaurkan master dan transaksi merusak sistem.
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              Jika nota belanja menduplikasi nama dan harga barang secara mentah, setiap perubahan harga katalog akan merusak rekap histori masa lalu. File data menjadi kacau dan stok tidak pernah cocok.
+            </p>
+          </div>
+
+          <!-- Beat 2.3: The KasirKita Method -->
+          <div class="absolute inset-0 flex flex-col justify-center" data-sc-cue="0.64">
+            <span class="font-mono text-xs uppercase tracking-widest text-blue-500 font-semibold mb-3">
+              03 / SOLUSI SISTEMATIS
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-950 dark:text-white tracking-tight leading-tight">
+              Sembilan langkah fondasi yang dirancang presisi.
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed">
+              KasirKita mengajarkan pemisahan relasi acuan, batasan scope, dan siklus SDLC nyata sebelum menulis satu baris pun kode struct C.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ACT 03 · THE TURN: SIGNATURE MOVE (LIVE BLUEPRINT STROKE-BUILD) ================= -->
+    <section data-sc-act="pin" data-sc-span="3.4" id="act-signature-move" class="relative">
+      <div data-sc-stage class="sc-stage flex flex-col justify-center px-4 sm:px-8 py-12">
+        <div class="w-full max-w-4xl mx-auto flex flex-col">
+          
+          <!-- Header of Blueprint Stage -->
+          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-4 border-b border-zinc-200 dark:border-white/10 pb-3">
+            <div>
+              <span class="font-mono text-xs uppercase tracking-widest font-bold text-blue-600 dark:text-blue-400">
+                SIGNATURE MOVE · CETAK BIRU INTERAKTIF
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-bold text-zinc-950 dark:text-white tracking-tight mt-1">
+                Anatomi Relasi: Master vs Transaksi
+              </h2>
+            </div>
+            <div class="mt-2 sm:mt-0 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+              <span>Putar wheel scroll untuk mengalirkan data ▾</span>
+            </div>
+          </div>
+
+          <!-- Interactive SVG Blueprint Surface -->
+          <div class="relative w-full rounded-2xl border border-zinc-300 dark:border-white/15 bg-white dark:bg-zinc-925 p-4 sm:p-6 shadow-xl transition-colors duration-300">
+            <svg id="blueprint-svg" viewBox="0 0 780 290" fill="none" class="w-full h-auto rounded-xl" aria-label="Diagram Anatomi Master vs Transaksi Dinamis">
+              <defs>
+                <!-- Crisp Clean Grid Pattern -->
+                <pattern id="scGridClean" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="1" fill="currentColor" class="text-zinc-300 dark:text-white/10"/>
+                </pattern>
+                
+                <!-- Blue Rightward Flow Arrow Head -->
+                <marker id="scArrowHead" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1 2 L 8 5 L 1 8 z" fill="#2563eb" class="dark:fill-[#38bdf8]"/>
+                </marker>
+                
+                <!-- Blue Downward Arrow Head (Points along +X so orient="auto" rotates correctly to point DOWN) -->
+                <marker id="scArrowDown" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 1 2 L 8 5 L 1 8 z" fill="#2563eb" class="dark:fill-[#38bdf8]"/>
+                </marker>
+              </defs>
+
+              <!-- Layer 1: Blueprint Canvas Background -->
+              <rect width="780" height="290" rx="12" class="fill-zinc-50 dark:fill-zinc-950 stroke-zinc-200 dark:stroke-white/10" stroke-width="1"/>
+              <rect width="780" height="290" fill="url(#scGridClean)" rx="12"/>
+
+              <!-- Layer 2: 1. KOTAK MASTER (ACUAN STATIS) Container -->
+              <rect x="20" y="16" width="360" height="258" rx="10" class="fill-white/80 dark:fill-zinc-900/90 stroke-zinc-400 dark:stroke-zinc-600" stroke-width="1.5" stroke-dasharray="5 3"/>
+              <text x="36" y="40" class="fill-zinc-700 dark:fill-zinc-300 font-mono text-[11px] font-bold tracking-wider">1. KOTAK MASTER (ACUAN STATIS)</text>
+
+              <!-- Layer 3: Card Category -->
+              <rect id="card-cat" x="34" y="52" width="332" height="66" rx="8" class="fill-zinc-100 dark:fill-zinc-800/90 stroke-zinc-300 dark:stroke-white/10" stroke-width="1.2"/>
+              <text x="48" y="74" class="fill-zinc-900 dark:fill-white font-mono text-[12px] font-bold">CATEGORY</text>
+              <text x="48" y="93" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">PK: <tspan class="fill-zinc-900 dark:fill-white font-bold">id_cat: K01</tspan> &bull; name: &ldquo;Alat Tulis&rdquo;</text>
+              <text x="48" y="108" class="fill-zinc-500 font-mono text-[10px]">&bull; Bersifat acuan mandiri &bull; Jarang berubah</text>
+
+              <!-- Layer 4: Card Product -->
+              <rect id="card-prod" x="34" y="136" width="332" height="124" rx="8" class="fill-zinc-100 dark:fill-zinc-800/90 stroke-zinc-300 dark:stroke-white/10" stroke-width="1.2"/>
+              <text x="48" y="158" class="fill-zinc-900 dark:fill-white font-mono text-[12px] font-bold">PRODUCT (Katalog Acuan)</text>
+              <text x="48" y="178" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">PK: <tspan class="fill-zinc-900 dark:fill-white font-bold">id_prod: P001</tspan> &bull; FK: <tspan class="fill-blue-600 dark:fill-blue-400 font-bold">id_cat: K01 &larr;</tspan></text>
+              <text x="48" y="196" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">name: &ldquo;Buku Tulis A5&rdquo; &bull; price: Rp12.000</text>
+              
+              <!-- Divider inside Product -->
+              <line x1="48" y1="206" x2="352" y2="206" class="stroke-zinc-200 dark:stroke-white/10" stroke-width="1"/>
+              
+              <!-- Stock Rows with Right-aligned Pin 4 -->
+              <g id="stock-row-group">
+                <text x="48" y="224" id="stock-text" class="fill-red-600 dark:fill-red-400 font-mono text-[11px] font-bold transition-all duration-300">
+                  stock: 20 &rarr; 18 pcs (Terpotong -2)
+                </text>
+                <text x="48" y="240" class="fill-red-500/80 dark:fill-red-400/70 font-mono text-[10px]">
+                  Status: 2 pcs dialokasikan ke Struk #N001
+                </text>
+              </g>
+
+              <!-- Layer 5: 2. KOTAK TRANSAKSI (DINAMIS) Container -->
+              <rect x="430" y="16" width="330" height="258" rx="10" class="fill-white/80 dark:fill-zinc-900/90 stroke-zinc-400 dark:stroke-zinc-600" stroke-width="1.5"/>
+              <text x="446" y="40" class="fill-zinc-700 dark:fill-zinc-300 font-mono text-[11px] font-bold tracking-wider">2. KOTAK TRANSAKSI (DINAMIS)</text>
+
+              <!-- Card: Sale -->
+              <rect id="card-sale" x="444" y="52" width="302" height="208" rx="8" class="fill-zinc-100 dark:fill-zinc-800/90 stroke-zinc-300 dark:stroke-white/10" stroke-width="1.2"/>
+              <text x="458" y="74" class="fill-zinc-900 dark:fill-white font-mono text-[12px] font-bold">SALE (Nota Belanja Kasir)</text>
+              <text x="458" y="93" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">No. Struk: <tspan class="fill-amber-600 dark:fill-amber-400 font-bold">#N001</tspan> &bull; Pelanggan: <tspan class="fill-zinc-900 dark:fill-white font-semibold">C001 (Rani)</tspan></text>
+              
+              <text x="458" y="120" class="fill-zinc-500 font-mono text-[10px] tracking-wider uppercase font-semibold">ITEM BELANJA (PINJAM ID MASTER):</text>
+              
+              <!-- Highlight box for active transaction item -->
+              <rect id="row-item-highlight" x="454" y="130" width="282" height="34" rx="6" class="fill-blue-50/80 dark:fill-blue-950/40 stroke-blue-200 dark:stroke-blue-800/50" stroke-width="1"/>
+              <text x="468" y="151" class="fill-blue-700 dark:fill-blue-400 font-mono text-[11px] font-bold">&rarr; id_prod: P001 &bull; Qty: 2 pcs</text>
+
+              <!-- Financial recap -->
+              <text x="458" y="184" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">Subtotal: 2 &times; 12.000 = <tspan class="fill-emerald-600 dark:fill-emerald-400 font-bold">Rp24.000</tspan></text>
+              <text x="458" y="202" class="fill-zinc-600 dark:fill-zinc-400 font-mono text-[11px]">Bayar: Rp30.000 &bull; Kembali: <tspan class="fill-emerald-600 dark:fill-emerald-400 font-bold">Rp6.000</tspan></text>
+              
+              <line x1="458" y1="214" x2="732" y2="214" class="stroke-zinc-200 dark:stroke-white/10" stroke-width="1"/>
+              <text x="458" y="228" class="fill-zinc-500 font-mono text-[10px]">&bull; Mode: Append ke file data/penjualan.txt</text>
+              <text x="458" y="242" class="fill-zinc-500 font-mono text-[10px]">&bull; Tidak menduplikasi field nama atau kategori</text>
+
+              <!-- ================= LAYER 6: CONNECTING ARROWS ================= -->
+              <!-- 1. Category -> Product Downward Arrow -->
+              <path id="arrow-down-cat-prod"
+                    d="M 175 118 L 175 128" 
+                    stroke="#2563eb" 
+                    class="dark:stroke-[#38bdf8]"
+                    stroke-width="2" 
+                    stroke-linecap="round"
+                    marker-end="url(#scArrowDown)"/>
+
+              <!-- 2. Product -> SALE Signature Blue Flow Path (Smooth continuous bezier ending cleanly at row-item-highlight) -->
+              <circle cx="366" cy="178" r="3.5" class="fill-blue-600 dark:fill-blue-400"/>
+              <path id="signature-flow-path" 
+                    d="M 366 178 C 395 178, 415 147, 448 147" 
+                    stroke="#2563eb" 
+                    class="dark:stroke-[#38bdf8] transition-all duration-300"
+                    stroke-width="2.2" 
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    fill="none"
+                    marker-end="url(#scArrowHead)"/>
+
+              <!-- ================= LAYER 7: SOLID CIRCULAR PIN BADGES (IMAGE 2 STANDARD) ================= -->
+              <!-- Pin 1 Badge (inside Category card, top-right) -->
+              <g id="pin-1-group">
+                <circle id="pin-1-circle" cx="346" cy="74" r="10" class="fill-blue-600 dark:fill-blue-500 shadow-sm transition-all duration-300"/>
+                <text id="pin-1-num" x="346" y="78" text-anchor="middle" class="fill-white font-mono text-[11px] font-bold">1</text>
+              </g>
+
+              <!-- Pin 2 Badge (inside Product card, top-right) -->
+              <g id="pin-2-group">
+                <circle id="pin-2-circle" cx="346" cy="158" r="10" class="fill-blue-600 dark:fill-blue-500 shadow-sm transition-all duration-300"/>
+                <text id="pin-2-num" x="346" y="162" text-anchor="middle" class="fill-white font-mono text-[11px] font-bold">2</text>
+              </g>
+
+              <!-- Pin 3 Badge (inside active item row, right-side) -->
+              <g id="pin-3-group">
+                <circle id="pin-3-circle" cx="716" cy="147" r="10" class="fill-blue-600 dark:fill-blue-500 shadow-sm transition-all duration-300"/>
+                <text id="pin-3-num" x="716" y="151" text-anchor="middle" class="fill-white font-mono text-[11px] font-bold">3</text>
+              </g>
+
+              <!-- Pin 4 Badge (inside Product card, stock row right-side) -->
+              <g id="pin-4-group">
+                <circle id="pin-4-circle" cx="346" cy="226" r="10" class="fill-red-600 dark:fill-red-500 shadow-sm transition-all duration-300"/>
+                <text id="pin-4-num" x="346" y="230" text-anchor="middle" class="fill-white font-mono text-[11px] font-bold">4</text>
+              </g>
+            </svg>
+
+            <!-- Responsive Callout Legend (Clean Badges matching Image 2) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5 text-xs">
+              <div id="legend-1" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">1</span>
+                <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Primary Key (PK):</strong> ID paten unik K01, P001 mencegah duplikasi katalog.</span>
+              </div>
+              <div id="legend-2" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">2</span>
+                <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Master-ke-Master:</strong> Kategori K01 dimasukkan ke Produk P001 untuk rak.</span>
+              </div>
+              <div id="legend-3" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">3</span>
+                <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Foreign Key (FK):</strong> Nota meminjam P001 tanpa menduplikasi nama barang.</span>
+              </div>
+              <div id="legend-4" class="flex gap-3 items-center p-3 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] transition-all duration-300">
+                <span class="w-6 h-6 rounded-full bg-red-600 dark:bg-red-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">4</span>
+                <span class="text-zinc-700 dark:text-zinc-300 leading-snug"><strong>Mutasi Stok:</strong> Transaksi otomatis memotong saldo stok master (-2).</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ACT 04 · SUBSTANCE: THE 9 SYSTEMATIC CHAPTERS (FLOW) ================= -->
+    <section class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300" data-sc-act="flow">
+      <div class="w-full max-w-4xl mx-auto">
+        
+        <div class="text-center mb-16" data-sc-in>
+          <span class="inline-block border border-zinc-300 dark:border-white/10 bg-zinc-100 dark:bg-zinc-800/60 px-3.5 py-1 rounded-full font-mono text-[11px] text-zinc-700 dark:text-zinc-300 uppercase tracking-widest mb-3 font-semibold">
+            KURIKULUM LENGKAP · 9 LANGKAH PEMBELAJARAN
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-zinc-950 dark:text-white tracking-tight">Perjalanan Modul 01</h2>
+          <p class="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base mt-2 max-w-lg mx-auto">
+            Pelajari setiap konsep, analogi nyata, bedah cetak biru, dan pola kode C secara teratur.
+          </p>
+        </div>
+
+        <div class="space-y-8" data-sc-in data-sc-stagger="50">
+
+          <!-- Langkah 01: SDLC -->
+          <article class="arch-card p-6 sm:p-8" id="sdlc">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 01 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 10 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Lihat perjalanan SDLC</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              SDLC menggambarkan siklus pengembangan project, bukan urutan membaca modul. Tahap pengujian bisa mengembalikan pekerjaan ke implementasi.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti merancang, membuat, mencoba, dan merawat sebuah rak.</p>
+            </div>
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Temukan jalur perbaikan dari pengujian kembali ke implementasi pada diagram SDLC.
+            </div>
+            <details class="arch-details mt-5">
+              <summary>Lihat diagram, contoh, dan materi lengkap</summary>
+              <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
+                <p>SDLC adalah siklus pengembangan project, bukan urutan membaca modul. Gunakan zoom untuk menelusuri tahapan dan jalur perbaikan.</p>
+                <div class="p-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-white/10">
+                  <a href="diagrams/sdlc.html" target="_blank" class="text-zinc-900 dark:text-zinc-100 hover:underline font-semibold">Buka Diagram SDLC KasirKita Ukuran Penuh ↗</a>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <!-- Langkah 02: Tema -->
+          <article class="arch-card p-6 sm:p-8" id="tema">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 02 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 8 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Tentukan tema project</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Mulai dari masalah nyata. KasirKita membantu toko alat tulis mencatat produk, penjualan, dan nota.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti memilih tujuan perjalanan sebelum menentukan kendaraan.</p>
+            </div>
+            <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
+              <strong>Coba sekarang:</strong> Tuliskan masalah, pengguna, dan hasil yang dibutuhkan.
+            </div>
+          </article>
+
+          <!-- Langkah 03: Platform -->
+          <article class="arch-card p-6 sm:p-8" id="platform">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 03 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 12 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Bedakan desktop dan website</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Program latihan berjalan di console Windows; website Hello Project menjadi buku panduannya.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Buku di meja dan buku yang dibuka lewat browser sama-sama menyampaikan isi dengan cara berbeda.</p>
+            </div>
+          </article>
+
+          <!-- Langkah 04: Standalone -->
+          <article class="arch-card p-6 sm:p-8" id="standalone">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 04 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 6 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Standalone atau terintegrasi?</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Tentukan apakah program bekerja sendiri atau bertukar data dengan sistem lain. Latihan KasirKita berdiri sendiri dengan file TXT lokal.
+            </p>
+          </article>
+
+          <!-- Langkah 05: Scope -->
+          <article class="arch-card p-6 sm:p-8" id="scope">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 05 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 10 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Tentukan scope</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Scope membatasi apa yang akan dikerjakan dan apa yang ditunda untuk menjaga fokus tim.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Daftar pesanan membantu menghindari pekerjaan yang terus bertambah liar.</p>
+            </div>
+          </article>
+
+          <!-- Langkah 06: Data Master vs Transaksi Detail -->
+          <article class="arch-card p-6 sm:p-8 border-blue-500/40" id="data">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs uppercase tracking-wider text-zinc-800 dark:text-zinc-200 font-bold bg-zinc-200/70 dark:bg-white/10 px-2.5 py-1 rounded">
+                LANGKAH 06 / 09 · PILAR UTAMA
+              </span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400 font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg><span>Core Concept</span></span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-bold text-zinc-950 dark:text-white tracking-tight">Pisahkan master dan transaksi</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Master adalah data acuan yang jarang berubah dan bisa masuk antar-master; transaksi adalah pencatatan kejadian yang isi datanya pasti berubah-ubah.
+            </p>
+            
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">
+                Empat kotak di meja: kotak kategori, barang, dan pelanggan adalah master yang datanya jarang berubah; kotak transaksi berisi nota belanja yang isinya pasti berubah-ubah setiap menit.
+              </p>
+            </div>
+
+            <!-- Table Comparison -->
+            <div class="mt-6 overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="border-b border-zinc-200 dark:border-white/10 bg-zinc-100/80 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100 font-bold">
+                    <th class="p-3">Aspek Pembeda</th>
+                    <th class="p-3">Entitas Master (Katalog)</th>
+                    <th class="p-3">Entitas Transaksi (Nota Belanja)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Sifat Data</td><td>Jarang Berubah (statis, acuan paten)</td><td>Pasti Berubah-Ubah (dinamis, bertambah terus)</td></tr>
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Relasi</td><td>Bisa saling terhubung (Kategori &rarr; Produk)</td><td>Meminjam ID produk dari master (Foreign Key)</td></tr>
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Aktor Pengubah</td><td>Pemilik toko / admin katalog</td><td>Kasir yang melayani pembeli di mesin kasir</td></tr>
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Operasi File C</td><td>Dibaca ("r"/"rb"), diperbarui saat mutasi</td><td>Ditambah di akhir file mode append ("a"/"ab")</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- C Code Pattern -->
+            <div class="mt-6 rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
+              <div class="text-zinc-400 text-[11px] mb-2">// Pola Struct C: Master vs Transaksi</div>
+              <pre><code><span class="text-purple-400">typedef struct</span> {
+    <span class="text-blue-400">char</span> id_category[<span class="text-amber-400">21</span>];  <span class="text-zinc-500">// K01 (Primary Key Kategori)</span>
+    <span class="text-blue-400">char</span> name[<span class="text-amber-400">64</span>];         <span class="text-zinc-500">// Alat Tulis</span>
 } CategoryMaster;
 
-typedef struct {
-    char id_product[21];   // P001 (Primary Key Produk)
-    char id_category[21];  // K01 (Foreign Key merujuk Master Kategori: Master ke Master!)
-    char name[128];        // Buku Tulis A5
-    int price;             // 12000
-    int stock;             // 20
-} ProductMaster;
+<span class="text-purple-400">typedef struct</span> {
+    <span class="text-blue-400">char</span> id_product[<span class="text-amber-400">21</span>];   <span class="text-zinc-500">// P001 (Primary Key Produk)</span>
+    <span class="text-blue-400">char</span> id_category[<span class="text-amber-400">21</span>];  <span class="text-zinc-500">// K01 (FK: Master ke Master!)</span>
+    <span class="text-blue-400">char</span> name[<span class="text-amber-400">128</span>];        <span class="text-zinc-500">// Buku Tulis A5</span>
+    <span class="text-blue-400">int</span> price;             <span class="text-zinc-500">// 12000</span>
+    <span class="text-blue-400">int</span> stock;             <span class="text-zinc-500">// 20</span>
+} ProductMaster;</code></pre>
+            </div>
+          
+            <!-- 2D / 3D Representation Switcher -->
+            <div class="representation-mode-bar mt-6 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900/40 flex flex-col sm:flex-row items-center justify-between gap-4" role="region" aria-label="Pilihan Representasi Master & Transaksi 2D / 3D">
+              <div>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400">SIMULATOR DATA KASIRKITA</span>
+                <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">Representasi Interaktif Master &amp; Transaksi</h4>
+                <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Eksplorasi pemisahan katalog statis vs keranjang transaksi dalam ruang vektor 2D atau kanvas 3D WebGL.</p>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <a href="game/boxes-2d.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-xs font-semibold text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors shadow-sm">
+                  <span>Buka mode 2D</span>
+                  <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <a href="game/boxes-analogy.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-zinc-900 text-zinc-50 hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200 text-xs font-semibold transition-colors shadow-sm">
+                  <span>Buka mode 3D</span>
+                  <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
 
-typedef struct {
-    char id_customer[21];  // C001 (Primary Key Pelanggan)
-    char name[128];        // Rani
-    char phone[32];        // 0812345678
-} CustomerMaster;
+          <!-- Langkah 07: Atribut -->
+          <article class="arch-card p-6 sm:p-8" id="atribut">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 07 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 12 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Temukan atribut dari kebutuhan</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Cari data yang diperlukan dari formulir, nota, laporan, dan aturan bisnis. Kelompokkan atribut ke entitas mandiri.
+            </p>
+          </article>
 
-// 2. DATA TRANSAKSI: Disimpan di data/penjualan.txt (Mode Append &quot;a&quot; - Pasti Berubah-Ubah)
-typedef struct {
-    char id_sale[21];      // N001 (Nomor Struk - berubah setiap transaksi)
-    char id_customer[21];  // C001 (Foreign Key merujuk Pelanggan)
-    char id_product[21];   // P001 (Foreign Key merujuk Produk Master)
-    int quantity;          // Berubah sesuai belanjaan pembeli
-    int unit_price;        // Harga snapshot saat transaksi
-    char timestamp[25];    // Waktu transaksi yang selalu berubah
-} SaleTransaction;
+          <!-- Langkah 08: Probis -->
+          <article class="arch-card p-6 sm:p-8" id="probis">
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 08 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 15 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Pahami dan gunakan Probis</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Probis menghubungkan aktivitas nyata menjadi input, proses, dan output yang bernilai bagi pemilik dan kasir.
+            </p>
+            <div class="mt-4 flex flex-wrap items-center gap-3">
+              <a href="probis.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-xs font-medium hover:opacity-90 transition-opacity">
+                <span>Buka Materi Probis Lengkap</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+              <a href="files/Contoh_Probis_KasirKita.md" download class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-colors shadow-sm">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Unduh Dokumen Probis (.md)</span>
+              </a>
+            </div>
 
-// Program C mencocokkan kode barang transaksi dengan data di master:
-int hitungSubtotal(SaleTransaction trx, ProductMaster katalog[], int jumlahProduk) {
-    for (int i = 0; i &lt; jumlahProduk; i++) {
-        if (strcmp(trx.id_product, katalog[i].id_product) == 0) {
-            return trx.quantity * katalog[i].price; // Cocokkan harga dari master!
+            <!-- Download Callout Card: Probis Reference -->
+            <div class="mt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.03] shadow-sm">
+              <div>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-sky-400">BAHAN DOKUMEN PRA-SIDANG</span>
+                <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">Dokumen Spesifikasi Probis KasirKita</h4>
+                <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Panduan lengkap: Overview, pemisahan data Master vs Transaksi, aturan snapshot harga historis, flowchart atomik, dan DFD Level 0/1.</p>
+              </div>
+              <a href="files/Contoh_Probis_KasirKita.md" download class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold text-xs hover:opacity-90 transition-opacity shrink-0 shadow-sm">
+                <span>Unduh Dokumen Probis (.md)</span>
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Langkah 09: Activity Plan -->
+          <article class="arch-card p-6 sm:p-8" id="activity-plan">
+            <span id="activity" class="sr-only"></span>
+            <div class="flex items-center justify-between mb-4">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                LANGKAH 09 / 09
+              </span>
+              <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Estimasi: 10 mnt</span>
+            </div>
+            <h3 class="text-2xl font-bold text-zinc-950 dark:text-white tracking-tight">Susun Activity Plan</h3>
+            <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+              Activity Plan merencanakan kegiatan, penanggung jawab, waktu, hasil, dan status project sebelum memulai coding.
+            </p>
+            <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
+              <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti jadwal kerja toko yang menetapkan pekerjaan, petugas, dan waktu.</p>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ACT 05 · COMMITMENT: RESOLVED CLOSE (PINNED + SPOTLIGHT) ================= -->
+    <section id="close-section" data-sc-act="pin" data-sc-span="1.25" class="relative">
+      <div data-sc-stage class="sc-stage flex items-center justify-center px-6" data-sc-spotlight>
+        <div class="w-full max-w-xl mx-auto flex flex-col items-center text-center p-8 rounded-3xl border border-zinc-300 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-2xl">
+          
+          <!-- Terminal Status Card -->
+          <div class="w-full bg-zinc-950 text-left rounded-xl p-4 font-mono text-xs text-zinc-300 border border-zinc-800 mb-6 shadow-inner" data-sc-cue="0.05">
+            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-zinc-800">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+              <span class="text-[11px] text-zinc-500 ml-2">kasirkita-audit.exe</span>
+            </div>
+            <div class="space-y-1 text-emerald-400">
+              <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[SDLC] Scope &amp; Probis Toko: Terverifikasi</span></p>
+              <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[MASTER] Relasi Kategori &amp; Produk P001: Siap</span></p>
+              <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[TRANSAKSI] Append-only Nota Belanja: Valid</span></p>
+              <p class="text-zinc-400 mt-2">&gt; Status Modul 01: LULUS. Siap melanjutkan ke Modul 02.</p>
+            </div>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-950 dark:text-white tracking-tight" data-sc-cue="0.08" data-sc-kinetic="lines">
+            Fondasi Selesai. Saatnya Menulis Kode.
+          </h2>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-2 max-w-md">
+            Anda telah menyelesaikan 9 langkah persiapan dokumen. Lanjutkan ke modul berikutnya atau telaah daftar materi lengkap.
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 mt-6" data-sc-cue="0.10">
+            <a href="daftarModul.html" class="inline-flex items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 px-6 py-3 text-sm font-semibold hover:opacity-90 transition-opacity" data-sc-magnet="0.2">
+              Buka Daftar Modul ↗
+            </a>
+            <a href="project.html" class="inline-flex items-center justify-center rounded-full border border-zinc-300 dark:border-white/20 bg-white/60 dark:bg-zinc-800/60 px-6 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors">
+              Lihat Versi Klasik ↺
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= SCRIPTS ================= -->
+  <!-- 1. Scroll-Craft Runtime Engine -->
+  <script src="assets/scrollcraft/scrollcraft.js"></script>
+
+  <!-- 2. Main Page Orchestration & Signature Move Logic -->
+  <script>
+    // Initialize ScrollCraft Runtime
+    const sc = ScrollCraft.mount(document.body);
+
+    // Theme Management (Zero-FOUC & Reactive)
+    (function initThemeToggle() {
+      const btnLight = document.getElementById('theme-btn-light');
+      const btnDark = document.getElementById('theme-btn-dark');
+
+      function updateButtons(isDark) {
+        if (isDark) {
+          btnDark.classList.add('bg-zinc-800', 'text-white', 'shadow-sm');
+          btnDark.classList.remove('text-zinc-400');
+          btnLight.classList.remove('bg-zinc-200', 'text-zinc-900', 'shadow-sm');
+          btnLight.classList.add('text-zinc-400');
+        } else {
+          btnLight.classList.add('bg-zinc-200', 'text-zinc-900', 'shadow-sm');
+          btnLight.classList.remove('text-zinc-600');
+          btnDark.classList.remove('bg-zinc-800', 'text-white', 'shadow-sm');
+          btnDark.classList.add('text-zinc-600');
         }
-    }
-    return 0; // Tidak ditemukan di katalog master
-}</code></pre><h3>Skenario yang Digunakan Sepanjang Tutorial</h3><p>Rani membeli 2 Buku A5 seharga Rp12.000 per buku. Total Rp24.000, dibayar Rp30.000, kembalian Rp6.000. Stok buku di Kotak Master berkurang dari 20 menjadi 18, dan satu lembar nota baru tersimpan di Kotak Transaksi.</p></div></details></section><section class="story-step" id="atribut" data-story-title="Temukan atribut dari kebutuhan"><p class="story-kicker">LANGKAH 07 / 09</p><h2>Temukan atribut dari kebutuhan</h2><p class="story-explanation">Cari data yang diperlukan dari formulir, nota, laporan, dan aturan bisnis.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti menentukan kotak-kotak isian yang benar pada formulir pendaftaran sebelum menghubungkannya.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Tentukan tipe dan validasi untuk setiap field produk.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Temukan atribut dari kebutuhan</h3><p>Mulai dari kebutuhan pengguna, bukan menambah kolom tanpa tujuan. Periksa contoh dokumen dan formulir toko untuk menemukan data apa yang harus masuk, disimpan, dan keluar. Atribut dikelompokkan dalam tabel entitas mandiri. Pada tahap identifikasi awal ini, kita hanya mendata atribut alami masing-masing entitas tanpa Foreign Key (relasi antar-entitas akan dibentuk nanti saat perancangan relasi dan normalisasi).</p><h3>Tabel Entitas CATEGORY (Kategori Barang)</h3><div class="table-wrap"><table><thead><tr><th>Atribut</th><th>Tipe model</th><th>Representasi C</th><th>Keterangan</th></tr></thead><tbody><tr><td>id_category</td><td>VARCHAR(20)</td><td>char[21]</td><td>Kunci utama (ID kategori unik)</td></tr><tr><td>name</td><td>VARCHAR(64)</td><td>char[65]</td><td>Nama kelompok / rak barang</td></tr></tbody></table></div><h3>Tabel Entitas PRODUCT (Produk Dagangan)</h3><div class="table-wrap"><table><thead><tr><th>Atribut</th><th>Tipe model</th><th>Representasi C</th><th>Keterangan</th></tr></thead><tbody><tr><td>id_product</td><td>VARCHAR(20)</td><td>char[21]</td><td>Kunci utama (ID produk unik)</td></tr><tr><td>sku</td><td>VARCHAR(32)</td><td>char[33]</td><td>Kode barcode unik produk</td></tr><tr><td>name</td><td>VARCHAR(128)</td><td>char[129]</td><td>Nama lengkap barang</td></tr><tr><td>price</td><td>INTEGER</td><td>int</td><td>Harga satuan barang (rupiah bulat)</td></tr><tr><td>stock</td><td>INTEGER</td><td>int</td><td>Jumlah sisa persediaan</td></tr></tbody></table></div><h3>Tabel Entitas CUSTOMER (Data Pelanggan)</h3><div class="table-wrap"><table><thead><tr><th>Atribut</th><th>Tipe model</th><th>Representasi C</th><th>Keterangan</th></tr></thead><tbody><tr><td>id_customer</td><td>VARCHAR(20)</td><td>char[21]</td><td>Kunci utama (ID pelanggan unik)</td></tr><tr><td>name</td><td>VARCHAR(128)</td><td>char[129]</td><td>Nama lengkap pembeli</td></tr><tr><td>phone</td><td>VARCHAR(32)</td><td>char[33]</td><td>Nomor WhatsApp / telepon</td></tr></tbody></table></div><h3>Tabel Entitas SALE (Nota Penjualan)</h3><div class="table-wrap"><table><thead><tr><th>Atribut</th><th>Tipe model</th><th>Representasi C</th><th>Keterangan</th></tr></thead><tbody><tr><td>id_sale</td><td>VARCHAR(20)</td><td>char[21]</td><td>Kunci utama (Nomor transaksi nota)</td></tr><tr><td>created_at</td><td>VARCHAR(20)</td><td>char[21]</td><td>Waktu transaksi dibuat</td></tr><tr><td>paid</td><td>INTEGER</td><td>int</td><td>Nominal uang pembayaran</td></tr><tr><td>total</td><td>INTEGER</td><td>int</td><td>Total nominal belanja transaksi</td></tr></tbody></table></div><h3>Tabel Entitas ITEM (Detail Item Belanja)</h3><div class="table-wrap"><table><thead><tr><th>Atribut</th><th>Tipe model</th><th>Representasi C</th><th>Keterangan</th></tr></thead><tbody><tr><td>quantity</td><td>INTEGER</td><td>int</td><td>Jumlah barang yang dibeli (> 0)</td></tr><tr><td>unit_price</td><td>INTEGER</td><td>int</td><td>Harga satuan saat transaksi berlangsung</td></tr></tbody></table></div><div class="callout"><strong>Sederhana di C:</strong> Gunakan <code>int</code> untuk bilangan bulat (harga, stok, jumlah, bayar) dan array karakter <code>char[N]</code> untuk teks dengan satu slot ekstra terminator NUL <code>\0</code>. Semua ID memakai <code>char[21]</code> untuk menampung teks hingga 20 karakter. Validasi string juga menolak delimiter | dan newline bila disimpan pada format TXT.</div></div></details></section><section class="story-step" id="probis" data-story-title="Pahami dan gunakan Probis"><p class="story-kicker">LANGKAH 08 / 09</p><h2>Pahami dan gunakan Probis</h2><p class="story-explanation">Probis menghubungkan aktivitas nyata menjadi input, proses, dan output yang bernilai.</p><p>Penjelasan, diagram, source Mermaid, dan latihan tersedia dalam halaman materi.</p><a class="pill" href="probis.html">Buka materi Probis →</a></section><section class="story-step" id="activity-plan" data-story-title="Susun Activity Plan"><p class="story-kicker">LANGKAH 09 / 09</p><h2>Susun Activity Plan</h2><p class="story-explanation">AP merencanakan kegiatan, penanggung jawab, waktu, hasil, dan status project.</p><div class="story-analogy"><span>BAYANGKAN BEGINI</span><p>Seperti jadwal kerja toko yang menetapkan pekerjaan, petugas, dan waktu.</p></div><div class="story-action"><strong>Coba sekarang</strong><p>Isi AP berdasarkan jadwal timmu sendiri.</p></div><details class="story-details"><summary>Lihat diagram, contoh, dan materi lengkap</summary><div class="story-reference"><h3>Susun Activity Plan</h3><div class="download-card"><div><span class="download-label">BAHAN DOWNLOAD</span><h3>Activity Plan (AP)</h3><p>Dokumen Activity Plan (AP) untuk merencanakan kegiatan project.</p></div><a class="pill download-button" href="files/PRO-INT-TK2-001%20-%20AP.xlsx" download>Unduh Activity Plan (AP) <span aria-hidden="true">↓</span></a></div><p>Gunakan Activity Plan sebelum coding dan perbarui selama pengerjaan. Pecah kegiatan menjadi pekerjaan yang dapat diperiksa; bandingkan jadwal rencana dengan pelaksanaan. Template AP tersedia untuk diunduh.</p><div class="table-wrap"><table><thead><tr><th>Kegiatan</th><th>PIC</th><th>Waktu rencana</th><th>Hasil</th><th>Status</th></tr></thead><tbody><tr><td>Kebutuhan dan Probis</td><td>[nama]</td><td>[tanggal]</td><td>Scope, atribut, diagram</td><td>Belum dimulai</td></tr><tr><td>Mempelajari lib.h</td><td>[nama]</td><td>[tanggal]</td><td>Latihan fungsi</td><td>Belum dimulai</td></tr><tr><td>Membuat UI ASCII art</td><td>[nama]</td><td>[tanggal]</td><td>File teks dan layar C</td><td>Belum dimulai</td></tr><tr><td>Testing dan dokumen akhir</td><td>[nama]</td><td>[tanggal]</td><td>Bukti, Product Documentation, User Guide</td><td>Belum dimulai</td></tr></tbody></table></div><div class="checklist"><label><input type="checkbox"><span>Tema, platform, integrasi, dan scope ditentukan.</span></label><label><input type="checkbox"><span>Master, transaksi, atribut, dan validasi konsisten.</span></label><label><input type="checkbox"><span>Probis serta AP siap menjadi acuan.</span></label></div><p><strong>Hasil modul 1:</strong> satu dokumen persiapan berisi masalah dan scope, tabel Probis (aktor, input, aktivitas, output, fitur), daftar atribut beserta validasinya, serta AP dengan PIC dan tanggal rencana yang nyata. Periksa satu alur penjualan dari kebutuhan sampai hasil yang diharapkan bersama pengajar.</p></div></details></section></div><script src="assets/js/story.js" defer></script><script src="assets/js/step-nav.js" defer></script><button class="cta complete" aria-pressed="false">Tandai modul selesai ✓</button><nav class="pagination" aria-label="Modul sebelum dan sesudah"><a href="daftarModul.html"><small>← SEBELUMNYA</small>Daftar modul</a><a href="daftarisi-2.html"><small>BERIKUTNYA →</small>Dokumen After</a></nav></main></div><button class="video-toggle" aria-label="Jeda latar video">Ⅱ</button><footer class="foot"><span>Hello Project <span class="footer-tagline">/ Belajar dengan membangun.</span></span><span>PROJECT GUIDE · VOL. 01 &nbsp; © 2026</span></footer><script>const storage={get(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch{return[]}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
-const video=document.querySelector('video'), toggle=document.querySelector('.video-toggle');
-let userManuallyPaused=false;
-if(video){
-  video.muted=true;video.defaultMuted=true;video.playsInline=true;
-  video.play().catch(()=>{});
-  function videoLabel(){
-    if(!toggle)return;
-    toggle.textContent=video.paused?'▷':'Ⅱ';
-    toggle.setAttribute('aria-label',video.paused?'Putar latar video':'Jeda latar video');
-  }
-  video.addEventListener('play',videoLabel);
-  video.addEventListener('pause',videoLabel);
-  videoLabel();
-  if(toggle){
-    toggle.addEventListener('click',()=>{
-      if(video.paused){
-        userManuallyPaused=false;
-        video.play().catch(()=>{});
-      }else{
-        userManuallyPaused=true;
-        video.pause();
       }
-    });
-  }
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){
-      video.pause();
-    }else if(!userManuallyPaused){
-      video.play().catch(()=>{});
-    }
-  });
-}
-const page=document.body.dataset.page;const completed=storage.get('kasirkita-completed');document.querySelectorAll('[data-progress]').forEach(e=>e.textContent=completed.length+' dari 4 modul selesai');document.querySelectorAll('.track i').forEach(e=>e.style.width=completed.length/4*100+'%');
-const done=document.querySelector('.complete');function renderDone(){if(done){const yes=completed.includes(page);done.classList.toggle('done',yes);done.textContent=yes?'✓ Modul selesai — batalkan':'Tandai modul selesai  ✓';done.setAttribute('aria-pressed',yes)}}renderDone();if(done)done.onclick=()=>{const i=completed.indexOf(page);if(i<0)completed.push(page);else completed.splice(i,1);storage.set('kasirkita-completed',completed);renderDone();document.querySelectorAll('[data-progress]').forEach(e=>e.textContent=completed.length+' dari 4 modul selesai');document.querySelectorAll('.track i').forEach(e=>e.style.width=completed.length/4*100+'%')};
-document.querySelectorAll('.checklist input').forEach((el,i)=>{const key=page+'-checks';el.checked=storage.get(key).includes(i);el.onchange=()=>{let v=storage.get(key).filter(x=>x!==i);if(el.checked)v.push(i);storage.set(key,v)}});
-document.querySelectorAll('.copy').forEach(b=>{const label=b.textContent;b.onclick=async()=>{try{await navigator.clipboard.writeText(b.parentElement.nextElementSibling.textContent);b.textContent='Tersalin ✓'}catch{b.textContent='Pilih kode untuk menyalin'}setTimeout(()=>b.textContent=label,2200)}});</script></body></html>
+
+      function setTheme(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('kasirkita-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('kasirkita-theme', 'light');
+        }
+        updateButtons(isDark);
+        if (window.updateThreeColor) window.updateThreeColor(isDark);
+      }
+
+      const initialDark = document.documentElement.classList.contains('dark');
+      updateButtons(initialDark);
+
+      if (btnLight) btnLight.addEventListener('click', () => setTheme(false));
+      if (btnDark) btnDark.addEventListener('click', () => setTheme(true));
+    })();
+
+    // Three.js Ambient Particles (Anti-Slop: Restrained, Non-Neon)
+    (function initThreeParticles() {
+      const container = document.getElementById('three-particles');
+      if (!container || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+      camera.position.z = 400;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+
+      const particleCount = 35;
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 800;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 800;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 400;
+      }
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const isDarkInit = document.documentElement.classList.contains('dark');
+      const material = new THREE.PointsMaterial({
+        size: 2,
+        color: isDarkInit ? 0xd4d4d8 : 0x71717a,
+        transparent: true,
+        opacity: isDarkInit ? 0.3 : 0.2,
+      });
+
+      const particles = new THREE.Points(geometry, material);
+      scene.add(particles);
+
+      window.updateThreeColor = function(isDark) {
+        material.color.setHex(isDark ? 0xd4d4d8 : 0x71717a);
+        material.opacity = isDark ? 0.3 : 0.2;
+      };
+
+      function animate() {
+        requestAnimationFrame(animate);
+        particles.rotation.y += 0.0003;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
+
+    // Bespoke Signature Move: Live Blueprint Stroke-Build & Stock Flux
+    (function initSignatureMove() {
+      const act = document.getElementById('act-signature-move');
+      const flowPath = document.getElementById('signature-flow-path');
+      const stockText = document.getElementById('stock-text');
+      const stockDelta = document.getElementById('stock-delta');
+      const itemRow = document.getElementById('row-item-highlight');
+      const pin1 = document.getElementById('pin-1-circle');
+      const pin1Num = document.getElementById('pin-1-num');
+      const pin2 = document.getElementById('pin-2-circle');
+      const pin2Num = document.getElementById('pin-2-num');
+      const pin3 = document.getElementById('pin-3-circle');
+      const pin3Num = document.getElementById('pin-3-num');
+      const pin4 = document.getElementById('pin-4-circle');
+      const leg1 = document.getElementById('legend-1');
+      const leg2 = document.getElementById('legend-2');
+      const leg3 = document.getElementById('legend-3');
+      const leg4 = document.getElementById('legend-4');
+
+      if (!act || !flowPath) return;
+
+      function updateBlueprint() {
+        // Read progress --sc-p from the act (published by scrollcraft.js)
+        const pRaw = parseFloat(getComputedStyle(act).getPropertyValue('--sc-p') || '0');
+        const p = Math.max(0, Math.min(1, pRaw));
+
+        // Stage 1: Primary Key (p: 0.1 - 0.3)
+        if (p >= 0.1) {
+          leg1.classList.add('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (pin1) pin1.classList.add('stroke-2', 'stroke-white');
+        } else {
+          leg1.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (pin1) pin1.classList.remove('stroke-2', 'stroke-white');
+        }
+
+        // Stage 2: Master-to-Master Product (p: 0.3 - 0.5)
+        if (p >= 0.3) {
+          leg2.classList.add('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (pin2) pin2.classList.add('stroke-2', 'stroke-white');
+        } else {
+          leg2.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (pin2) pin2.classList.remove('stroke-2', 'stroke-white');
+        }
+
+        // Stage 3: Foreign Key in Transaction (p: 0.5 - 0.75)
+        if (p >= 0.5) {
+          flowPath.classList.add('flow-line-active');
+          if (pin3) pin3.classList.add('stroke-2', 'stroke-white');
+          leg3.classList.add('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (itemRow) {
+            itemRow.classList.add('fill-blue-100', 'dark:fill-blue-900/60');
+          }
+        } else {
+          flowPath.classList.remove('flow-line-active');
+          if (pin3) pin3.classList.remove('stroke-2', 'stroke-white');
+          leg3.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-500/10');
+          if (itemRow) {
+            itemRow.classList.remove('fill-blue-100', 'dark:fill-blue-900/60');
+          }
+        }
+
+        // Stage 4: Stock Mutation Flux (p: 0.75 - 1.0)
+        if (p >= 0.75) {
+          leg4.classList.add('ring-2', 'ring-red-500', 'bg-red-500/10');
+          if (pin4) pin4.classList.add('stroke-2', 'stroke-white');
+        } else {
+          leg4.classList.remove('ring-2', 'ring-red-500', 'bg-red-500/10');
+          if (pin4) pin4.classList.remove('stroke-2', 'stroke-white');
+        }
+
+        requestAnimationFrame(updateBlueprint);
+      }
+
+      requestAnimationFrame(updateBlueprint);
+    })();
+  </script>
+  <!-- Navigation Integration Script -->
+  <script src="assets/js/step-nav.js"></script>
+</body>
+</html>

@@ -1,26 +1,65 @@
-# Python generator cache & local generators (not deployed)
-__pycache__/
-*.py[cod]
-/*.py
+# ==============================================================================
+# GITIGNORE RESMI WEB HELLO PROJECT / KASIRKITA
+# ==============================================================================
 
-# Local validation, temporary scripts, and test screenshots
-diagrams/archify-validation.json
-diagrams/archify-delivery.json
-diagrams/archify-browser.json
-diagrams/*.visual-check.*
-diagrams/verification.md
+# 1. Media Biner Berat & Rekaman Video (DILARANG MASUK GIT)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+output_video/
+
+# 2. Direktori Karantina & Arsip Eksperimental Lokal
+_archive/
+pdf_builder/
+
+# 3. Tangkapan Layar Audit Sementara & Debugging di Root
+/*.png
+/*.jpg
+/*.jpeg
 test_chrome.png
 test_box.svg
-probe.js
-record_animation.mjs
-postman_collection*.json
+video_frame.jpg
 
-# Editor and operating-system metadata
+# 4. Dump Teks Ekstraksi Slide & Scraping
+slide_p*.txt
+pdf_titles.txt
+extracted_pdf_content.json
+
+# 5. Berkas PDF Hasil Kompilasi di Root (PDF resmi ada di files/)
+/*.pdf
+
+# 6. Cache Python, Runtime & Virtualenv
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv/
+env/
+
+# 7. Metadata Editor & Sistem Operasi
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
 *.log
+desktop.ini
 
+# 8. Berkas Cadangan & Duplikasi Sementara
+*_backup*
+*backup*
+*.bak
+*.tmp
+
+# 9. Artefak Pengujian & Validasi Diagrams
+diagrams/archify-validation.json
+diagrams/archify-delivery.json
+diagrams/archify-browser.json
+diagrams/*.visual-check.*
+diagrams/verification.md
 diagrams/mermaid-check.html
 diagrams/sdlc-delivery.json
+postman_collection*.json
+probe.js
+record_animation.mjs
