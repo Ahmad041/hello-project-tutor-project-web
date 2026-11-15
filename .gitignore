@@ -64,3 +64,11 @@ diagrams/sdlc-delivery.json
 postman_collection*.json
 probe.js
 record_animation.mjs
+
+# 10. Development Tooling, Test Suites & Generator Tools (Bukan aset web publik)
+scripts/
+scrollcraft/
+tools/
+tests/
+cinematic/
+
