@@ -26,8 +26,8 @@
 
     init() {
       this.bindButtons();
-      this.setupObserver();
-      this.applyStep(prefersReducedMotion ? this.steps : 1);
+      // Always initialize at Stage 1 so user can progress through stages intentionally
+      this.applyStep(1);
     }
 
     bindButtons() {
@@ -109,15 +109,15 @@
       this.currentStep = Math.max(1, Math.min(step, this.steps));
       this.container.setAttribute('data-active-step', this.currentStep);
 
-      // 1. Update Stepper Buttons state
+      // 1. Update Stepper Buttons state (Neutral monochrome, no blue)
       this.stepBtns.forEach((btn) => {
         const btnStep = parseInt(btn.getAttribute('data-step-btn'), 10);
         if (btnStep === this.currentStep) {
-          btn.classList.add('bg-blue-600', 'text-white', 'dark:bg-sky-500', 'dark:text-zinc-950', 'font-bold');
+          btn.classList.add('bg-zinc-900', 'text-white', 'dark:bg-white', 'dark:text-zinc-950', 'font-bold', 'shadow-sm');
           btn.classList.remove('text-zinc-600', 'dark:text-zinc-400', 'hover:bg-zinc-200', 'dark:hover:bg-white/10');
           btn.setAttribute('aria-current', 'step');
         } else {
-          btn.classList.remove('bg-blue-600', 'text-white', 'dark:bg-sky-500', 'dark:text-zinc-950', 'font-bold');
+          btn.classList.remove('bg-zinc-900', 'text-white', 'dark:bg-white', 'dark:text-zinc-950', 'font-bold', 'shadow-sm');
           btn.classList.add('text-zinc-600', 'dark:text-zinc-400', 'hover:bg-zinc-200', 'dark:hover:bg-white/10');
           btn.removeAttribute('aria-current');
         }
@@ -145,12 +145,12 @@
         const elStep = parseInt(el.getAttribute('data-step'), 10);
         if (elStep === this.currentStep) {
           el.style.opacity = '1';
-          el.style.transition = 'opacity 300ms ease, filter 300ms ease, transform 300ms ease';
-          el.style.filter = 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.45))';
+          el.style.transition = 'opacity 250ms ease, filter 250ms ease';
+          el.style.filter = 'drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45))';
           el.classList.add('is-active-step');
         } else {
-          el.style.opacity = '0.35';
-          el.style.transition = 'opacity 300ms ease, filter 300ms ease, transform 300ms ease';
+          el.style.opacity = '0.45';
+          el.style.transition = 'opacity 250ms ease, filter 250ms ease';
           el.style.filter = 'none';
           el.classList.remove('is-active-step');
         }

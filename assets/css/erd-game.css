@@ -54,10 +54,10 @@
 }
 
 .erd-level-btn.active {
-  background: linear-gradient(135deg, #0284c7, #0369a1);
-  border-color: #38bdf8;
+  background: #27272a;
+  border-color: #52525b;
   color: #fff;
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .erd-level-btn.completed {
@@ -72,9 +72,9 @@
 
 /* Mission Briefing Box */
 .erd-mission-box {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-left: 5px solid #38bdf8;
+  background: #121215;
+  border: 1px solid var(--border-subtle, #27272a);
+  border-left: 4px solid #52525b;
   border-radius: 12px;
   padding: 1.1rem 1.4rem;
   display: flex;
@@ -107,9 +107,9 @@
   text-transform: uppercase;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  color: #38bdf8;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e4e4e7;
 }
 
 .erd-mission-text {
@@ -247,7 +247,7 @@
 .erd-pulse {
   pointer-events: none;
   fill: #fff;
-  filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 12px var(--pulse-color, #38bdf8));
+  filter: drop-shadow(0 0 4px #fff);
 }
 
 /* Entity Cards Grid (3 Columns) */
@@ -300,8 +300,8 @@
 }
 
 .erd-card.highlight-pulse {
-  border-color: #38bdf8;
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
+  border-color: #71717a;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
   transform: scale(1.02);
 }
 
@@ -372,7 +372,7 @@
 }
 
 .erd-field-key.uk {
-  color: #38bdf8;
+  color: #e4e4e7;
 }
 
 .erd-field-key.pk-fk {
@@ -429,12 +429,12 @@
 
 .erd-socket:hover {
   transform: scale(1.3);
-  border-color: #38bdf8;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+  border-color: #a1a1aa;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .erd-socket:hover::after {
-  background: #38bdf8;
+  background: #ffffff;
   transform: scale(1.4);
 }
 
@@ -598,7 +598,7 @@
 
 .erd-receipt-box h4 {
   margin: 0 0 0.5rem 0;
-  color: #38bdf8;
+  color: #f4f4f5;
   text-align: center;
   letter-spacing: 0.05em;
 }

@@ -8,19 +8,23 @@
   <link rel="stylesheet" href="../assets/css/site.css?v=20261016-clean">
   <link rel="stylesheet" href="../assets/css/uat-game.css">
   <style>
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #050c16; color: #edf3fc; font-family: 'Sora', sans-serif; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #09090b; color: #f4f4f5; font-family: 'Sora', sans-serif; }
     .checkout-app { display: flex; flex-direction: column; width: 100vw; height: 100vh; padding: 12px 20px; gap: 12px; position: relative; z-index: 2; }
-    .checkout-topbar { display: flex; align-items: center; justify-content: space-between; height: 48px; padding: 0 16px; background: rgba(13, 23, 37, 0.85); backdrop-filter: blur(12px); border: 1px solid #1e314b; border-radius: 12px; flex-shrink: 0; }
-    .checkout-back-btn { display: inline-flex; align-items: center; gap: 8px; color: #ebd1a1; text-decoration: none; font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(235, 209, 161, 0.25); background: rgba(235, 209, 161, 0.06); transition: all 0.2s ease; }
-    .checkout-back-btn:hover { background: rgba(235, 209, 161, 0.15); }
+    .checkout-topbar { display: flex; align-items: center; justify-content: space-between; height: 48px; padding: 0 16px; background: rgba(18, 18, 21, 0.85); backdrop-filter: blur(12px); border: 1px solid #27272a; border-radius: 12px; flex-shrink: 0; }
+    .checkout-back-btn { display: inline-flex; align-items: center; gap: 8px; color: #f4f4f5; text-decoration: none; font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 8px; border: 1px solid #27272a; background: rgba(255, 255, 255, 0.04); transition: all 0.2s ease; }
+    .checkout-back-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: #52525b; }
     .checkout-badge { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #f1f5f9; }
-    .checkout-badge .tag { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 999px; }
+    .checkout-badge .tag { background: #27272a; border: 1px solid #3f3f46; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 999px; }
     .checkout-scroll-content { flex: 1; overflow-y: auto; padding-right: 8px; display: flex; flex-direction: column; gap: 14px; }
     .checkout-scroll-content .checkout-game { margin: 0; }
   </style>
 </head>
 <body>
-  <video class="uat-bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" src="../assets/video/daftarModul.mp4"></video>
+  <video class="uat-bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="../assets/images/video_frame.jpg">
+    <source src="../assets/video/hf_bg_h264.mp4" type="video/mp4">
+    <source src="../hf_bg_h264.mp4" type="video/mp4">
+    <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260818_072341_50851634-bbc3-4c33-9acc-7647d4db44aa.mp4" type="video/mp4">
+  </video>
   <div class="uat-veil"></div>
 
   <main class="checkout-app" id="main">
@@ -80,7 +84,7 @@
       <svg class="checkout-svg-canvas" aria-hidden="true">
         <defs>
           <marker id="arrow-next" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#38bdf8"/>
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#a1a1aa"/>
           </marker>
           <marker id="arrow-ya" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#10b981"/>
@@ -92,7 +96,7 @@
             <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#f59e0b"/>
           </marker>
           <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#38bdf8" flood-opacity="0.6"/>
+            <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.3"/>
           </filter>
         </defs>
         <g class="checkout-wires-group"></g>

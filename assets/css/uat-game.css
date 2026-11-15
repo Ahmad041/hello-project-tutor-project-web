@@ -4,15 +4,15 @@
    ========================================================================== */
 
 :root {
-  --bg-deep: #050c16;
-  --bg-card: #0d1725;
-  --bg-surface: #132238;
-  --border-subtle: #1e314b;
-  --border-focus: #38bdf8;
-  --text-main: #edf3fc;
-  --text-muted: #94a3b8;
-  --accent-gold: #ebd1a1;
-  --accent-cyan: #38bdf8;
+  --bg-deep: #09090b;
+  --bg-card: #121215;
+  --bg-surface: #18181b;
+  --border-subtle: #27272a;
+  --border-focus: #52525b;
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --accent-gold: #e4e4e7;
+  --accent-cyan: #e4e4e7;
   --accent-emerald: #10b981;
   --accent-rose: #f43f5e;
   --accent-amber: #f59e0b;
@@ -50,7 +50,7 @@ html, body {
 .uat-veil {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 20%, rgba(19, 34, 56, 0.4) 0%, rgba(5, 12, 22, 0.92) 80%);
+  background: radial-gradient(circle at 50% 20%, rgba(24, 24, 27, 0.4) 0%, rgba(9, 9, 11, 0.94) 80%);
   z-index: 1;
   pointer-events: none;
 }
@@ -74,7 +74,7 @@ html, body {
   justify-content: space-between;
   height: 48px;
   padding: 0 16px;
-  background: rgba(13, 23, 37, 0.85);
+  background: rgba(18, 18, 21, 0.85);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
@@ -85,21 +85,21 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--accent-gold);
+  color: var(--text-main);
   text-decoration: none;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.05em;
   padding: 6px 12px;
   border-radius: 8px;
-  border: 1px solid rgba(235, 209, 161, 0.25);
-  background: rgba(235, 209, 161, 0.06);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.04);
   transition: all 0.2s ease;
 }
 
 .uat-back-btn:hover {
-  background: rgba(235, 209, 161, 0.15);
-  border-color: var(--accent-gold);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #52525b;
   transform: translateX(-2px);
 }
 
@@ -115,12 +115,13 @@ html, body {
 }
 
 .uat-title-badge .tag {
-  background: linear-gradient(135deg, #0284c7, #0369a1);
+  background: #27272a;
   color: #fff;
   font-size: 10px;
   padding: 3px 8px;
   border-radius: 6px;
   font-weight: 800;
+  border: 1px solid #3f3f46;
 }
 
 .uat-topbar-controls {
@@ -134,9 +135,9 @@ html, body {
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  color: var(--accent-cyan);
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
   padding: 4px 12px;
   border-radius: 20px;
   font-weight: 600;
@@ -153,7 +154,7 @@ html, body {
 .uat-progress-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+  background: #52525b;
   transition: width 0.4s ease;
 }
 
@@ -196,7 +197,7 @@ html, body {
 .uat-level-tabs {
   display: flex;
   gap: 6px;
-  background: rgba(13, 23, 37, 0.6);
+  background: rgba(18, 18, 21, 0.6);
   padding: 4px;
   border-radius: 10px;
   border: 1px solid var(--border-subtle);
@@ -221,9 +222,9 @@ html, body {
 
 .uat-level-tab.active {
   color: #fff;
-  background: var(--bg-surface);
+  background: #27272a;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-focus);
+  border: 1px solid #3f3f46;
 }
 
 .uat-level-tab.locked {
@@ -297,7 +298,7 @@ html, body {
   align-items: center;
   gap: 6px;
   background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #050c16;
+  color: #09090b;
   font-size: 12px;
   font-weight: 800;
   padding: 7px 14px;
@@ -328,7 +329,7 @@ html, body {
 /* Mock Application Sandbox Viewport */
 .uat-mock-window {
   flex: 1;
-  background: #09121e;
+  background: #09090b;
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   display: flex;
@@ -339,7 +340,7 @@ html, body {
 
 .uat-mock-titlebar {
   height: 36px;
-  background: #0d1a2c;
+  background: #141418;
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
@@ -426,8 +427,8 @@ html, body {
   width: 100%;
   height: 38px;
   padding: 0 12px;
-  background: #060e18;
-  border: 1px solid #1e314b;
+  background: #09090b;
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
   color: #fff;
   font-size: 13px;
@@ -437,8 +438,8 @@ html, body {
 
 .uat-form-group input:focus, .uat-form-group select:focus {
   outline: none;
-  border-color: var(--accent-cyan);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+  border-color: #52525b;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
 }
 
 .uat-form-group .field-error {
@@ -461,8 +462,8 @@ html, body {
 .uat-btn-submit {
   width: 100%;
   height: 40px;
-  background: linear-gradient(135deg, #0284c7, #0369a1);
-  color: #fff;
+  background: #f4f4f5;
+  color: #09090b;
   border: none;
   border-radius: 8px;
   font-size: 13px;
@@ -473,8 +474,8 @@ html, body {
 }
 
 .uat-btn-submit:hover {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 /* Mock Screen Alerts */
@@ -543,7 +544,7 @@ html, body {
 }
 
 .uat-catalog-table th {
-  background: #08111e;
+  background: #141418;
   padding: 8px 10px;
   text-align: left;
   border-bottom: 1px solid var(--border-subtle);
@@ -568,7 +569,7 @@ html, body {
 
 .uat-sheet-header {
   padding: 12px 16px;
-  background: #0b1522;
+  background: #141418;
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
@@ -578,7 +579,7 @@ html, body {
 .uat-sheet-header h3 {
   font-size: 13px;
   font-weight: 800;
-  color: var(--accent-gold);
+  color: var(--text-main);
   letter-spacing: 0.04em;
 }
 
@@ -609,10 +610,10 @@ html, body {
 .uat-table th {
   position: sticky;
   top: 0;
-  background: #091320;
+  background: #141418;
   padding: 8px 10px;
   text-align: left;
-  color: #94a3b8;
+  color: #a1a1aa;
   font-weight: 700;
   border-bottom: 2px solid var(--border-subtle);
   z-index: 10;
@@ -620,9 +621,9 @@ html, body {
 
 .uat-table td {
   padding: 8px 10px;
-  border-bottom: 1px solid #14243b;
+  border-bottom: 1px solid #1f1f23;
   vertical-align: top;
-  color: #cbd5e1;
+  color: #d4d4d8;
 }
 
 /* Category Banner Header Row (Matching Image 2 Yellow Banner) */
@@ -698,8 +699,8 @@ html, body {
 }
 
 .uat-table tr.active-target {
-  background: rgba(56, 189, 248, 0.06);
-  outline: 1px dashed var(--accent-cyan);
+  background: rgba(255, 255, 255, 0.05);
+  outline: 1px dashed #52525b;
 }
 
 .uat-table tr.row-passed {
@@ -754,7 +755,7 @@ html, body {
   position: absolute;
   inset: -3px;
   border-radius: 32px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.6), transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%);
   z-index: -1;
   animation: packetPulse 0.5s infinite alternate;
 }

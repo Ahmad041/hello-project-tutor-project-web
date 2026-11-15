@@ -195,7 +195,7 @@
           <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">⏱ ± 45 Menit</span>
           <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">Level Menengah</span>
           <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">Output: ASCII Banner &amp; Engine PrintTxt</span>
-          <a href="daftarisi-4.html" class="px-3 py-1.5 rounded-lg bg-blue-500/20 backdrop-blur-md border border-blue-400/30 text-blue-300 hover:text-white transition-colors"><span>Daftar Isi Modul 04</span><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          <a href="daftarisi-4.html" class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-zinc-100 hover:text-white transition-colors flex items-center gap-1.5"><span>Daftar Isi Modul 04</span><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
         </div>
       </div>
     </section>
@@ -242,70 +242,63 @@
             <!-- Fig 4.1 Diagram -->
             <div class="story-anatomy" data-anatomy-scroll data-steps="3">
               <div class="anatomy-header">
-                <span class="anatomy-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 dark:bg-sky-400/10 border border-blue-500/20 dark:border-sky-400/20 text-blue-600 dark:text-sky-400 font-mono text-xs font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 22h18"/><path d="m14 22 3-3 3 3"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="m12 6 4-4 3 3-4 4"/></svg><span>BEDAH ANATOMI</span></span>
+                <span class="anatomy-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-zinc-700/80 text-zinc-300 font-mono text-xs font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 22h18"/><path d="m14 22 3-3 3 3"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="m12 6 4-4 3 3-4 4"/></svg><span>BEDAH ANATOMI</span></span>
                 <span class="anatomy-fig">Fig 4.1 · Anatomi Kanvas ASCII Art &amp; Staging Grid Terminal 80&times;25</span>
               </div>
               <h4 class="anatomy-title">Pembagian Zona Vertikal Layar Terminal 80 Kolom &times; 25 Baris</h4>
               
               <div class="anatomy-canvas">
                 <svg viewBox="0 0 760 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram Anatomi Kanvas ASCII Art">
-      <defs>
-        <pattern id="ascGridClean" width="20" height="20" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1" fill="#38bdf8" opacity="0.15"/>
-        </pattern>
-      </defs>
-
-      <!-- Canvas Background -->
-      <rect width="760" height="270" rx="10" fill="#040914" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
-      <rect width="760" height="270" fill="url(#ascGridClean)" rx="10"/>
+      <!-- Canvas Background Solid Matte -->
+      <rect width="760" height="270" rx="10" fill="#09090b" stroke="#27272a" stroke-width="1"/>
 
       <!-- Console Window Outer Bezel -->
-      <rect x="50" y="18" width="660" height="234" rx="8" fill="#030712" stroke="#38bdf8" stroke-width="2"/>
+      <rect x="50" y="18" width="660" height="234" rx="8" fill="#09090b" stroke="#3f3f46" stroke-width="1.5"/>
       
       <!-- Window Title Bar -->
-      <rect x="50" y="18" width="660" height="26" rx="8" fill="#0f172a"/>
-      <circle cx="68" cy="31" r="4" fill="#ef4444"/>
-      <circle cx="82" cy="31" r="4" fill="#f59e0b"/>
-      <circle cx="96" cy="31" r="4" fill="#10b981"/>
-      <text x="110" y="35" fill="#94a3b8" font-family="monospace" font-size="10">Layout Windows Terminal &middot; 80 Kolom x 25 Baris (Monospace)</text>
+      <rect x="50" y="18" width="660" height="26" rx="8" fill="#18181b"/>
+      <circle cx="68" cy="31" r="4" fill="#71717a"/>
+      <circle cx="82" cy="31" r="4" fill="#71717a"/>
+      <circle cx="96" cy="31" r="4" fill="#71717a"/>
+      <text x="110" y="35" fill="#a1a1aa" font-family="monospace" font-size="10">Layout Windows Terminal &middot; 80 Kolom x 25 Baris (Monospace)</text>
 
       <!-- 1. ZONA BANNER ASCII HEADER (Y: 1..8) (STEP 1) -->
       <g id="asc-step-1" data-step="1">
-        <rect x="62" y="52" width="636" height="66" rx="6" fill="#0b1e38" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2"/>
-        <text x="74" y="72" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">1. ZONA BANNER ASCII (assets/ascii/judul.txt)</text>
-        <text x="74" y="90" fill="#6ee7b7" font-size="10" font-family="monospace">+----------------------------------------------------------+</text>
-        <text x="74" y="104" fill="#6ee7b7" font-size="10" font-family="monospace">|                 KASIRKITA &middot; TOKO ALAT TULIS               |</text>
+        <rect x="62" y="52" width="636" height="66" rx="6" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+        <text x="74" y="72" fill="#f4f4f5" font-size="11" font-weight="700" font-family="monospace">1. ZONA BANNER ASCII (assets/ascii/judul.txt)</text>
+        <text x="74" y="90" fill="#a1a1aa" font-size="10" font-family="monospace">+----------------------------------------------------------+</text>
+        <text x="74" y="104" fill="#e4e4e7" font-size="10" font-family="monospace">|                 KASIRKITA &middot; TOKO ALAT TULIS               |</text>
 
         <!-- Pin 1: Blue in Header ASCII Zone -->
-        <circle cx="676" cy="72" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <circle cx="676" cy="72" r="9.5" fill="#2563eb" stroke="#60a5fa" stroke-width="1.2"/>
         <text x="676" y="76" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">1</text>
       </g>
 
       <!-- 2. ZONA WORKSPACE & MENU TRANSAKSI (Y: 9..24) (STEP 2) -->
       <g id="asc-step-2" data-step="2">
-        <rect x="62" y="126" width="410" height="74" rx="6" fill="#071526" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1"/>
-        <text x="74" y="146" fill="#ffffff" font-size="11" font-weight="700" font-family="monospace">2. ZONA FORMULIR &amp; TRANSAKSI (KASIR)</text>
-        <text x="74" y="166" fill="#94a3b8" font-size="10" font-family="monospace">&gt; [1] Transaksi Baru    &gt; [3] Kelola Barang</text>
-        <text x="74" y="184" fill="#94a3b8" font-size="10" font-family="monospace">&gt; [2] Cetak Struk Nota  &gt; [4] Keluar Program</text>
+        <rect x="62" y="126" width="410" height="74" rx="6" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+        <text x="74" y="146" fill="#f4f4f5" font-size="11" font-weight="700" font-family="monospace">2. ZONA FORMULIR &amp; TRANSAKSI (KASIR)</text>
+        <text x="74" y="166" fill="#a1a1aa" font-size="10" font-family="monospace">&gt; [1] Transaksi Baru    &gt; [3] Kelola Barang</text>
+        <text x="74" y="184" fill="#a1a1aa" font-size="10" font-family="monospace">&gt; [2] Cetak Struk Nota  &gt; [4] Keluar Program</text>
 
         <!-- 4. ZONA STATUS & PROMPT BAR (Y: 20..24) -->
-        <rect x="62" y="208" width="636" height="32" rx="5" fill="#0b1e38" stroke="rgba(251, 191, 36, 0.4)" stroke-width="1"/>
-        <text x="74" y="228" fill="#fbbf24" font-size="10" font-weight="700" font-family="monospace">3. STATUS BAR: [F1] Bantuan  |  [Esc] Batalkan  |  Pilih menu [1-4]: _</text>
+        <rect x="62" y="208" width="636" height="32" rx="5" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+        <text x="74" y="228" fill="#e4e4e7" font-size="10" font-weight="700" font-family="monospace">3. STATUS BAR: [F1] Bantuan  |  [Esc] Batalkan  |  Pilih menu [1-4]: _</text>
 
         <!-- Pin 2: Blue in Workspace Menu Zone -->
-        <circle cx="446" cy="146" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <circle cx="446" cy="146" r="9.5" fill="#2563eb" stroke="#60a5fa" stroke-width="1.2"/>
         <text x="446" y="150" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">2</text>
         <!-- Pin 3: Blue in Status Bar -->
-        <circle cx="676" cy="223" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <circle cx="676" cy="223" r="9.5" fill="#2563eb" stroke="#60a5fa" stroke-width="1.2"/>
         <text x="676" y="227" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">3</text>
       </g>
 
       <!-- 3. ZONA INTEGRITAS SPASI / GUARD (STEP 3) -->
       <g id="asc-step-3" data-step="3">
-        <rect x="484" y="126" width="214" height="74" rx="6" fill="#180a0e" stroke="rgba(239, 68, 68, 0.4)" stroke-width="1"/>
+        <rect x="484" y="126" width="214" height="74" rx="6" fill="#18181b" stroke="#52525b" stroke-width="1"/>
         <text x="496" y="146" fill="#f87171" font-size="10" font-weight="700" font-family="monospace">4. PRESERVASI SPASI KIRI</text>
         <text x="496" y="164" fill="#fca5a5" font-size="9" font-family="monospace">&#9888;&#65039; DILARANG TRIM SPASI!</text>
-        <text x="496" y="178" fill="#94a3b8" font-size="9" font-family="monospace">Spasi membentuk gambar.</text>
+        <text x="496" y="178" fill="#a1a1aa" font-size="9" font-family="monospace">Spasi membentuk gambar.</text>
         <text x="496" y="190" fill="#fca5a5" font-size="9" font-family="monospace">Jika di-trim, art miring/patah.</text>
 
         <!-- Pin 4: Red in Space Preservation Guard -->
@@ -324,7 +317,7 @@
                   <button data-step-btn="3" class="px-3 py-1 rounded transition-colors" title="Status Bar (Y=20..24)">Tahap 3</button>
                   <button data-step-next class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Selanjutnya"><span>Next</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
                 </div>
-                <span data-step-display class="font-bold text-blue-600 dark:text-sky-400">Tahap 1 / 3</span>
+                <span data-step-display class="font-bold text-zinc-900 dark:text-zinc-100">Tahap 1 / 3</span>
               </div>
 
               <!-- Responsive Callout Legend Grid -->
@@ -387,7 +380,7 @@
               <summary>Lihat diagram, contoh, dan materi lengkap</summary>
               <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
                 <ol class="list-decimal pl-5 space-y-2">
-                  <li>Buka converter online seperti <a href="https://www.asciiart.eu/image-to-ascii" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-sky-400 underline font-semibold">Image to ASCII</a>.</li>
+                  <li>Buka converter online seperti <a href="https://www.asciiart.eu/image-to-ascii" target="_blank" rel="noopener noreferrer" class="text-zinc-900 dark:text-zinc-100 underline decoration-zinc-400 font-semibold">Image to ASCII</a>.</li>
                   <li>Pilih gambar melalui area upload file.</li>
                   <li>Sesuaikan parameter Characters untuk mengontrol kerapatan detail dan lebar karakter.</li>
                   <li>Atur brightness dan contrast sampai objek siluet kasir terlihat tegas.</li>
@@ -430,114 +423,107 @@
             <!-- Fig 4.3 Diagram -->
             <div class="story-anatomy" data-anatomy-scroll data-steps="3">
               <div class="anatomy-header">
-                <span class="anatomy-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 dark:bg-sky-400/10 border border-blue-500/20 dark:border-sky-400/20 text-blue-600 dark:text-sky-400 font-mono text-xs font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 22h18"/><path d="m14 22 3-3 3 3"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="m12 6 4-4 3 3-4 4"/></svg><span>BEDAH ANATOMI</span></span>
+                <span class="anatomy-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-zinc-700/80 text-zinc-300 font-mono text-xs font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-zinc-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18h8"/><path d="M3 22h18"/><path d="m14 22 3-3 3 3"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="m12 6 4-4 3 3-4 4"/></svg><span>BEDAH ANATOMI</span></span>
                 <span class="anatomy-fig">Fig 4.3 · Anatomi Buffer String C char text[255] &amp; Null Terminator</span>
               </div>
               <h4 class="anatomy-title">Alokasi Buffer Memori Stack &amp; Mekanisme Pembacaan fgets() Baris per Baris</h4>
               
               <div class="anatomy-canvas">
                 <svg viewBox="0 0 760 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram Anatomi Buffer C fgets">
-      <defs>
-        <pattern id="bufGridClean" width="20" height="20" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1" fill="#38bdf8" opacity="0.15"/>
-        </pattern>
-      </defs>
-
-      <!-- Canvas Background -->
-      <rect width="760" height="270" rx="10" fill="#040914" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.2"/>
-      <rect width="760" height="270" fill="url(#bufGridClean)" rx="10"/>
+      <!-- Canvas Background Solid Matte -->
+      <rect width="760" height="270" rx="10" fill="#09090b" stroke="#27272a" stroke-width="1"/>
 
       <!-- 1. TOP: Array Buffer Memory Container (STEP 1) -->
       <g id="buf-step-1" data-step="1">
-        <rect x="20" y="16" width="720" height="96" rx="8" fill="#071526" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2"/>
-        <text x="36" y="36" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">STRUKTUR ARRAY MEMORI C: char text[255] (Kapasitas Buffer fgets)</text>
+        <rect x="20" y="16" width="720" height="96" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1.2"/>
+        <text x="36" y="36" fill="#f4f4f5" font-size="11" font-weight="700" font-family="monospace">STRUKTUR ARRAY MEMORI C: char text[255] (Kapasitas Buffer fgets)</text>
 
         <!-- Memory Cells Row -->
         <g transform="translate(34, 48)">
           <!-- Cell 0 -->
-          <rect x="0" y="0" width="46" height="52" rx="4" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
-          <text x="23" y="26" text-anchor="middle" fill="#f1f5f9" font-size="15" font-weight="700" font-family="monospace">+</text>
-          <text x="23" y="40" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">[0]</text>
+          <rect x="0" y="0" width="46" height="52" rx="4" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+          <text x="23" y="26" text-anchor="middle" fill="#f4f4f5" font-size="15" font-weight="700" font-family="monospace">+</text>
+          <text x="23" y="40" text-anchor="middle" fill="#a1a1aa" font-size="9" font-family="monospace">[0]</text>
 
           <!-- Cell 1 -->
-          <rect x="52" y="0" width="46" height="52" rx="4" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
-          <text x="75" y="26" text-anchor="middle" fill="#f1f5f9" font-size="15" font-weight="700" font-family="monospace">-</text>
-          <text x="75" y="40" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">[1]</text>
+          <rect x="52" y="0" width="46" height="52" rx="4" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+          <text x="75" y="26" text-anchor="middle" fill="#f4f4f5" font-size="15" font-weight="700" font-family="monospace">-</text>
+          <text x="75" y="40" text-anchor="middle" fill="#a1a1aa" font-size="9" font-family="monospace">[1]</text>
 
           <!-- Cell 2 -->
-          <rect x="104" y="0" width="46" height="52" rx="4" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
-          <text x="127" y="26" text-anchor="middle" fill="#f1f5f9" font-size="15" font-weight="700" font-family="monospace">K</text>
-          <text x="127" y="40" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">[2]</text>
+          <rect x="104" y="0" width="46" height="52" rx="4" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+          <text x="127" y="26" text-anchor="middle" fill="#f4f4f5" font-size="15" font-weight="700" font-family="monospace">K</text>
+          <text x="127" y="40" text-anchor="middle" fill="#a1a1aa" font-size="9" font-family="monospace">[2]</text>
 
           <!-- Cell 3 -->
-          <rect x="156" y="0" width="46" height="52" rx="4" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
-          <text x="179" y="26" text-anchor="middle" fill="#f1f5f9" font-size="15" font-weight="700" font-family="monospace">a</text>
-          <text x="179" y="40" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">[3]</text>
+          <rect x="156" y="0" width="46" height="52" rx="4" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+          <text x="179" y="26" text-anchor="middle" fill="#f4f4f5" font-size="15" font-weight="700" font-family="monospace">a</text>
+          <text x="179" y="40" text-anchor="middle" fill="#a1a1aa" font-size="9" font-family="monospace">[3]</text>
 
           <!-- Ellipsis -->
-          <rect x="208" y="0" width="46" height="52" rx="4" fill="#071526" stroke="rgba(255,255,255,0.1)" stroke-dasharray="2 2"/>
-          <text x="231" y="28" text-anchor="middle" fill="#64748b" font-size="15" font-family="monospace">...</text>
+          <rect x="208" y="0" width="46" height="52" rx="4" fill="#18181b" stroke="rgba(255,255,255,0.1)" stroke-dasharray="2 2"/>
+          <text x="231" y="28" text-anchor="middle" fill="#71717a" font-size="15" font-family="monospace">...</text>
 
           <!-- Cell 252: Last Char -->
-          <rect x="260" y="0" width="52" height="52" rx="4" fill="#0b1e38" stroke="#38bdf8" stroke-width="1.5"/>
-          <text x="286" y="26" text-anchor="middle" fill="#f1f5f9" font-size="15" font-weight="700" font-family="monospace">+</text>
-          <text x="286" y="40" text-anchor="middle" fill="#64748b" font-size="9" font-family="monospace">[252]</text>
+          <rect x="260" y="0" width="52" height="52" rx="4" fill="#27272a" stroke="#52525b" stroke-width="1.5"/>
+          <text x="286" y="26" text-anchor="middle" fill="#f4f4f5" font-size="15" font-weight="700" font-family="monospace">+</text>
+          <text x="286" y="40" text-anchor="middle" fill="#a1a1aa" font-size="9" font-family="monospace">[252]</text>
 
           <!-- Cell 253: Newline \n -->
-          <rect x="318" y="0" width="56" height="52" rx="4" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
-          <text x="346" y="26" text-anchor="middle" fill="#c7d2fe" font-size="13" font-weight="700" font-family="monospace">\n</text>
-          <text x="346" y="40" text-anchor="middle" fill="#a5b4fc" font-size="9" font-family="monospace">[253]</text>
+          <rect x="318" y="0" width="56" height="52" rx="4" fill="#27272a" stroke="#71717a" stroke-width="1.5"/>
+          <text x="346" y="26" text-anchor="middle" fill="#f4f4f5" font-size="13" font-weight="700" font-family="monospace">\n</text>
+          <text x="346" y="40" text-anchor="middle" fill="#a1a1aa" font-size="9" font-family="monospace">[253]</text>
 
           <!-- Cell 254: Null Terminator \0 -->
-          <rect x="380" y="0" width="56" height="52" rx="4" fill="#2a0c1a" stroke="#f43f5e" stroke-width="2"/>
-          <text x="408" y="26" text-anchor="middle" fill="#fda4af" font-size="13" font-weight="700" font-family="monospace">\0</text>
-          <text x="408" y="40" text-anchor="middle" fill="#f43f5e" font-size="9" font-family="monospace">[254]</text>
+          <rect x="380" y="0" width="56" height="52" rx="4" fill="#27272a" stroke="#ef4444" stroke-width="2"/>
+          <text x="408" y="26" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700" font-family="monospace">\0</text>
+          <text x="408" y="40" text-anchor="middle" fill="#f87171" font-size="9" font-family="monospace">[254]</text>
 
           <!-- Total Indicator Box -->
-          <rect x="448" y="0" width="220" height="52" rx="4" fill="#071b33" stroke="rgba(56, 189, 248, 0.4)"/>
-          <text x="460" y="20" fill="#38bdf8" font-size="11" font-weight="700" font-family="monospace">TOTAL: 255 BYTE</text>
-          <text x="460" y="36" fill="#94a3b8" font-size="10" font-family="monospace">Payload Teks Maksimal: 253 Char</text>
+          <rect x="448" y="0" width="220" height="52" rx="4" fill="#27272a" stroke="#3f3f46"/>
+          <text x="460" y="20" fill="#f4f4f5" font-size="11" font-weight="700" font-family="monospace">TOTAL: 255 BYTE</text>
+          <text x="460" y="36" fill="#a1a1aa" font-size="10" font-family="monospace">Payload Teks Maksimal: 253 Char</text>
         </g>
 
         <!-- Pin 1 Badge (in Buffer Header, right-aligned) -->
-        <circle cx="704" cy="74" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <circle cx="704" cy="74" r="9.5" fill="#2563eb" stroke="#60a5fa" stroke-width="1.2"/>
         <text x="704" y="78" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">1</text>
       </g>
 
       <!-- 2. BOTTOM LEFT: Integritas String C (\n & \0) (STEP 2) -->
       <g id="buf-step-2" data-step="2">
-        <rect x="20" y="124" width="350" height="130" rx="8" fill="#071526" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.2"/>
-        <text x="34" y="142" fill="#ffffff" font-size="11" font-weight="700" font-family="monospace">1. INTEGRITAS STRING C (\n &amp; \0)</text>
+        <rect x="20" y="124" width="350" height="130" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1.2"/>
+        <text x="34" y="142" fill="#f4f4f5" font-size="11" font-weight="700" font-family="monospace">1. INTEGRITAS STRING C (\n &amp; \0)</text>
 
         <!-- Sub-row Newline -->
-        <rect x="34" y="152" width="322" height="42" rx="5" fill="#0b1e38" stroke="rgba(129, 140, 248, 0.3)" stroke-width="1"/>
-        <text x="44" y="169" fill="#a5b4fc" font-size="10" font-weight="700" font-family="monospace">Newline: '\n' (ASCII 10)</text>
-        <text x="44" y="184" fill="#94a3b8" font-size="9" font-family="monospace">fgets menyertakan enter dari baris file TXT.</text>
-        <circle cx="334" cy="173" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <rect x="34" y="152" width="322" height="42" rx="5" fill="#27272a" stroke="#3f3f46" stroke-width="1"/>
+        <text x="44" y="169" fill="#f4f4f5" font-size="10" font-weight="700" font-family="monospace">Newline: '\n' (ASCII 10)</text>
+        <text x="44" y="184" fill="#a1a1aa" font-size="9" font-family="monospace">fgets menyertakan enter dari baris file TXT.</text>
+        <circle cx="334" cy="173" r="9.5" fill="#2563eb" stroke="#60a5fa" stroke-width="1.2"/>
         <text x="334" y="177" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">2</text>
 
         <!-- Sub-row Null Terminator -->
-        <rect x="34" y="202" width="322" height="42" rx="5" fill="#0b1e38" stroke="rgba(244, 63, 94, 0.3)" stroke-width="1"/>
-        <text x="44" y="219" fill="#fda4af" font-size="10" font-weight="700" font-family="monospace">Null Terminator: '\0' (ASCII 0)</text>
-        <text x="44" y="234" fill="#94a3b8" font-size="9" font-family="monospace">Pembatas wajib agar printf berhenti membaca.</text>
-        <circle cx="334" cy="223" r="9.5" fill="#0284c7" stroke="#38bdf8" stroke-width="1.2"/>
+        <rect x="34" y="202" width="322" height="42" rx="5" fill="#27272a" stroke="#3f3f46" stroke-width="1"/>
+        <text x="44" y="219" fill="#f4f4f5" font-size="10" font-weight="700" font-family="monospace">Null Terminator: '\0' (ASCII 0)</text>
+        <text x="44" y="234" fill="#a1a1aa" font-size="9" font-family="monospace">Pembatas wajib agar printf berhenti membaca.</text>
+        <circle cx="334" cy="223" r="9.5" fill="#2563eb" stroke="#60a5fa" stroke-width="1.2"/>
         <text x="334" y="227" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">3</text>
       </g>
 
       <!-- 3. BOTTOM RIGHT: Guard Buffer Overflow & Null Pointer (STEP 3) -->
       <g id="buf-step-3" data-step="3">
-        <rect x="390" y="124" width="350" height="130" rx="8" fill="#180a0e" stroke="rgba(239, 68, 68, 0.4)" stroke-width="1.2"/>
+        <rect x="390" y="124" width="350" height="130" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1.2"/>
         <text x="404" y="142" fill="#f87171" font-size="11" font-weight="700" font-family="monospace">2. GUARD BUFFER OVERFLOW &amp; FILE NULL</text>
 
         <!-- Sub-row Pointer Check -->
-        <rect x="404" y="152" width="322" height="42" rx="5" fill="#2a0c14" stroke="rgba(239, 68, 68, 0.3)" stroke-width="1"/>
+        <rect x="404" y="152" width="322" height="42" rx="5" fill="#27272a" stroke="#3f3f46" stroke-width="1"/>
         <text x="414" y="169" fill="#fca5a5" font-size="10" font-weight="700" font-family="monospace">&#9888;&#65039; POINTER CHECK: if (file == NULL) return;</text>
-        <text x="414" y="184" fill="#94a3b8" font-size="9" font-family="monospace">Cegah Crash / SegFault jika file TXT tidak ada.</text>
+        <text x="414" y="184" fill="#a1a1aa" font-size="9" font-family="monospace">Cegah Crash / SegFault jika file TXT tidak ada.</text>
 
         <!-- Sub-row Sizing Safe -->
-        <rect x="404" y="202" width="322" height="42" rx="5" fill="#2a0c14" stroke="rgba(239, 68, 68, 0.3)" stroke-width="1"/>
+        <rect x="404" y="202" width="322" height="42" rx="5" fill="#27272a" stroke="#3f3f46" stroke-width="1"/>
         <text x="414" y="219" fill="#fca5a5" font-size="10" font-weight="700" font-family="monospace">&#128737;&#65039; SIZING SAFE: fgets(text, sizeof(text), f)</text>
-        <text x="414" y="234" fill="#94a3b8" font-size="9" font-family="monospace">Batas 255 byte cegah stack memory smash.</text>
+        <text x="414" y="234" fill="#a1a1aa" font-size="9" font-family="monospace">Batas 255 byte cegah stack memory smash.</text>
         <circle cx="704" cy="223" r="9.5" fill="#dc2626" stroke="#fca5a5" stroke-width="1.2"/>
         <text x="704" y="227" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="10" font-weight="700">4</text>
       </g>
@@ -553,7 +539,7 @@
                   <button data-step-btn="3" class="px-3 py-1 rounded transition-colors" title="Proteksi NUL Terminator">Tahap 3</button>
                   <button data-step-next class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-200 dark:bg-white/10 hover:bg-zinc-300 dark:hover:bg-white/20 transition-colors" title="Langkah Selanjutnya"><span>Next</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
                 </div>
-                <span data-step-display class="font-bold text-blue-600 dark:text-sky-400">Tahap 1 / 3</span>
+                <span data-step-display class="font-bold text-zinc-900 dark:text-zinc-100">Tahap 1 / 3</span>
               </div>
 
               <!-- Responsive Callout Legend Grid -->
@@ -582,14 +568,14 @@
               <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
                 <div class="rounded-xl border border-zinc-300 dark:border-white/10 bg-zinc-900 text-zinc-100 p-4 font-mono text-xs overflow-x-auto">
                   <div class="text-zinc-400 text-[11px] mb-2">// Implementasi Aman PrintTxt di lib.h</div>
-                  <pre><code><span class="text-blue-400">void</span> <span class="text-amber-400">PrintTxt</span>(<span class="text-blue-400">int</span> x, <span class="text-blue-400">int</span> y, <span class="text-purple-400">const</span> <span class="text-blue-400">char</span> *filename) {
+                  <pre><code><span class="text-emerald-400">void</span> <span class="text-amber-400">PrintTxt</span>(<span class="text-emerald-400">int</span> x, <span class="text-emerald-400">int</span> y, <span class="text-purple-400">const</span> <span class="text-emerald-400">char</span> *filename) {
     FILE *fp = fopen(filename, <span class="text-emerald-400">"r"</span>);
     <span class="text-purple-400">if</span> (fp == NULL) {
         gotoxy(x, y);
         printf(<span class="text-red-400">"[ERROR] File %s tidak ditemukan!\n"</span>, filename);
         <span class="text-purple-400">return</span>;
     }
-    <span class="text-blue-400">char</span> text[<span class="text-amber-400">255</span>];
+    <span class="text-emerald-400">char</span> text[<span class="text-amber-400">255</span>];
     <span class="text-purple-400">while</span> (fgets(text, <span class="text-purple-400">sizeof</span>(text), fp) != NULL) {
         gotoxy(x, y++);
         printf(<span class="text-emerald-400">"%s"</span>, text);
@@ -629,27 +615,27 @@
                 <div class="space-y-2.5 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-zinc-50/60 dark:bg-white/[0.02]">
                   <span class="text-xs font-mono font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">CHECKLIST KUALITAS UI ASCII:</span>
                   <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
-                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-400 dark:border-zinc-600 accent-zinc-900 dark:accent-zinc-100">
                     <span>ASCII art tersimpan sebagai TXT dan spasinya utuh.</span>
                   </label>
                   <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
-                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-400 dark:border-zinc-600 accent-zinc-900 dark:accent-zinc-100">
                     <span>File dapat ditemukan dari direktori kerja root kasirkita.</span>
                   </label>
                   <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
-                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-400 dark:border-zinc-600 accent-zinc-900 dark:accent-zinc-100">
                     <span>Koordinat dan ukuran gambar muat dalam batas console 80x25.</span>
                   </label>
                   <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
-                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-400 dark:border-zinc-600 accent-zinc-900 dark:accent-zinc-100">
                     <span>Font monospace dipakai dan baris tidak terpotong.</span>
                   </label>
                   <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
-                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-400 dark:border-zinc-600 accent-zinc-900 dark:accent-zinc-100">
                     <span>File hilang menghasilkan pesan terkontrol tanpa crash.</span>
                   </label>
                   <label class="flex items-center gap-3 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
-                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" class="w-4 h-4 rounded border-zinc-400 dark:border-zinc-600 accent-zinc-900 dark:accent-zinc-100">
                     <span>Screenshot dan hasil aktual dicatat dalam dokumen user testing.</span>
                   </label>
                 </div>

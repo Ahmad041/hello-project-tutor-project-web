@@ -4,6 +4,8 @@
 
 # 1. Media Biner Berat & Rekaman Video (DILARANG MASUK GIT)
 *.mp4
+!assets/video/*.mp4
+!hf_bg_h264.mp4
 *.mov
 *.avi
 *.mkv

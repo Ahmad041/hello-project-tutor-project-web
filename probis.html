@@ -1,35 +1,447 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="description" content="Tutorial KasirKita: bangun aplikasi kasir desktop IntelliJ dengan file processing dari dokumen persiapan hingga lib.h dan UI ASCII art."><title>Proses Bisnis KasirKita — Hello Project</title><link rel="stylesheet" href="assets/css/site.css?v=20261016-clean"></head><body class="docs" data-page="probis.html"><video class="art" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/130837c4-0244-4f37-9c61-8d801d93fd29.jpg" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260912_104303_0c6d60b2-9353-408e-9449-585108a22fb5.mp4"></video><div class="veil"></div><a class="skip" href="#main">Lewati navigasi</a><header class="bar"><a class="brand" href="index.html" aria-label="Hello Project beranda"><svg viewBox="0 0 23 17" aria-hidden="true"><path d="M8.15 .9H4.55L.5 9.3h3.6Z"/><path d="M17 0h-3.6L6.15 16.4h3.6Z"/><path d="M22.9 0h-3.6L15 7.6h3.6Z"/><path d="M22.6 6.9H19l-4.95 9.5h3.6Z"/></svg>Hello Project</a></header><div class="layout module-content"><main class="article lesson-article" id="main"><div class="breadcrumb"><a href="daftarisi.html">Dokumen Persiapan</a> &nbsp; / &nbsp; Probis</div><div class="eyebrow"><span class="dot"></span> MODUL 01 · MATERI 08 DARI 09</div><h1>Proses Bisnis KasirKita</h1><p class="lead">Probis menghubungkan aktivitas nyata menjadi input, proses, dan output yang bernilai.</p>
-<div class="download-card" style="margin:20px 0;padding:16px 20px;border-radius:10px;border:1px solid rgba(56,189,248,0.3);background:rgba(56,189,248,0.06);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-  <div>
-    <div style="font-size:11px;font-family:ui-monospace,SFMono-Regular,monospace;font-weight:700;color:#38bdf8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">BAHAN REFERENSI PRA-SIDANG</div>
-    <div style="font-size:15px;font-weight:700;color:#edf3fc;margin-bottom:2px;">Dokumen Spesifikasi Probis KasirKita (.md)</div>
-    <div style="font-size:13px;color:#94a3b8;line-height:1.4;">Dokumen lengkap: Problem framing, pemisahan Master vs Transaksi, aturan snapshot harga, flowchart atomik, dan DFD Level 0/1.</div>
-  </div>
-  <a class="download" href="files/Contoh_Probis_KasirKita.md" download style="background:#38bdf8;color:#09090b;border-color:#38bdf8;font-weight:700;display:inline-flex;align-items:center;gap:8px;">
-    <span>Unduh Dokumen Probis (.md)</span>
-    <span>↓</span>
-  </a>
-</div><section class="lesson-content" id="probis"><p>Proses Bisnis adalah sekumpulan aktivitas terstruktur yang saling berhubungan untuk mengubah input menjadi output demi tujuan organisasi. Probis mencegah aplikasi salah sasaran, membantu menemukan entitas/atribut, serta menjadi dasar kondisi dan percabangan program.</p><div class="table-wrap"><table><thead><tr><th>Komponen</th><th>KasirKita</th></tr></thead><tbody><tr><td>Aktor</td><td>Kasir melayani; pemilik mengelola master dan rekap</td></tr><tr><td>Input</td><td>Produk, jumlah pembelian, uang pembayaran</td></tr><tr><td>Aktivitas</td><td>Hitung total, validasi, simpan transaksi dan stok</td></tr><tr><td>Output</td><td>Nota atau pesan kesalahan; rekap penjualan</td></tr></tbody></table></div><h2>As-is dan to-be</h2><p>As-is: kasir menulis nota dan mengurangi stok secara manual. To-be: program membantu menghitung, memeriksa input, menyimpan transaksi, dan menampilkan nota. Dokumen Probis menjadi acuan kebutuhan serta pengujian, bukan sekadar gambar.</p><div class="callout"><strong>Validasi wajib pada setiap fitur.</strong> Periksa tipe data, input kosong, panjang teks, rentang angka, ID ganda, dan referensi data. Tampilkan pesan kesalahan yang bisa dipahami; jangan menyimpan perubahan sebelum input valid. Validasi keyboard saja belum menggantikan pemeriksaan nilai dan aturan bisnis.</div><section class="story-action" id="game-checkout"><h2>Latihan flowchart checkout</h2><p>Perbaiki simbol dan sambungan, lalu jalankan empat skenario untuk melihat akibat pilihanmu. Pilihan terakhir tersimpan di browser ini.</p><a class="pill" href="game/checkout.html">Buka game checkout →</a></section><h2 id="checkout-reference">Flowchart checkout · referensi</h2><figure class="learning-diagram"><div class="diagram-scroll"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1040" role="img" aria-labelledby="flowchart-checkout-title flowchart-checkout-desc"><title id="flowchart-checkout-title">Flowchart checkout</title><desc id="flowchart-checkout-desc">Nota hanya ditampilkan setelah input valid dan penyimpanan berhasil.</desc><defs><marker id="flowchart-checkout-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#b2c1d5"/></marker></defs><path d="M780 80V120" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 192V240" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 304V350" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 450V500" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M640 400H540V525H413" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 564V610" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 710V760" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M640 660H520V550H406" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M110 536H60V156H620" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 832V900" fill="none" stroke="#b2c1d5" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><rect x="660" y="30" width="240" height="50" rx="25.0" fill="#0d1725" stroke="#34465e"/><text x="780.0" y="60.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Mulai</text><path d="M630 120H950L930 192H610Z" fill="#0d1725" stroke="#34465e"/><text x="780.0" y="153.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Input barang, jumlah</text><text x="780.0" y="177.0" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">dan pembayaran</text><rect x="640" y="240" width="280" height="64" rx="6" fill="#0d1725" stroke="#34465e"/><text x="780.0" y="269.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Hitung total</text><text x="780.0" y="293.0" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">dari harga produk</text><path d="M780.0 350L920 400.0L780.0 450L640 400.0Z" fill="#0d1725" stroke="#ebd1a1"/><text x="780.0" y="397.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Input valid?</text><text x="780.0" y="421.0" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">tipe, stok, dan uang</text><rect x="640" y="500" width="280" height="64" rx="6" fill="#0d1725" stroke="#34465e"/><text x="780.0" y="529.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Simpan transaksi</text><text x="780.0" y="553.0" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">kandidat data dan stok</text><path d="M780.0 610L920 660.0L780.0 710L640 660.0Z" fill="#0d1725" stroke="#ebd1a1"/><text x="780.0" y="665.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Simpan berhasil?</text><path d="M630 760H950L930 832H610Z" fill="#0d1725" stroke="#34465e"/><text x="780.0" y="793.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Tampilkan nota</text><text x="780.0" y="817.0" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">transaksi tersimpan</text><rect x="660" y="900" width="240" height="50" rx="25.0" fill="#0d1725" stroke="#34465e"/><text x="780.0" y="930.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Selesai</text><path d="M120 500H420L400 572H100Z" fill="#0d1725" stroke="#34465e"/><text x="260.0" y="533.0" fill="#edf3fc" font-size="16" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Tampilkan kesalahan</text><text x="260.0" y="557.0" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">data aktif tidak berubah</text><rect x="804.2" y="460" width="31.6" height="22" fill="#050c16"/><text x="820" y="475" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Ya</text><rect x="540.5" y="371" width="55.0" height="22" fill="#050c16"/><text x="568" y="386" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Tidak</text><rect x="804.2" y="721" width="31.6" height="22" fill="#050c16"/><text x="820" y="736" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Ya</text><rect x="542.5" y="669" width="55.0" height="22" fill="#050c16"/><text x="570" y="684" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Tidak</text><rect x="189.0" y="124" width="172.0" height="22" fill="#050c16"/><text x="275" y="139" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">Perbaiki / coba lagi</text><text x="40" y="998" fill="#b2c1d5" font-size="13" text-anchor="start" font-family="Sora, system-ui, sans-serif">OVAL: mulai/selesai · KOTAK: proses · DIAMOND: keputusan · PARALELOGRAM: input/output</text></svg></div><figcaption><a href="diagrams/flowchart-checkout.html" target="_blank" rel="noopener">Buka diagram ukuran penuh ↗</a></figcaption></figure><details class="mermaid-source"><summary>Lihat source Mermaid</summary><div class="codebar"><span>flowchart-checkout.mmd</span><button class="copy" type="button">Salin source</button></div><pre tabindex="0"><code>flowchart TD
-    start([&quot;Mulai&quot;])
-    input[/&quot;Input barang, jumlah&lt;br/&gt;dan pembayaran&quot;/]
-    calculate[&quot;Hitung total&lt;br/&gt;dari harga produk&quot;]
-    valid{&quot;Input valid?&lt;br/&gt;tipe, stok, dan uang&quot;}
-    save[&quot;Simpan transaksi&lt;br/&gt;kandidat data dan stok&quot;]
-    saved{&quot;Simpan berhasil?&quot;}
-    receipt[/&quot;Tampilkan nota&lt;br/&gt;transaksi tersimpan&quot;/]
-    finish([&quot;Selesai&quot;])
-    error[/&quot;Tampilkan kesalahan&lt;br/&gt;data aktif tidak berubah&quot;/]
-    start --&gt; input
-    input --&gt; calculate
-    calculate --&gt; valid
-    valid --&gt;|&quot;Ya&quot;| save
-    valid --&gt;|&quot;Tidak&quot;| error
-    save --&gt; saved
-    saved --&gt;|&quot;Ya&quot;| receipt
-    saved --&gt;|&quot;Tidak&quot;| error
-    error --&gt;|&quot;Perbaiki / coba lagi&quot;| input
-    receipt --&gt; finish
-</code></pre><p><a href="diagrams/flowchart-checkout.mmd" download>Unduh .mmd</a></p></details><h2>ERD awal</h2><figure class="learning-diagram"><div class="diagram-scroll"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-labelledby="erd-awal-title erd-awal-desc"><title id="erd-awal-title">ERD awal</title><desc id="erd-awal-desc">Kardinalitas dan kata memiliki/dimiliki menunjukkan hubungan record KasirKita.</desc><defs><marker id="erd-awal-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#b2c1d5"/></marker></defs><path d="M360 248H480" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M800 248H920" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><rect x="40" y="160" width="320" height="156" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M40 216H360" stroke="#34465e"/><text x="56" y="182" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">ENTITAS KONSEPTUAL</text><text x="56" y="204" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">PELANGGAN</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="236" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 236H69.5 M66.5 236V239 M69 236V238.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="240" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_pelanggan</text><text x="76" y="268" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">nama</text><text x="76" y="296" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">telepon</text><rect x="480" y="160" width="320" height="184" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M480 216H800" stroke="#34465e"/><text x="496" y="182" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">ENTITAS KONSEPTUAL</text><text x="496" y="204" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">NOTA_AWAL</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="236" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 236H509.5 M506.5 236V239 M509 236V238.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="240" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_nota</text><text x="516" y="268" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">waktu</text><text x="516" y="296" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">items</text><text x="516" y="324" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">dibayar</text><rect x="920" y="160" width="320" height="212" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M920 216H1240" stroke="#34465e"/><text x="936" y="182" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">ENTITAS KONSEPTUAL</text><text x="936" y="204" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">PRODUK</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="236" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 236H949.5 M946.5 236V239 M949 236V238.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="956" y="240" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_produk</text><text x="956" y="268" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">nama_produk</text><text x="956" y="296" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">nama_kategori</text><text x="956" y="324" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">harga</text><text x="956" y="352" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">stok</text><rect x="358.5" y="215" width="55.0" height="22" fill="#050c16"/><text x="386" y="230" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...1</text><rect x="426.5" y="215" width="55.0" height="22" fill="#050c16"/><text x="454" y="230" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...*</text><rect x="373.0" y="385" width="94.0" height="22" fill="#050c16"/><text x="420" y="400" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="409" width="94.0" height="22" fill="#050c16"/><text x="420" y="424" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><rect x="798.5" y="215" width="55.0" height="22" fill="#050c16"/><text x="826" y="230" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...*</text><rect x="866.5" y="215" width="55.0" height="22" fill="#050c16"/><text x="894" y="230" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...*</text><rect x="813.0" y="385" width="94.0" height="22" fill="#050c16"/><text x="860" y="400" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="409" width="94.0" height="22" fill="#050c16"/><text x="860" y="424" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><g class="key-icon" role="img"><title>Primary Key</title><circle cx="44.5" cy="584" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M47.5 584H53.5 M50.5 584V587 M53 584V586.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="60" y="588" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">Kunci Kuning: Primary Key (PK entitas)</text><text x="40" y="616" fill="#b2c1d5" font-size="13" text-anchor="start" font-family="Sora, system-ui, sans-serif">1...1: tepat satu · 0...1: satu opsional · 1...*: satu atau banyak · 0...*: nol atau banyak</text></svg></div><figcaption><a href="diagrams/erd-awal.html" target="_blank" rel="noopener">Buka diagram ukuran penuh ↗</a></figcaption></figure><details class="mermaid-source"><summary>Lihat source Mermaid</summary><div class="codebar"><span>erd-awal.mmd</span><button class="copy" type="button">Salin source</button></div><pre tabindex="0"><code>erDiagram
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Proses Bisnis &amp; Arsitektur Data KasirKita — Hello Project</title>
+  <meta name="description" content="Modul 01 Materi 08 KasirKita: Proses Bisnis, Flowchart Checkout Atomik, ERD Konseptual, PDM 3NF vs Denormalisasi, dan DFD Level 0/1.">
+
+  <!-- Google Fonts: Inter & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Zero-FOUC Theme Initializer -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('kasirkita-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              925: '#111114',
+              950: '#09090b',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ================= DUAL-THEME TOKENS (1:1 MODUL 01 PARITY) ================= */
+    :root {
+      --sc-canvas: #fcfcfd;
+      --sc-surface: rgba(255, 255, 255, 0.94);
+      --sc-ink: #18181b;
+      --sc-ink-soft: #71717a;
+      --sc-accent: #2563eb;
+      --sc-accent-ink: #ffffff;
+      --sc-hairline: rgba(228, 228, 231, 0.85);
+      --sc-hairline-strong: rgba(161, 161, 170, 0.4);
+      --sc-font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+      --sc-font-text: "Inter", system-ui, sans-serif;
+      --sc-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    }
+
+    html.dark {
+      --sc-canvas: #09090b;
+      --sc-surface: rgba(18, 18, 21, 0.82);
+      --sc-ink: #f4f4f5;
+      --sc-ink-soft: #a1a1aa;
+      --sc-accent: #38bdf8;
+      --sc-accent-ink: #09090b;
+      --sc-hairline: rgba(255, 255, 255, 0.08);
+      --sc-hairline-strong: rgba(255, 255, 255, 0.16);
+    }
+
+    .arch-card {
+      background: var(--sc-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--sc-hairline);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: border-color 200ms ease, box-shadow 200ms ease, background-color 300ms ease;
+    }
+    .dark .arch-card {
+      box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .arch-card:hover {
+      border-color: var(--sc-hairline-strong);
+    }
+
+    .arch-details {
+      background: rgba(244, 244, 245, 0.6);
+      border: 1px solid rgba(228, 228, 231, 0.8);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 200ms ease;
+    }
+    .dark .arch-details {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .arch-details > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(244, 244, 245, 0.9);
+      color: #18181b;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+    }
+    .dark .arch-details > summary {
+      background: rgba(255, 255, 255, 0.04);
+      color: #f4f4f5;
+    }
+    .arch-details > summary::-webkit-details-marker {
+      display: none;
+    }
+    .arch-details[open] > summary {
+      border-bottom: 1px solid rgba(228, 228, 231, 0.8);
+    }
+    .dark .arch-details[open] > summary {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .diagram-scroll {
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(161, 161, 170, 0.3) transparent;
+    }
+    .diagram-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+    .diagram-scroll::-webkit-scrollbar-thumb {
+      background: rgba(161, 161, 170, 0.3);
+      border-radius: 9999px;
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/module-shared.css">
+</head>
+<body class="relative min-h-screen text-zinc-900 dark:text-zinc-100 bg-[#fcfcfd] dark:bg-[#09090b]" data-page="probis.html">
+
+  <!-- ================= TOP READING PROGRESS BAR ================= -->
+  <span data-sc-progress class="fixed top-0 left-0 right-0 h-[3px] bg-zinc-900 dark:bg-white z-50 origin-left scale-x-0 transition-transform duration-75"></span>
+
+  <!-- ================= TOP THEME TOGGLE CAPSULE (FLOATING & ACCESSIBLE) ================= -->
+  <aside class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-zinc-200 dark:border-white/10 bg-white/85 dark:bg-zinc-900/80 p-1.5 backdrop-blur-xl shadow-sm dark:shadow-2xl transition-colors duration-300" aria-label="Pengalih Mode Tampilan">
+    <button id="theme-btn-light" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Terang">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <span>Terang</span>
+    </button>
+    <button id="theme-btn-dark" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Gelap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></svg>
+      <span>Gelap</span>
+    </button>
+  </aside>
+
+  <!-- ================= TOP NAV CHROME ================= -->
+  <header class="fixed top-5 left-5 right-5 sm:left-8 sm:right-8 z-40 flex items-center justify-between pointer-events-none">
+    <a href="index.html" class="pointer-events-auto flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
+      <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>HELLO PROJECT</span>
+    </a>
+    <div class="pointer-events-auto flex items-center gap-2">
+      <a href="modul01.html#probis" class="text-xs font-mono font-medium text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors inline-flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        <span>Modul 01</span>
+      </a>
+      <a href="daftarModul.html" class="text-xs font-mono font-medium text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors inline-flex items-center gap-1.5">
+        <span>Daftar Modul</span><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main id="top" class="w-full flex flex-col">
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="relative bg-zinc-950 text-white pt-32 pb-20 px-5 sm:px-8 overflow-hidden border-b border-zinc-800">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-zinc-950/80 to-zinc-950 pointer-events-none"></div>
+
+      <div class="relative max-w-4xl mx-auto z-10">
+        <!-- Eyebrow Badge -->
+        <div class="mb-4">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-700 text-xs font-mono font-medium text-zinc-300">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            MODUL 01 · MATERI 08 DARI 09
+          </span>
+        </div>
+
+        <!-- Headline & Subtitle -->
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display tracking-tight text-white leading-tight">
+          Proses Bisnis &amp; Arsitektur Data KasirKita
+        </h1>
+        <p class="text-base sm:text-lg text-zinc-300 mt-4 max-w-2xl leading-relaxed">
+          Probis menghubungkan aktivitas nyata menjadi input, proses kalkulasi, dan output yang bernilai. Pelajari flowchart checkout atomik, relasi ERD awal, normalisasi PDM 3NF, hingga aliran data DFD.
+        </p>
+
+        <!-- Metadata Pills -->
+        <div class="mt-8 flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-300">
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 inline-flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>± 45 Menit</span>
+          </span>
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">Level Pemula</span>
+          <span class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15">Output: Flowchart &amp; PDM 3NF</span>
+          <a href="modul01.html#probis" class="px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 text-zinc-100 hover:text-white transition-colors inline-flex items-center gap-1.5">
+            <span>Kembali ke Modul 01</span>
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MAIN SUBSTANCE CONTENT ================= -->
+    <div class="w-full max-w-4xl mx-auto px-5 sm:px-8 py-12 space-y-12">
+
+      <!-- BAHAN REFERENSI PRA-SIDANG DOWNLOAD CARD -->
+      <div class="p-5 sm:p-6 rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-100/70 dark:bg-white/[0.03] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <div class="text-[11px] font-mono font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-1">BAHAN REFERENSI PRA-SIDANG</div>
+          <div class="text-base font-bold text-zinc-950 dark:text-white mb-1">Dokumen Spesifikasi Probis KasirKita (.md)</div>
+          <div class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl">
+            Dokumen lengkap: Problem framing, pemisahan Master vs Transaksi, aturan snapshot harga, flowchart atomik, dan DFD Level 0/1.
+          </div>
+        </div>
+        <a class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-xs font-semibold hover:opacity-90 transition-opacity shrink-0 shadow-sm" href="files/Contoh_Probis_KasirKita.md" download>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Unduh Dokumen Probis (.md)</span>
+        </a>
+      </div>
+
+      <!-- SECTION 1: PROBIS CONCEPT & AS-IS / TO-BE -->
+      <article class="arch-card p-6 sm:p-8" id="probis">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            FONDASI SISTEM
+          </span>
+          <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Materi 08</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          Fondasi Proses Bisnis (Probis)
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Proses Bisnis adalah sekumpulan aktivitas terstruktur yang saling berhubungan untuk mengubah input menjadi output demi tujuan organisasi. Probis mencegah aplikasi salah sasaran, membantu menemukan entitas/atribut, serta menjadi dasar kondisi dan percabangan logika program C.
+        </p>
+
+        <!-- Komponen Table -->
+        <div class="mt-6 overflow-hidden rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/60">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-zinc-100 dark:bg-zinc-800/80 text-zinc-900 dark:text-white font-mono text-xs uppercase tracking-wider border-b border-zinc-200 dark:border-white/10">
+                <tr>
+                  <th class="px-5 py-3 font-semibold w-1/4">Komponen</th>
+                  <th class="px-5 py-3 font-semibold">KasirKita (Implementasi Nyata)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-700 dark:text-zinc-300">
+                <tr class="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
+                  <td class="px-5 py-3.5 font-semibold text-zinc-900 dark:text-zinc-100 font-mono text-xs">Aktor</td>
+                  <td class="px-5 py-3.5">Kasir melayani transaksi; pemilik mengelola data master produk dan membaca rekapitulasi penjualan.</td>
+                </tr>
+                <tr class="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
+                  <td class="px-5 py-3.5 font-semibold text-zinc-900 dark:text-zinc-100 font-mono text-xs">Input</td>
+                  <td class="px-5 py-3.5">Kode produk (SKU), jumlah pembelian (kuantitas), dan nominal uang tunai pembayaran.</td>
+                </tr>
+                <tr class="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
+                  <td class="px-5 py-3.5 font-semibold text-zinc-900 dark:text-zinc-100 font-mono text-xs">Aktivitas</td>
+                  <td class="px-5 py-3.5">Hitung total belanja, verifikasi kecukupan stok, validasi uang tunai, simpan transaksi ke file TXT, dan potong stok master.</td>
+                </tr>
+                <tr class="hover:bg-zinc-50 dark:hover:bg-white/[0.02] transition-colors">
+                  <td class="px-5 py-3.5 font-semibold text-zinc-900 dark:text-zinc-100 font-mono text-xs">Output</td>
+                  <td class="px-5 py-3.5">Nota belanja tercetak di layar terminal atau pesan kesalahan ramah; rekap data penjualan tersimpan permanen.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- As-Is vs To-Be Cards -->
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+            <div class="flex items-center gap-2 text-xs font-mono font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+              <span>● ALUR MANUAL (AS-IS)</span>
+            </div>
+            <p class="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 mt-2 leading-relaxed">
+              Kasir menulis nota di kertas rangkap dan mengurangi stok secara manual. Rentan terhadap salah hitung kalkulator, selisih kas fisik, serta rekapitulasi data yang memakan waktu lama.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
+            <div class="flex items-center gap-2 text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+              <span>● SISTEM KASIRKITA (TO-BE)</span>
+            </div>
+            <p class="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 mt-2 leading-relaxed">
+              Program C otomatis menghitung total, memeriksa validitas input, memvalidasi kecukupan uang, memotong stok master, dan mencetak nota. Dokumen Probis menjadi acuan pengujian dan implementasi kode.
+            </p>
+          </div>
+        </div>
+
+        <!-- Callout Box -->
+        <div class="mt-6 p-4 sm:p-5 rounded-xl bg-zinc-100/80 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700/80 text-xs sm:text-sm text-zinc-800 dark:text-zinc-200">
+          <div class="flex items-center gap-2 font-bold text-zinc-950 dark:text-white mb-1.5 font-display text-sm">
+            <svg class="w-4 h-4 text-amber-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Aturan Validasi Wajib pada Setiap Fitur</span>
+          </div>
+          <p class="leading-relaxed">
+            Periksa tipe data, cegah input string kosong, batasi panjang buffer, validasi rentang angka (kuantitas &gt; 0), cegah duplikasi ID, dan pastikan referensi FK valid. Tampilkan pesan kesalahan yang manusiawi dan jangan pernah menyimpan mutasi data sebelum seluruh input tervalidasi. Validasi keyboard saja belum menggantikan pemeriksaan nilai dan aturan bisnis.
+          </p>
+        </div>
+      </article>
+
+      <!-- SECTION 2: GAME CHECKOUT ACTION CARD -->
+      <section class="arch-card p-6 sm:p-8" id="game-checkout">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            SIMULATOR INTERAKTIF
+          </span>
+          <span class="text-xs font-mono text-emerald-500 font-semibold">Ready to Play</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          Latihan Flowchart Checkout KasirKita
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Perbaiki simbol dan sambungan flowchart kasir, lalu jalankan empat skenario simulasi (Normal, Qty Negatif, Uang Kurang, dan Gagal Simpan) untuk membuktikan integritas aturan transaksi Anda. Pilihan jawaban tersimpan di browser ini.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-sm font-semibold hover:opacity-90 transition-opacity shadow-sm" href="game/checkout.html">
+            <span>Buka Game Checkout Simulator</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- SECTION 3: CHECKOUT REFERENCE FLOWCHART -->
+      <article class="arch-card p-6 sm:p-8" id="checkout-reference">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            CETAK BIRU LOGIKA
+          </span>
+          <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Flowchart Standar</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          Flowchart Checkout · Referensi
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Nota belanja hanya boleh ditampilkan setelah seluruh parameter input valid dan penyimpanan data append-only ke file TXT berhasil dilakukan.
+        </p>
+
+        <!-- Flowchart Diagram Canvas -->
+        <div class="mt-6 rounded-xl bg-zinc-950 border border-zinc-800 p-4 sm:p-6">
+          <div class="diagram-scroll">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1040" role="img" aria-labelledby="flowchart-checkout-title flowchart-checkout-desc"><title id="flowchart-checkout-title">Flowchart checkout</title><desc id="flowchart-checkout-desc">Nota hanya ditampilkan setelah input valid dan penyimpanan berhasil.</desc><defs><marker id="flowchart-checkout-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#a1a1aa"/></marker></defs><path d="M780 80V120" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 192V240" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 304V350" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 450V500" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M640 400H540V525H413" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 564V610" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 710V760" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M640 660H520V550H406" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M110 536H60V156H620" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><path d="M780 832V900" fill="none" stroke="#71717a" stroke-width="1.5" marker-end="url(#flowchart-checkout-arrow)"/><rect x="660" y="30" width="240" height="50" rx="25.0" fill="#18181b" stroke="#3f3f46"/><text x="780.0" y="60.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Mulai</text><path d="M630 120H950L930 192H610Z" fill="#18181b" stroke="#3f3f46"/><text x="780.0" y="153.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Input barang, jumlah</text><text x="780.0" y="177.0" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">dan pembayaran</text><rect x="640" y="240" width="280" height="64" rx="6" fill="#18181b" stroke="#3f3f46"/><text x="780.0" y="269.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Hitung total</text><text x="780.0" y="293.0" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">dari harga produk</text><path d="M780.0 350L920 400.0L780.0 450L640 400.0Z" fill="#18181b" stroke="#a1a1aa"/><text x="780.0" y="397.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Input valid?</text><text x="780.0" y="421.0" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">tipe, stok, dan uang</text><rect x="640" y="500" width="280" height="64" rx="6" fill="#18181b" stroke="#3f3f46"/><text x="780.0" y="529.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Simpan transaksi</text><text x="780.0" y="553.0" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">kandidat data dan stok</text><path d="M780.0 610L920 660.0L780.0 710L640 660.0Z" fill="#18181b" stroke="#a1a1aa"/><text x="780.0" y="665.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Simpan berhasil?</text><path d="M630 760H950L930 832H610Z" fill="#18181b" stroke="#3f3f46"/><text x="780.0" y="793.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Tampilkan nota</text><text x="780.0" y="817.0" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">transaksi tersimpan</text><rect x="660" y="900" width="240" height="50" rx="25.0" fill="#18181b" stroke="#3f3f46"/><text x="780.0" y="930.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Selesai</text><path d="M120 500H420L400 572H100Z" fill="#18181b" stroke="#3f3f46"/><text x="260.0" y="533.0" fill="#f4f4f5" font-size="16" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Tampilkan kesalahan</text><text x="260.0" y="557.0" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">data aktif tidak berubah</text><rect x="804.2" y="460" width="31.6" height="22" fill="#09090b"/><text x="820" y="475" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Ya</text><rect x="540.5" y="371" width="55.0" height="22" fill="#09090b"/><text x="568" y="386" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Tidak</text><rect x="804.2" y="721" width="31.6" height="22" fill="#09090b"/><text x="820" y="736" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Ya</text><rect x="542.5" y="669" width="55.0" height="22" fill="#09090b"/><text x="570" y="684" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Tidak</text><rect x="189.0" y="124" width="172.0" height="22" fill="#09090b"/><text x="275" y="139" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Perbaiki / coba lagi</text><text x="40" y="998" fill="#a1a1aa" font-size="13" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">OVAL: mulai/selesai · KOTAK: proses · DIAMOND: keputusan · PARALELOGRAM: input/output</text></svg>
+          </div>
+          <div class="mt-4 pt-3 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-400 font-mono">
+            <span>OVAL: Mulai/Selesai · KOTAK: Proses · DIAMOND: Validasi · PARALELOGRAM: I/O</span>
+            <a href="diagrams/flowchart-checkout.html" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white underline inline-flex items-center gap-1">
+              <span>Buka diagram ukuran penuh</span>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Mermaid Source Collapsible Drawer -->
+        <details class="arch-details mt-5">
+          <summary>
+            <span>Lihat Source Mermaid (flowchart-checkout.mmd)</span>
+            <svg class="w-4 h-4 transition-transform duration-200 details-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="p-4 bg-zinc-900 text-zinc-200">
+            <div class="flex items-center justify-between mb-3 text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+              <span>flowchart-checkout.mmd</span>
+              <button class="copy px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors" type="button">Salin Source</button>
+            </div>
+            <pre class="text-xs font-mono overflow-x-auto p-2 leading-relaxed text-zinc-300"><code>flowchart TD
+    start(["Mulai"])
+    input[/"Input barang, jumlah<br/>dan pembayaran"/]
+    calculate["Hitung total<br/>dari harga produk"]
+    valid{"Input valid?<br/>tipe, stok, dan uang"}
+    save["Simpan transaksi<br/>kandidat data dan stok"]
+    saved{"Simpan berhasil?"}
+    receipt[/"Tampilkan nota<br/>transaksi tersimpan"/]
+    finish(["Selesai"])
+    error[/"Tampilkan kesalahan<br/>data aktif tidak berubah"/]
+    start --> input
+    input --> calculate
+    calculate --> valid
+    valid -->|"Ya"| save
+    valid -->|"Tidak"| error
+    save --> saved
+    saved -->|"Ya"| receipt
+    saved -->|"Tidak"| error
+    error -->|"Perbaiki / coba lagi"| input
+    receipt --> finish</code></pre>
+            <div class="mt-3 pt-2 border-t border-zinc-800 text-right">
+              <a href="diagrams/flowchart-checkout.mmd" download class="text-xs font-mono text-zinc-400 hover:text-white underline">Unduh .mmd</a>
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <!-- SECTION 4: ERD AWAL -->
+      <article class="arch-card p-6 sm:p-8" id="erd-awal">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            MODEL DATA KONSEPTUAL
+          </span>
+          <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Skema Awal</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          ERD Awal (Entity-Relationship Diagram)
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Kardinalitas dan hubungan semantik memiliki/dimiliki menunjukkan relasi record KasirKita sebelum normalisasi relasi master-transaksi.
+        </p>
+
+        <!-- ERD Diagram Canvas -->
+        <div class="mt-6 rounded-xl bg-zinc-950 border border-zinc-800 p-4 sm:p-6">
+          <div class="diagram-scroll">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-labelledby="erd-awal-title erd-awal-desc"><title id="erd-awal-title">ERD awal</title><desc id="erd-awal-desc">Kardinalitas dan kata memiliki/dimiliki menunjukkan hubungan record KasirKita.</desc><defs><marker id="erd-awal-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#a1a1aa"/></marker></defs><path d="M360 248H480" fill="none" stroke="#71717a" stroke-width="1.5"/><path d="M800 248H920" fill="none" stroke="#71717a" stroke-width="1.5"/><rect x="40" y="160" width="320" height="156" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M40 216H360" stroke="#3f3f46"/><text x="56" y="182" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">ENTITAS KONSEPTUAL</text><text x="56" y="204" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">PELANGGAN</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="236" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 236H69.5 M66.5 236V239 M69 236V238.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="240" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_pelanggan</text><text x="76" y="268" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">nama</text><text x="76" y="296" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">telepon</text><rect x="480" y="160" width="320" height="184" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M480 216H800" stroke="#3f3f46"/><text x="496" y="182" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">ENTITAS KONSEPTUAL</text><text x="496" y="204" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">NOTA_AWAL</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="236" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 236H509.5 M506.5 236V239 M509 236V238.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="240" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_nota</text><text x="516" y="268" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">waktu</text><text x="516" y="296" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">items</text><text x="516" y="324" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">dibayar</text><rect x="920" y="160" width="320" height="212" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M920 216H1240" stroke="#3f3f46"/><text x="936" y="182" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">ENTITAS KONSEPTUAL</text><text x="936" y="204" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">PRODUK</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="236" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 236H949.5 M946.5 236V239 M949 236V238.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="956" y="240" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_produk</text><text x="956" y="268" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">nama_produk</text><text x="956" y="296" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">nama_kategori</text><text x="956" y="324" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">harga</text><text x="956" y="352" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">stok</text><rect x="358.5" y="215" width="55.0" height="22" fill="#09090b"/><text x="386" y="230" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...1</text><rect x="426.5" y="215" width="55.0" height="22" fill="#09090b"/><text x="454" y="230" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...*</text><rect x="373.0" y="385" width="94.0" height="22" fill="#09090b"/><text x="420" y="400" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="409" width="94.0" height="22" fill="#09090b"/><text x="420" y="424" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><rect x="798.5" y="215" width="55.0" height="22" fill="#09090b"/><text x="826" y="230" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...*</text><rect x="866.5" y="215" width="55.0" height="22" fill="#09090b"/><text x="894" y="230" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...*</text><rect x="813.0" y="385" width="94.0" height="22" fill="#09090b"/><text x="860" y="400" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="409" width="94.0" height="22" fill="#09090b"/><text x="860" y="424" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><g class="key-icon" role="img"><title>Primary Key</title><circle cx="44.5" cy="584" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M47.5 584H53.5 M50.5 584V587 M53 584V586.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="60" y="588" fill="#a1a1aa" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Kunci Kuning: Primary Key (PK entitas)</text><text x="40" y="616" fill="#a1a1aa" font-size="13" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1: tepat satu · 0...1: satu opsional · 1...*: satu atau banyak · 0...*: nol atau banyak</text></svg>
+          </div>
+          <div class="mt-4 pt-3 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-400 font-mono">
+            <span>Kunci Kuning: Primary Key (PK) · Kardinalitas: 1...1, 0...1, 1...*, 0...*</span>
+            <a href="diagrams/erd-awal.html" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white underline inline-flex items-center gap-1">
+              <span>Buka diagram ukuran penuh</span>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Mermaid Source Collapsible Drawer -->
+        <details class="arch-details mt-5">
+          <summary>
+            <span>Lihat Source Mermaid (erd-awal.mmd)</span>
+            <svg class="w-4 h-4 transition-transform duration-200 details-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="p-4 bg-zinc-900 text-zinc-200">
+            <div class="flex items-center justify-between mb-3 text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+              <span>erd-awal.mmd</span>
+              <button class="copy px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors" type="button">Salin Source</button>
+            </div>
+            <pre class="text-xs font-mono overflow-x-auto p-2 leading-relaxed text-zinc-300"><code>erDiagram
     PELANGGAN {
         id_pelanggan PK
         nama
@@ -48,9 +460,79 @@
         harga
         stok
     }
-    PELANGGAN |o--o{ NOTA_AWAL : &quot;memiliki / dimiliki (0...1 : 0...*)&quot;
-    NOTA_AWAL }o--|{ PRODUK : &quot;memiliki / dimiliki (0...* : 1...*)&quot;
-</code></pre><p><a href="diagrams/erd-awal.mmd" download>Unduh .mmd</a></p></details><section class="story-action" id="game-erd"><h2>Latihan kabel relasi ERD & PDM</h2><p>Hubungkan kabel virtual dari Primary Key ke Foreign Key, lalu jalankan simulasi transaksi toko Rani. Tersedia 5 level interaktif dengan skema berbeda.</p><a class="pill" href="game/erd-wires.html">Buka game kabel ERD & PDM ↗</a></section><h2>PDM setelah normalisasi</h2><figure class="learning-diagram"><div class="diagram-scroll"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" role="img" aria-labelledby="pdm-normalisasi-title pdm-normalisasi-desc"><title id="pdm-normalisasi-title">PDM setelah normalisasi</title><desc id="pdm-normalisasi-desc">Kardinalitas dan kata memiliki/dimiliki menunjukkan hubungan record KasirKita.</desc><defs><marker id="pdm-normalisasi-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#b2c1d5"/></marker></defs><path d="M360 144H416V172H480" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M360 504H416V532H480" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M800 144H880V372H920" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M800 504H872V400H920" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><rect x="40" y="64" width="320" height="128" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M40 120H360" stroke="#34465e"/><text x="56" y="86" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="56" y="108" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">CATEGORY</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="140" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 140H69.5 M66.5 140V143 M69 140V142.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="144" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_category</text><text x="344" y="144" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="76" y="172" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">name</text><text x="344" y="172" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(64)</text><rect x="480" y="64" width="320" height="240" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M480 120H800" stroke="#34465e"/><text x="496" y="86" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="496" y="108" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">PRODUCT</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="140" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 140H509.5 M506.5 140V143 M509 140V142.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="144" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_product</text><text x="784" y="144" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="500.5" cy="168" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M503.5 168H509.5 M506.5 168V171 M509 168V170.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="172" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_category</text><text x="784" y="172" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Unique (UK)</title><circle cx="500.5" cy="196" r="3" fill="none" stroke="#38bdf8" stroke-width="1.3"/><path d="M503.5 196H509.5 M506.5 196V199 M509 196V198.5" fill="none" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="200" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">sku</text><text x="784" y="200" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(32)</text><text x="516" y="228" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">name</text><text x="784" y="228" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(128)</text><text x="516" y="256" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">price</text><text x="784" y="256" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><text x="516" y="284" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">stock</text><text x="784" y="284" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><rect x="40" y="424" width="320" height="156" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M40 480H360" stroke="#34465e"/><text x="56" y="446" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="56" y="468" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">CUSTOMER</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="500" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 500H69.5 M66.5 500V503 M69 500V502.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="504" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_customer</text><text x="344" y="504" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="76" y="532" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">name</text><text x="344" y="532" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(128)</text><text x="76" y="560" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">phone</text><text x="344" y="560" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(32)</text><rect x="480" y="424" width="320" height="184" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M480 480H800" stroke="#34465e"/><text x="496" y="446" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="496" y="468" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">SALE</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="500" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 500H509.5 M506.5 500V503 M509 500V502.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="504" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_sale</text><text x="784" y="504" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="500.5" cy="528" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M503.5 528H509.5 M506.5 528V531 M509 528V530.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="532" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_customer</text><text x="784" y="532" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="516" y="560" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">created_at</text><text x="784" y="560" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="516" y="588" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">paid</text><text x="784" y="588" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><rect x="920" y="292" width="320" height="184" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M920 348H1240" stroke="#34465e"/><text x="936" y="314" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="936" y="336" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">ITEM</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="368" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 368H949.5 M946.5 368V371 M949 368V370.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="956.5" cy="368" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M959.5 368H965.5 M962.5 368V371 M965 368V370.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="972" y="372" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_product</text><text x="1224" y="372" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="396" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 396H949.5 M946.5 396V399 M949 396V398.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="956.5" cy="396" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M959.5 396H965.5 M962.5 396V399 M965 396V398.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="972" y="400" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_sale</text><text x="1224" y="400" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="956" y="428" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">quantity</text><text x="1224" y="428" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><text x="956" y="456" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">unit_price</text><text x="1224" y="456" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><rect x="352.5" y="115" width="55.0" height="22" fill="#050c16"/><text x="380" y="130" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...1</text><rect x="426.5" y="143" width="55.0" height="22" fill="#050c16"/><text x="454" y="158" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...*</text><rect x="373.0" y="189" width="94.0" height="22" fill="#050c16"/><text x="420" y="204" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="213" width="94.0" height="22" fill="#050c16"/><text x="420" y="228" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><rect x="358.5" y="475" width="55.0" height="22" fill="#050c16"/><text x="386" y="490" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...1</text><rect x="426.5" y="503" width="55.0" height="22" fill="#050c16"/><text x="454" y="518" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...*</text><rect x="373.0" y="549" width="94.0" height="22" fill="#050c16"/><text x="420" y="564" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="573" width="94.0" height="22" fill="#050c16"/><text x="420" y="588" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><rect x="792.5" y="115" width="55.0" height="22" fill="#050c16"/><text x="820" y="130" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...1</text><rect x="866.5" y="339" width="55.0" height="22" fill="#050c16"/><text x="894" y="354" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...*</text><rect x="813.0" y="209" width="94.0" height="22" fill="#050c16"/><text x="860" y="224" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="233" width="94.0" height="22" fill="#050c16"/><text x="860" y="248" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><rect x="792.5" y="475" width="55.0" height="22" fill="#050c16"/><text x="820" y="490" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...1</text><rect x="866.5" y="415" width="55.0" height="22" fill="#050c16"/><text x="894" y="430" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...*</text><rect x="813.0" y="549" width="94.0" height="22" fill="#050c16"/><text x="860" y="564" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="573" width="94.0" height="22" fill="#050c16"/><text x="860" y="588" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><g class="key-icon" role="img"><title>Primary Key</title><circle cx="44.5" cy="704" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M47.5 704H53.5 M50.5 704V707 M53 704V706.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="60" y="708" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">Kunci Kuning: PK</text><g class="key-icon" role="img"><title>Foreign Key</title><circle cx="194.5" cy="704" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M197.5 704H203.5 M200.5 704V707 M203 704V706.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="210" y="708" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">Kunci Abu-abu: FK</text><g class="key-icon" role="img"><title>Unique Key</title><circle cx="354.5" cy="704" r="3" fill="none" stroke="#38bdf8" stroke-width="1.3"/><path d="M357.5 704H363.5 M360.5 704V707 M363 704V706.5" fill="none" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/></g><text x="370" y="708" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">Kunci Biru: Unique (UK)</text><text x="40" y="736" fill="#b2c1d5" font-size="13" text-anchor="start" font-family="Sora, system-ui, sans-serif">1...1: tepat satu · 0...1: satu opsional · 1...*: satu atau banyak · 0...*: nol atau banyak</text></svg></div><figcaption><a href="diagrams/pdm-normalisasi.html" target="_blank" rel="noopener">Buka diagram ukuran penuh ↗</a></figcaption></figure><details class="mermaid-source"><summary>Lihat source Mermaid</summary><div class="codebar"><span>pdm-normalisasi.mmd</span><button class="copy" type="button">Salin source</button></div><pre tabindex="0"><code>erDiagram
+    PELANGGAN |o--o{ NOTA_AWAL : "memiliki / dimiliki (0...1 : 0...*)"
+    NOTA_AWAL }o--|{ PRODUK : "memiliki / dimiliki (0...* : 1...*)"</code></pre>
+            <div class="mt-3 pt-2 border-t border-zinc-800 text-right">
+              <a href="diagrams/erd-awal.mmd" download class="text-xs font-mono text-zinc-400 hover:text-white underline">Unduh .mmd</a>
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <!-- SECTION 5: GAME ERD WIRES ACTION CARD -->
+      <section class="arch-card p-6 sm:p-8" id="game-erd">
+        <span id="erd-reference"></span>
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            SIMULATOR KABEL RELASI
+          </span>
+          <span class="text-xs font-mono text-emerald-500 font-semibold">5 Level Progresif</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          Latihan Kabel Relasi ERD &amp; PDM
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Hubungkan kabel virtual dari Primary Key ke Foreign Key, lalu jalankan simulasi transaksi toko Rani. Tersedia 5 level interaktif mulai dari toko kelontong, membership, distributor, hingga skema lengkap KasirKita.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-sm font-semibold hover:opacity-90 transition-opacity shadow-sm" href="game/erd-wires.html">
+            <span>Buka Game Kabel ERD &amp; PDM</span>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- SECTION 6: PDM NORMALISASI -->
+      <article class="arch-card p-6 sm:p-8" id="pdm-normalisasi">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            STRUKTUR DATA FISIK
+          </span>
+          <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Normalisasi 3NF</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          PDM Setelah Normalisasi (3NF)
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Pemisahan entitas master (CATEGORY, PRODUCT, CUSTOMER) dan entitas transaksi (SALE, ITEM) memastikan data terisolasi rapi tanpa anomali redundansi atau update.
+        </p>
+
+        <!-- PDM Normalisasi Canvas -->
+        <div class="mt-6 rounded-xl bg-zinc-950 border border-zinc-800 p-4 sm:p-6">
+          <div class="diagram-scroll">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" role="img" aria-labelledby="pdm-normalisasi-title pdm-normalisasi-desc"><title id="pdm-normalisasi-title">PDM setelah normalisasi</title><desc id="pdm-normalisasi-desc">Kardinalitas dan kata memiliki/dimiliki menunjukkan hubungan record KasirKita.</desc><defs><marker id="pdm-normalisasi-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#a1a1aa"/></marker></defs><path d="M360 144H416V172H480" fill="none" stroke="#71717a" stroke-width="1.5"/><path d="M360 504H416V532H480" fill="none" stroke="#71717a" stroke-width="1.5"/><path d="M800 144H880V372H920" fill="none" stroke="#71717a" stroke-width="1.5"/><path d="M800 504H872V400H920" fill="none" stroke="#71717a" stroke-width="1.5"/><rect x="40" y="64" width="320" height="128" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M40 120H360" stroke="#3f3f46"/><text x="56" y="86" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="56" y="108" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">CATEGORY</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="140" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 140H69.5 M66.5 140V143 M69 140V142.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="144" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_category</text><text x="344" y="144" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="76" y="172" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">name</text><text x="344" y="172" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(64)</text><rect x="480" y="64" width="320" height="240" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M480 120H800" stroke="#3f3f46"/><text x="496" y="86" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="496" y="108" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">PRODUCT</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="140" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 140H509.5 M506.5 140V143 M509 140V142.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="144" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_product</text><text x="784" y="144" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="500.5" cy="168" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M503.5 168H509.5 M506.5 168V171 M509 168V170.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="172" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_category</text><text x="784" y="172" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Unique (UK)</title><circle cx="500.5" cy="196" r="3" fill="none" stroke="#38bdf8" stroke-width="1.3"/><path d="M503.5 196H509.5 M506.5 196V199 M509 196V198.5" fill="none" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="200" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">sku</text><text x="784" y="200" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(32)</text><text x="516" y="228" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">name</text><text x="784" y="228" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(128)</text><text x="516" y="256" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">price</text><text x="784" y="256" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><text x="516" y="284" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">stock</text><text x="784" y="284" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><rect x="40" y="424" width="320" height="156" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M40 480H360" stroke="#3f3f46"/><text x="56" y="446" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="56" y="468" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">CUSTOMER</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="500" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 500H69.5 M66.5 500V503 M69 500V502.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="504" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_customer</text><text x="344" y="504" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="76" y="532" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">name</text><text x="344" y="532" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(128)</text><text x="76" y="560" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">phone</text><text x="344" y="560" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(32)</text><rect x="480" y="424" width="320" height="184" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M480 480H800" stroke="#3f3f46"/><text x="496" y="446" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="496" y="468" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">SALE</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="500" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 500H509.5 M506.5 500V503 M509 500V502.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="504" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_sale</text><text x="784" y="504" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="500.5" cy="528" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M503.5 528H509.5 M506.5 528V531 M509 528V530.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="532" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_customer</text><text x="784" y="532" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="516" y="560" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">created_at</text><text x="784" y="560" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="516" y="588" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">paid</text><text x="784" y="588" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><rect x="920" y="292" width="320" height="184" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M920 348H1240" stroke="#3f3f46"/><text x="936" y="314" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="936" y="336" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">ITEM</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="368" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 368H949.5 M946.5 368V371 M949 368V370.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="956.5" cy="368" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M959.5 368H965.5 M962.5 368V371 M965 368V370.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="972" y="372" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_product</text><text x="1224" y="372" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="396" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 396H949.5 M946.5 396V399 M949 396V398.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="956.5" cy="396" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M959.5 396H965.5 M962.5 396V399 M965 396V398.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="972" y="400" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_sale</text><text x="1224" y="400" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="956" y="428" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">quantity</text><text x="1224" y="428" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><text x="956" y="456" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">unit_price</text><text x="1224" y="456" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><rect x="352.5" y="115" width="55.0" height="22" fill="#09090b"/><text x="380" y="130" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1</text><rect x="426.5" y="143" width="55.0" height="22" fill="#09090b"/><text x="454" y="158" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...*</text><rect x="373.0" y="189" width="94.0" height="22" fill="#09090b"/><text x="420" y="204" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="213" width="94.0" height="22" fill="#09090b"/><text x="420" y="228" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><rect x="358.5" y="475" width="55.0" height="22" fill="#09090b"/><text x="386" y="490" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...1</text><rect x="426.5" y="503" width="55.0" height="22" fill="#09090b"/><text x="454" y="518" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...*</text><rect x="373.0" y="549" width="94.0" height="22" fill="#09090b"/><text x="420" y="564" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="573" width="94.0" height="22" fill="#09090b"/><text x="420" y="588" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><rect x="792.5" y="115" width="55.0" height="22" fill="#09090b"/><text x="820" y="130" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1</text><rect x="866.5" y="339" width="55.0" height="22" fill="#09090b"/><text x="894" y="354" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...*</text><rect x="813.0" y="209" width="94.0" height="22" fill="#09090b"/><text x="860" y="224" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="233" width="94.0" height="22" fill="#09090b"/><text x="860" y="248" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><rect x="792.5" y="475" width="55.0" height="22" fill="#09090b"/><text x="820" y="490" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1</text><rect x="866.5" y="415" width="55.0" height="22" fill="#09090b"/><text x="894" y="430" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...*</text><rect x="813.0" y="549" width="94.0" height="22" fill="#09090b"/><text x="860" y="564" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="573" width="94.0" height="22" fill="#09090b"/><text x="860" y="588" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><g class="key-icon" role="img"><title>Primary Key</title><circle cx="44.5" cy="704" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M47.5 704H53.5 M50.5 704V707 M53 704V706.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="60" y="708" fill="#a1a1aa" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Kunci Kuning: PK</text><g class="key-icon" role="img"><title>Foreign Key</title><circle cx="194.5" cy="704" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M197.5 704H203.5 M200.5 704V707 M203 704V706.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="210" y="708" fill="#a1a1aa" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Kunci Abu-abu: FK</text><g class="key-icon" role="img"><title>Unique Key</title><circle cx="354.5" cy="704" r="3" fill="none" stroke="#38bdf8" stroke-width="1.3"/><path d="M357.5 704H363.5 M360.5 704V707 M363 704V706.5" fill="none" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/></g><text x="370" y="708" fill="#a1a1aa" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Kunci Biru: Unique (UK)</text><text x="40" y="736" fill="#a1a1aa" font-size="13" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1: tepat satu · 0...1: satu opsional · 1...*: satu atau banyak · 0...*: nol atau banyak</text></svg>
+          </div>
+          <div class="mt-4 pt-3 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-400 font-mono">
+            <span>Kuning: PK · Abu-abu: FK · Biru: UK (Unique Key)</span>
+            <a href="diagrams/pdm-normalisasi.html" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white underline inline-flex items-center gap-1">
+              <span>Buka diagram ukuran penuh</span>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Mermaid Source Collapsible Drawer -->
+        <details class="arch-details mt-5">
+          <summary>
+            <span>Lihat Source Mermaid (pdm-normalisasi.mmd)</span>
+            <svg class="w-4 h-4 transition-transform duration-200 details-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="p-4 bg-zinc-900 text-zinc-200">
+            <div class="flex items-center justify-between mb-3 text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+              <span>pdm-normalisasi.mmd</span>
+              <button class="copy px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors" type="button">Salin Source</button>
+            </div>
+            <pre class="text-xs font-mono overflow-x-auto p-2 leading-relaxed text-zinc-300"><code>erDiagram
     CATEGORY {
         VARCHAR(20) id_category PK
         VARCHAR(64) name
@@ -80,11 +562,58 @@
         INTEGER quantity
         INTEGER unit_price
     }
-    CATEGORY ||--o{ PRODUCT : &quot;memiliki / dimiliki (1...1 : 0...*)&quot;
-    CUSTOMER |o--o{ SALE : &quot;memiliki / dimiliki (0...1 : 0...*)&quot;
-    PRODUCT ||--o{ ITEM : &quot;memiliki / dimiliki (1...1 : 0...*)&quot;
-    SALE ||--|{ ITEM : &quot;memiliki / dimiliki (1...1 : 1...*)&quot;
-</code></pre><p><a href="diagrams/pdm-normalisasi.mmd" download>Unduh .mmd</a></p></details><h2>PDM setelah denormalisasi</h2><figure class="learning-diagram"><div class="diagram-scroll"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" role="img" aria-labelledby="pdm-denormalisasi-title pdm-denormalisasi-desc"><title id="pdm-denormalisasi-title">PDM setelah denormalisasi</title><desc id="pdm-denormalisasi-desc">Kardinalitas dan kata memiliki/dimiliki menunjukkan hubungan record KasirKita.</desc><defs><marker id="pdm-denormalisasi-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#b2c1d5"/></marker></defs><path d="M360 144H416V172H480" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M360 504H416V532H480" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M800 144H880V372H920" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><path d="M800 504H872V400H920" fill="none" stroke="#b2c1d5" stroke-width="1.5"/><rect x="40" y="64" width="320" height="128" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M40 120H360" stroke="#34465e"/><text x="56" y="86" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="56" y="108" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">CATEGORY</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="140" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 140H69.5 M66.5 140V143 M69 140V142.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="144" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_category</text><text x="344" y="144" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="76" y="172" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">name</text><text x="344" y="172" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(64)</text><rect x="480" y="64" width="320" height="240" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M480 120H800" stroke="#34465e"/><text x="496" y="86" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="496" y="108" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">PRODUCT</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="140" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 140H509.5 M506.5 140V143 M509 140V142.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="144" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_product</text><text x="784" y="144" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="500.5" cy="168" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M503.5 168H509.5 M506.5 168V171 M509 168V170.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="172" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_category</text><text x="784" y="172" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Unique (UK)</title><circle cx="500.5" cy="196" r="3" fill="none" stroke="#38bdf8" stroke-width="1.3"/><path d="M503.5 196H509.5 M506.5 196V199 M509 196V198.5" fill="none" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="200" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">sku</text><text x="784" y="200" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(32)</text><text x="516" y="228" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">name</text><text x="784" y="228" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(128)</text><text x="516" y="256" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">price</text><text x="784" y="256" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><text x="516" y="284" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">stock</text><text x="784" y="284" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><rect x="40" y="424" width="320" height="156" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M40 480H360" stroke="#34465e"/><text x="56" y="446" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="56" y="468" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">CUSTOMER</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="500" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 500H69.5 M66.5 500V503 M69 500V502.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="504" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_customer</text><text x="344" y="504" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="76" y="532" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">name</text><text x="344" y="532" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(128)</text><text x="76" y="560" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">phone</text><text x="344" y="560" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(32)</text><rect x="480" y="424" width="320" height="212" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M480 480H800" stroke="#34465e"/><text x="496" y="446" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="496" y="468" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">SALE</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="500" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 500H509.5 M506.5 500V503 M509 500V502.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="504" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_sale</text><text x="784" y="504" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="500.5" cy="528" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M503.5 528H509.5 M506.5 528V531 M509 528V530.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="532" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_customer</text><text x="784" y="532" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="516" y="560" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">created_at</text><text x="784" y="560" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="516" y="588" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">paid</text><text x="784" y="588" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><text x="516" y="616" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">total</text><text x="784" y="616" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><rect x="920" y="292" width="320" height="184" rx="6" fill="#0d1725" stroke="#34465e"/><path d="M920 348H1240" stroke="#34465e"/><text x="936" y="314" fill="#b2c1d5" font-size="10" text-anchor="start" font-family="Sora, system-ui, sans-serif">DATA / RECORD</text><text x="936" y="336" fill="#ebd1a1" font-size="16" text-anchor="start" font-family="Sora, system-ui, sans-serif">ITEM</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="368" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 368H949.5 M946.5 368V371 M949 368V370.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="956.5" cy="368" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M959.5 368H965.5 M962.5 368V371 M965 368V370.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="972" y="372" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_product</text><text x="1224" y="372" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="396" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 396H949.5 M946.5 396V399 M949 396V398.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="956.5" cy="396" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M959.5 396H965.5 M962.5 396V399 M965 396V398.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="972" y="400" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">id_sale</text><text x="1224" y="400" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">VARCHAR(20)</text><text x="956" y="428" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">quantity</text><text x="1224" y="428" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><text x="956" y="456" fill="#edf3fc" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">unit_price</text><text x="1224" y="456" fill="#b2c1d5" font-size="12" text-anchor="end" font-family="Sora, system-ui, sans-serif">INTEGER</text><rect x="352.5" y="115" width="55.0" height="22" fill="#050c16"/><text x="380" y="130" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...1</text><rect x="426.5" y="143" width="55.0" height="22" fill="#050c16"/><text x="454" y="158" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...*</text><rect x="373.0" y="189" width="94.0" height="22" fill="#050c16"/><text x="420" y="204" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="213" width="94.0" height="22" fill="#050c16"/><text x="420" y="228" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><rect x="358.5" y="475" width="55.0" height="22" fill="#050c16"/><text x="386" y="490" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...1</text><rect x="426.5" y="503" width="55.0" height="22" fill="#050c16"/><text x="454" y="518" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...*</text><rect x="373.0" y="549" width="94.0" height="22" fill="#050c16"/><text x="420" y="564" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="573" width="94.0" height="22" fill="#050c16"/><text x="420" y="588" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><rect x="792.5" y="115" width="55.0" height="22" fill="#050c16"/><text x="820" y="130" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...1</text><rect x="866.5" y="339" width="55.0" height="22" fill="#050c16"/><text x="894" y="354" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">0...*</text><rect x="813.0" y="209" width="94.0" height="22" fill="#050c16"/><text x="860" y="224" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="233" width="94.0" height="22" fill="#050c16"/><text x="860" y="248" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><rect x="792.5" y="475" width="55.0" height="22" fill="#050c16"/><text x="820" y="490" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...1</text><rect x="866.5" y="415" width="55.0" height="22" fill="#050c16"/><text x="894" y="430" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">1...*</text><rect x="813.0" y="549" width="94.0" height="22" fill="#050c16"/><text x="860" y="564" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="573" width="94.0" height="22" fill="#050c16"/><text x="860" y="588" fill="#b2c1d5" font-size="12" text-anchor="middle" font-family="Sora, system-ui, sans-serif">&lt; dimiliki</text><g class="key-icon" role="img"><title>Primary Key</title><circle cx="44.5" cy="704" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M47.5 704H53.5 M50.5 704V707 M53 704V706.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="60" y="708" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">Kunci Kuning: PK</text><g class="key-icon" role="img"><title>Foreign Key</title><circle cx="194.5" cy="704" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M197.5 704H203.5 M200.5 704V707 M203 704V706.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="210" y="708" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">Kunci Abu-abu: FK</text><g class="key-icon" role="img"><title>Unique Key</title><circle cx="354.5" cy="704" r="3" fill="none" stroke="#38bdf8" stroke-width="1.3"/><path d="M357.5 704H363.5 M360.5 704V707 M363 704V706.5" fill="none" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/></g><text x="370" y="708" fill="#b2c1d5" font-size="12" text-anchor="start" font-family="Sora, system-ui, sans-serif">Kunci Biru: Unique (UK)</text><text x="40" y="736" fill="#b2c1d5" font-size="13" text-anchor="start" font-family="Sora, system-ui, sans-serif">1...1: tepat satu · 0...1: satu opsional · 1...*: satu atau banyak · 0...*: nol atau banyak</text></svg></div><figcaption><a href="diagrams/pdm-denormalisasi.html" target="_blank" rel="noopener">Buka diagram ukuran penuh ↗</a></figcaption></figure><details class="mermaid-source"><summary>Lihat source Mermaid</summary><div class="codebar"><span>pdm-denormalisasi.mmd</span><button class="copy" type="button">Salin source</button></div><pre tabindex="0"><code>erDiagram
+    CATEGORY ||--o{ PRODUCT : "memiliki / dimiliki (1...1 : 0...*)"
+    CUSTOMER |o--o{ SALE : "memiliki / dimiliki (0...1 : 0...*)"
+    PRODUCT ||--o{ ITEM : "memiliki / dimiliki (1...1 : 0...*)"
+    SALE ||--|{ ITEM : "memiliki / dimiliki (1...1 : 1...*)"</code></pre>
+            <div class="mt-3 pt-2 border-t border-zinc-800 text-right">
+              <a href="diagrams/pdm-normalisasi.mmd" download class="text-xs font-mono text-zinc-400 hover:text-white underline">Unduh .mmd</a>
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <!-- SECTION 7: PDM DENORMALISASI -->
+      <article class="arch-card p-6 sm:p-8" id="pdm-denormalisasi">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            OPTIMASI PERFORMA BACA
+          </span>
+          <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Denormalisasi Kasir</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          PDM Setelah Denormalisasi
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Menyimpan kolom redundan terukur (seperti kolom <code class="font-mono text-xs px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800">total</code> di entitas SALE dan snapshot <code class="font-mono text-xs px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800">unit_price</code> di ITEM) mempercepat proses cetak struk tanpa kalkulasi ulang dan menjaga integritas harga historis saat katalog berubah.
+        </p>
+
+        <!-- PDM Denormalisasi Canvas -->
+        <div class="mt-6 rounded-xl bg-zinc-950 border border-zinc-800 p-4 sm:p-6">
+          <div class="diagram-scroll">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 760" role="img" aria-labelledby="pdm-denormalisasi-title pdm-denormalisasi-desc"><title id="pdm-denormalisasi-title">PDM setelah denormalisasi</title><desc id="pdm-denormalisasi-desc">Kardinalitas dan kata memiliki/dimiliki menunjukkan hubungan record KasirKita.</desc><defs><marker id="pdm-denormalisasi-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#a1a1aa"/></marker></defs><path d="M360 144H416V172H480" fill="none" stroke="#71717a" stroke-width="1.5"/><path d="M360 504H416V532H480" fill="none" stroke="#71717a" stroke-width="1.5"/><path d="M800 144H880V372H920" fill="none" stroke="#71717a" stroke-width="1.5"/><path d="M800 504H872V400H920" fill="none" stroke="#71717a" stroke-width="1.5"/><rect x="40" y="64" width="320" height="128" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M40 120H360" stroke="#3f3f46"/><text x="56" y="86" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="56" y="108" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">CATEGORY</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="140" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 140H69.5 M66.5 140V143 M69 140V142.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="144" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_category</text><text x="344" y="144" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="76" y="172" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">name</text><text x="344" y="172" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(64)</text><rect x="480" y="64" width="320" height="240" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M480 120H800" stroke="#3f3f46"/><text x="496" y="86" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="496" y="108" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">PRODUCT</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="140" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 140H509.5 M506.5 140V143 M509 140V142.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="144" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_product</text><text x="784" y="144" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="500.5" cy="168" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M503.5 168H509.5 M506.5 168V171 M509 168V170.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="172" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_category</text><text x="784" y="172" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Unique (UK)</title><circle cx="500.5" cy="196" r="3" fill="none" stroke="#38bdf8" stroke-width="1.3"/><path d="M503.5 196H509.5 M506.5 196V199 M509 196V198.5" fill="none" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="200" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">sku</text><text x="784" y="200" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(32)</text><text x="516" y="228" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">name</text><text x="784" y="228" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(128)</text><text x="516" y="256" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">price</text><text x="784" y="256" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><text x="516" y="284" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">stock</text><text x="784" y="284" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><rect x="40" y="424" width="320" height="156" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M40 480H360" stroke="#3f3f46"/><text x="56" y="446" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="56" y="468" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">CUSTOMER</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="60.5" cy="500" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M63.5 500H69.5 M66.5 500V503 M69 500V502.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="76" y="504" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_customer</text><text x="344" y="504" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="76" y="532" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">name</text><text x="344" y="532" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(128)</text><text x="76" y="560" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">phone</text><text x="344" y="560" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(32)</text><rect x="480" y="424" width="320" height="212" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M480 480H800" stroke="#3f3f46"/><text x="496" y="446" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="496" y="468" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">SALE</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="500.5" cy="500" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M503.5 500H509.5 M506.5 500V503 M509 500V502.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="504" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_sale</text><text x="784" y="504" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="500.5" cy="528" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M503.5 528H509.5 M506.5 528V531 M509 528V530.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="516" y="532" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_customer</text><text x="784" y="532" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="516" y="560" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">created_at</text><text x="784" y="560" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="516" y="588" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">paid</text><text x="784" y="588" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><text x="516" y="616" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">total</text><text x="784" y="616" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><rect x="920" y="292" width="320" height="184" rx="6" fill="#18181b" stroke="#3f3f46"/><path d="M920 348H1240" stroke="#3f3f46"/><text x="936" y="314" fill="#a1a1aa" font-size="10" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">DATA / RECORD</text><text x="936" y="336" fill="#f4f4f5" font-size="16" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">ITEM</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="368" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 368H949.5 M946.5 368V371 M949 368V370.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="956.5" cy="368" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M959.5 368H965.5 M962.5 368V371 M965 368V370.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="972" y="372" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_product</text><text x="1224" y="372" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><g class="key-icon" role="img"><title>Primary Key (PK)</title><circle cx="940.5" cy="396" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M943.5 396H949.5 M946.5 396V399 M949 396V398.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><g class="key-icon" role="img"><title>Foreign Key (FK)</title><circle cx="956.5" cy="396" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M959.5 396H965.5 M962.5 396V399 M965 396V398.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="972" y="400" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">id_sale</text><text x="1224" y="400" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">VARCHAR(20)</text><text x="956" y="428" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">quantity</text><text x="1224" y="428" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><text x="956" y="456" fill="#f4f4f5" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">unit_price</text><text x="1224" y="456" fill="#a1a1aa" font-size="12" text-anchor="end" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">INTEGER</text><rect x="352.5" y="115" width="55.0" height="22" fill="#09090b"/><text x="380" y="130" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1</text><rect x="426.5" y="143" width="55.0" height="22" fill="#09090b"/><text x="454" y="158" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...*</text><rect x="373.0" y="189" width="94.0" height="22" fill="#09090b"/><text x="420" y="204" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="213" width="94.0" height="22" fill="#09090b"/><text x="420" y="228" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><rect x="358.5" y="475" width="55.0" height="22" fill="#09090b"/><text x="386" y="490" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...1</text><rect x="426.5" y="503" width="55.0" height="22" fill="#09090b"/><text x="454" y="518" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...*</text><rect x="373.0" y="549" width="94.0" height="22" fill="#09090b"/><text x="420" y="564" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="373.0" y="573" width="94.0" height="22" fill="#09090b"/><text x="420" y="588" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><rect x="792.5" y="115" width="55.0" height="22" fill="#09090b"/><text x="820" y="130" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1</text><rect x="866.5" y="339" width="55.0" height="22" fill="#09090b"/><text x="894" y="354" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">0...*</text><rect x="813.0" y="209" width="94.0" height="22" fill="#09090b"/><text x="860" y="224" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="233" width="94.0" height="22" fill="#09090b"/><text x="860" y="248" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><rect x="792.5" y="475" width="55.0" height="22" fill="#09090b"/><text x="820" y="490" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1</text><rect x="866.5" y="415" width="55.0" height="22" fill="#09090b"/><text x="894" y="430" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...*</text><rect x="813.0" y="549" width="94.0" height="22" fill="#09090b"/><text x="860" y="564" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">memiliki &gt;</text><rect x="813.0" y="573" width="94.0" height="22" fill="#09090b"/><text x="860" y="588" fill="#a1a1aa" font-size="12" text-anchor="middle" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">&lt; dimiliki</text><g class="key-icon" role="img"><title>Primary Key</title><circle cx="44.5" cy="704" r="3" fill="none" stroke="#fbbf24" stroke-width="1.3"/><path d="M47.5 704H53.5 M50.5 704V707 M53 704V706.5" fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/></g><text x="60" y="708" fill="#a1a1aa" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Kunci Kuning: PK</text><g class="key-icon" role="img"><title>Foreign Key</title><circle cx="194.5" cy="704" r="3" fill="none" stroke="#94a3b8" stroke-width="1.3"/><path d="M197.5 704H203.5 M200.5 704V707 M203 704V706.5" fill="none" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></g><text x="210" y="708" fill="#a1a1aa" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Kunci Abu-abu: FK</text><g class="key-icon" role="img"><title>Unique Key</title><circle cx="354.5" cy="704" r="3" fill="none" stroke="#38bdf8" stroke-width="1.3"/><path d="M357.5 704H363.5 M360.5 704V707 M363 704V706.5" fill="none" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/></g><text x="370" y="708" fill="#a1a1aa" font-size="12" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">Kunci Biru: Unique (UK)</text><text x="40" y="736" fill="#a1a1aa" font-size="13" text-anchor="start" font-family="'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif">1...1: tepat satu · 0...1: satu opsional · 1...*: satu atau banyak · 0...*: nol atau banyak</text></svg>
+          </div>
+          <div class="mt-4 pt-3 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-400 font-mono">
+            <span>Kuning: PK · Abu-abu: FK · Biru: UK · Kolom Tambahan: total (SALE)</span>
+            <a href="diagrams/pdm-denormalisasi.html" target="_blank" rel="noopener" class="text-zinc-300 hover:text-white underline inline-flex items-center gap-1">
+              <span>Buka diagram ukuran penuh</span>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Mermaid Source Collapsible Drawer -->
+        <details class="arch-details mt-5">
+          <summary>
+            <span>Lihat Source Mermaid (pdm-denormalisasi.mmd)</span>
+            <svg class="w-4 h-4 transition-transform duration-200 details-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="p-4 bg-zinc-900 text-zinc-200">
+            <div class="flex items-center justify-between mb-3 text-xs font-mono text-zinc-400 border-b border-zinc-800 pb-2">
+              <span>pdm-denormalisasi.mmd</span>
+              <button class="copy px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors" type="button">Salin Source</button>
+            </div>
+            <pre class="text-xs font-mono overflow-x-auto p-2 leading-relaxed text-zinc-300"><code>erDiagram
     CATEGORY {
         VARCHAR(20) id_category PK
         VARCHAR(64) name
@@ -115,44 +644,155 @@
         INTEGER quantity
         INTEGER unit_price
     }
-    CATEGORY ||--o{ PRODUCT : &quot;memiliki / dimiliki (1...1 : 0...*)&quot;
-    CUSTOMER |o--o{ SALE : &quot;memiliki / dimiliki (0...1 : 0...*)&quot;
-    PRODUCT ||--o{ ITEM : &quot;memiliki / dimiliki (1...1 : 0...*)&quot;
-    SALE ||--|{ ITEM : &quot;memiliki / dimiliki (1...1 : 1...*)&quot;
-</code></pre><p><a href="diagrams/pdm-denormalisasi.mmd" download>Unduh .mmd</a></p></details><h2>DFD · aliran data</h2><div class="diagram"><svg viewBox="0 0 1100 400" role="img" aria-label="DFD KasirKita: kasir dan pemilik bertukar data dengan proses master, penjualan, serta laporan. Data disimpan pada record TXT."><defs><marker id="dfd-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#b2c1d5"/></marker></defs><g fill="none" stroke="#b2c1d5" marker-end="url(#dfd-arrow)"><path d="M210 180H390"/><path d="M570 120H770"/><path d="M770 220H570"/><path d="M390 245H210"/></g><g fill="#0d1725" stroke="#34465e"><rect x="30" y="120" width="180" height="150" rx="6"/><rect x="390" y="60" width="180" height="240" rx="30"/><path d="M770 70H1030M790 70V290M770 290H1030"/></g><g fill="#edf3fc" font-size="16" text-anchor="middle"><text x="120" y="165">Kasir / Pemilik</text><text x="480" y="108">KasirKita</text><text x="480" y="165">1. Kelola master</text><text x="480" y="200">2. Penjualan</text><text x="480" y="235">3. Laporan</text><text x="910" y="130">D1: CATEGORY,</text><text x="910" y="165">PRODUCT, CUSTOMER</text><text x="910" y="220">D2: SALE, ITEM</text></g><g fill="#b2c1d5" font-size="13"><text x="230" y="163">master, item, uang</text><text x="220" y="275">nota, laporan, error</text><text x="610" y="103">simpan data</text><text x="610" y="247">baca data</text></g></svg></div></section><section class="story-action"><h2>Latihan Probis</h2><p>Tuliskan satu proses penjualan dengan aktor, input, aktivitas, dan output.</p><p>Hasil yang perlu ada: tabel aktor, input, aktivitas, output, dan fitur untuk satu penjualan. Gunakan contoh dua buku seharga Rp12.000, dibayar Rp30.000; jelaskan juga kondisi input tidak valid dan simpan gagal.</p></section><nav class="lesson-nav" aria-label="Navigasi materi"><a class="pill" href="project.html#atribut">← Sebelumnya: Atribut</a><a class="pill" href="daftarisi.html">Daftar isi modul 01</a><a class="pill" href="project.html#activity-plan">Berikutnya: Activity Plan →</a></nav></main></div><button class="video-toggle" aria-label="Jeda latar video">Ⅱ</button><footer class="foot"><span>Hello Project <span class="footer-tagline">/ Belajar dengan membangun.</span></span><span>PROJECT GUIDE · VOL. 01 &nbsp; © 2026</span></footer><script>const storage={get(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch{return[]}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
-const video=document.querySelector('video'), toggle=document.querySelector('.video-toggle');
-let userManuallyPaused=false;
-if(video){
-  video.muted=true;video.defaultMuted=true;video.playsInline=true;
-  video.play().catch(()=>{});
-  function videoLabel(){
-    if(!toggle)return;
-    toggle.textContent=video.paused?'▷':'Ⅱ';
-    toggle.setAttribute('aria-label',video.paused?'Putar latar video':'Jeda latar video');
-  }
-  video.addEventListener('play',videoLabel);
-  video.addEventListener('pause',videoLabel);
-  videoLabel();
-  if(toggle){
-    toggle.addEventListener('click',()=>{
-      if(video.paused){
-        userManuallyPaused=false;
-        video.play().catch(()=>{});
-      }else{
-        userManuallyPaused=true;
-        video.pause();
+    CATEGORY ||--o{ PRODUCT : "memiliki / dimiliki (1...1 : 0...*)"
+    CUSTOMER |o--o{ SALE : "memiliki / dimiliki (0...1 : 0...*)"
+    PRODUCT ||--o{ ITEM : "memiliki / dimiliki (1...1 : 0...*)"
+    SALE ||--|{ ITEM : "memiliki / dimiliki (1...1 : 1...*)"</code></pre>
+            <div class="mt-3 pt-2 border-t border-zinc-800 text-right">
+              <a href="diagrams/pdm-denormalisasi.mmd" download class="text-xs font-mono text-zinc-400 hover:text-white underline">Unduh .mmd</a>
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <!-- SECTION 8: DFD -->
+      <article class="arch-card p-6 sm:p-8" id="dfd">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            ALIRAN INFORMASI
+          </span>
+          <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">DFD Level 0/1</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          DFD · Aliran Data KasirKita
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Pertukaran data antara entitas eksternal (Kasir / Pemilik), proses fungsional aplikasi (Kelola Master, Penjualan, Laporan), dan file store database TXT (D1, D2).
+        </p>
+
+        <!-- DFD Diagram Canvas -->
+        <div class="mt-6 rounded-xl bg-zinc-950 border border-zinc-800 p-4 sm:p-6">
+          <div class="diagram-scroll">
+            <svg viewBox="0 0 1100 400" role="img" aria-label="DFD KasirKita: kasir dan pemilik bertukar data dengan proses master, penjualan, serta laporan. Data disimpan pada record TXT."><defs><marker id="dfd-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 1L7 4L0 7" fill="#a1a1aa"/></marker></defs><g fill="none" stroke="#71717a" marker-end="url(#dfd-arrow)"><path d="M210 180H390"/><path d="M570 120H770"/><path d="M770 220H570"/><path d="M390 245H210"/></g><g fill="#18181b" stroke="#3f3f46"><rect x="30" y="120" width="180" height="150" rx="6"/><rect x="390" y="60" width="180" height="240" rx="30"/><path d="M770 70H1030M790 70V290M770 290H1030"/></g><g fill="#f4f4f5" font-size="16" text-anchor="middle"><text x="120" y="165">Kasir / Pemilik</text><text x="480" y="108">KasirKita</text><text x="480" y="165">1. Kelola master</text><text x="480" y="200">2. Penjualan</text><text x="480" y="235">3. Laporan</text><text x="910" y="130">D1: CATEGORY,</text><text x="910" y="165">PRODUCT, CUSTOMER</text><text x="910" y="220">D2: SALE, ITEM</text></g><g fill="#a1a1aa" font-size="13"><text x="230" y="163">master, item, uang</text><text x="220" y="275">nota, laporan, error</text><text x="610" y="103">simpan data</text><text x="610" y="247">baca data</text></g></svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- SECTION 9: LATIHAN PROBIS -->
+      <article class="arch-card p-6 sm:p-8" id="latihan">
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+            LATIHAN MANDIRI
+          </span>
+          <span class="text-xs font-mono text-zinc-400 dark:text-zinc-500">Tugas Praktik</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-zinc-950 dark:text-white tracking-tight">
+          Latihan Analisis Probis
+        </h2>
+        <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
+          Tuliskan satu alur transaksi penjualan lengkap dengan membedah komponen sistem:
+        </p>
+        <div class="mt-4 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
+          <div class="flex items-start gap-2">
+            <span class="text-zinc-400 font-mono text-xs mt-0.5">1.</span>
+            <span>Identifikasi tabel Aktor, Input, Aktivitas, Output, dan Fitur untuk satu penjualan.</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-zinc-400 font-mono text-xs mt-0.5">2.</span>
+            <span>Simulasikan contoh belanja 2 buku tulis (@Rp12.000 = Rp24.000) dengan uang tunai Rp30.000.</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-zinc-400 font-mono text-xs mt-0.5">3.</span>
+            <span>Jelaskan kondisi eksepsi: mitigasi ketika input tidak valid (misal: stok kurang) dan mitigasi jika penulisan ke file gagal.</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- NAVIGATION LINKS -->
+      <nav class="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-zinc-200 dark:border-white/10" aria-label="Navigasi Materi">
+        <a href="project.html#atribut" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 text-xs sm:text-sm font-medium hover:border-zinc-400 dark:hover:border-white/30 transition-colors shadow-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span>Sebelumnya: Atribut Data</span>
+        </a>
+        <a href="modul01.html#probis" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 text-xs sm:text-sm font-medium hover:border-zinc-400 dark:hover:border-white/30 transition-colors shadow-sm">
+          <span>Daftar Modul 01</span>
+        </a>
+        <a href="project.html#activity-plan" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-xs sm:text-sm font-semibold hover:opacity-90 transition-opacity shadow-sm">
+          <span>Berikutnya: Activity Plan</span>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <!-- ================= MODERN COMPACT FOOTER ================= -->
+  <footer class="mt-20 border-t border-zinc-200 dark:border-white/10 py-10 px-5 sm:px-8 text-center text-xs font-mono text-zinc-500">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>Hello Project · Belajar dengan membangun.</div>
+      <div>PROJECT GUIDE · VOL. 01 &copy; 2026</div>
+    </div>
+  </footer>
+
+  <!-- ================= CLIENT SCRIPTS ================= -->
+  <script>
+    // Theme Toggle Handler
+    const btnLight = document.getElementById('theme-btn-light');
+    const btnDark = document.getElementById('theme-btn-dark');
+
+    function updateThemeUI() {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (btnLight && btnDark) {
+        btnLight.classList.toggle('bg-zinc-900', !isDark);
+        btnLight.classList.toggle('text-white', !isDark);
+        btnDark.classList.toggle('bg-white', isDark);
+        btnDark.classList.toggle('text-zinc-950', isDark);
       }
-    });
-  }
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){
-      video.pause();
-    }else if(!userManuallyPaused){
-      video.play().catch(()=>{});
     }
-  });
-}
-const page=document.body.dataset.page;const completed=storage.get('kasirkita-completed');document.querySelectorAll('[data-progress]').forEach(e=>e.textContent=completed.length+' dari 4 modul selesai');document.querySelectorAll('.track i').forEach(e=>e.style.width=completed.length/4*100+'%');
-const done=document.querySelector('.complete');function renderDone(){if(done){const yes=completed.includes(page);done.classList.toggle('done',yes);done.textContent=yes?'✓ Modul selesai — batalkan':'Tandai modul selesai  ✓';done.setAttribute('aria-pressed',yes)}}renderDone();if(done)done.onclick=()=>{const i=completed.indexOf(page);if(i<0)completed.push(page);else completed.splice(i,1);storage.set('kasirkita-completed',completed);renderDone();document.querySelectorAll('[data-progress]').forEach(e=>e.textContent=completed.length+' dari 4 modul selesai');document.querySelectorAll('.track i').forEach(e=>e.style.width=completed.length/4*100+'%')};
-document.querySelectorAll('.checklist input').forEach((el,i)=>{const key=page+'-checks';el.checked=storage.get(key).includes(i);el.onchange=()=>{let v=storage.get(key).filter(x=>x!==i);if(el.checked)v.push(i);storage.set(key,v)}});
-document.querySelectorAll('.copy').forEach(b=>{const label=b.textContent;b.onclick=async()=>{try{await navigator.clipboard.writeText(b.parentElement.nextElementSibling.textContent);b.textContent='Tersalin ✓'}catch{b.textContent='Pilih kode untuk menyalin'}setTimeout(()=>b.textContent=label,2200)}});</script></body></html>
+
+    if (btnLight) {
+      btnLight.addEventListener('click', () => {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('kasirkita-theme', 'light');
+        updateThemeUI();
+      });
+    }
+
+    if (btnDark) {
+      btnDark.addEventListener('click', () => {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('kasirkita-theme', 'dark');
+        updateThemeUI();
+      });
+    }
+
+    updateThemeUI();
+
+    // Scroll Progress Indicator
+    const progressBar = document.querySelector('[data-sc-progress]');
+    window.addEventListener('scroll', () => {
+      if (!progressBar) return;
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = totalScroll > 0 ? window.scrollY / totalScroll : 0;
+      progressBar.style.transform = "scaleX(" + Math.min(1, Math.max(0, progress)) + ")";
+    }, { passive: true });
+
+    // Copy Mermaid Source Handler
+    document.querySelectorAll('.copy').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const pre = btn.closest('.p-4').querySelector('pre');
+        if (!pre) return;
+        const codeText = pre.innerText;
+        try {
+          await navigator.clipboard.writeText(codeText);
+          const original = btn.textContent;
+          btn.textContent = 'Tersalin ✓';
+          setTimeout(() => { btn.textContent = original; }, 2000);
+        } catch (err) {
+          console.error('Failed to copy', err);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
