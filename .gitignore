@@ -18,9 +18,10 @@ pdf_builder/
 /*.png
 /*.jpg
 /*.jpeg
-test_chrome.png
-test_box.svg
-video_frame.jpg
+/test_chrome.png
+/test_box.svg
+/video_frame.jpg
+!assets/images/video_frame.jpg
 
 # 4. Dump Teks Ekstraksi Slide & Scraping
 slide_p*.txt
