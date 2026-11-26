@@ -10,9 +10,7 @@
  * - Code & Terminal blocks (pre, code)
  */
 
-/* ==========================================================================
-   GLOBAL SCROLL OFFSET (UI/UX PRO MAX COMPLIANCE)
-   ========================================================================== */
+/* Global scroll offset (UI/UX Pro Max compliance) */
 html {
   scroll-padding-top: 6rem;
 }
@@ -23,9 +21,7 @@ div[id] {
   scroll-margin-top: 6rem;
 }
 
-/* ==========================================================================
-   1. TECHNICAL ANATOMY BLUEPRINT CARD (.story-anatomy)
-   ========================================================================== */
+/* 1. Technical anatomy blueprint card (.story-anatomy) */
 .story-anatomy {
   margin: 28px 0;
   border-radius: 14px;
@@ -56,9 +52,7 @@ div[id] {
   display: none;
 }
 
-/* ==========================================================================
-   2. ANATOMY HEADER, BADGE, & TITLE
-   ========================================================================== */
+/* 2. Anatomy header, badge, and title */
 .anatomy-header {
   display: flex;
   align-items: center;
@@ -119,9 +113,7 @@ div[id] {
   color: #f1f5f9;
 }
 
-/* ==========================================================================
-   3. ANATOMY CANVAS (SVG CONTAINER)
-   ========================================================================== */
+/* 3. Anatomy canvas (SVG container) */
 .anatomy-canvas {
   background: #09090b;
   border: 1px solid #27272a;
@@ -140,9 +132,7 @@ div[id] {
   max-width: 100%;
 }
 
-/* ==========================================================================
-   4. STEPPER CONTROLS BAR
-   ========================================================================== */
+/* 4. Stepper controls bar */
 .anatomy-stepper-bar {
   display: flex;
   flex-wrap: wrap;
@@ -164,9 +154,7 @@ div[id] {
   color: #e2e8f0;
 }
 
-/* ==========================================================================
-   5. ANATOMY CALLOUTS GRID & CALLOUT CARDS
-   ========================================================================== */
+/* 5. Anatomy callouts grid and callout cards */
 .anatomy-callouts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -264,9 +252,7 @@ div[id] {
   color: #e4e4e7;
 }
 
-/* ==========================================================================
-   6. TABLES & TABLE WRAPPERS
-   ========================================================================== */
+/* 6. Tables and table wrappers */
 .table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -334,9 +320,7 @@ tbody tr:hover {
   background: rgba(255, 255, 255, 0.03);
 }
 
-/* ==========================================================================
-   7. DOWNLOAD CARDS & PILLS
-   ========================================================================== */
+/* 7. Download cards and pills */
 .download-card {
   display: flex;
   align-items: center;
@@ -446,9 +430,7 @@ tbody tr:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* ==========================================================================
-   8. CALLOUT & QUOTE BOXES
-   ========================================================================== */
+/* 8. Callout and quote boxes */
 .callout {
   margin: 18px 0;
   padding: 16px 20px;
@@ -468,9 +450,7 @@ tbody tr:hover {
   border-left-width: 4px;
 }
 
-/* ==========================================================================
-   9. DETAILS DRAWER REFERENCE CONTENT
-   ========================================================================== */
+/* 9. Details drawer reference content */
 .story-reference {
   padding: 24px;
   background: #ffffff;
@@ -503,9 +483,7 @@ tbody tr:hover {
   color: #a1a1aa;
 }
 
-/* ==========================================================================
-   10. CODE BLOCKS & SYNTAX
-   ========================================================================== */
+/* 10. Code blocks and syntax */
 pre {
   background: #09090b;
   color: #f4f4f5;

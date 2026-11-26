@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>[SANDBOX] Modul 01 — Dokumen Persiapan (Testing Environment) | Hello Project</title>
+  <title>[SANDBOX] Modul 01: Dokumen Persiapan (Testing Environment) | Hello Project</title>
   <meta name="description" content="Edisi interaktif Scroll-Craft: Modul 01 KasirKita. Arsitektur data master vs transaksi, SDLC, dan Activity Plan dengan dimensional scrollytelling.">
 
   <!-- Google Fonts: Inter & DM Sans -->
@@ -54,7 +54,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
-    /* ================= SCROLL-CRAFT DUAL-THEME OVERRIDES ================= */
+    /* Scroll-craft dual-theme overrides */
     :root {
       --sc-canvas: #fcfcfd;
       --sc-surface: rgba(255, 255, 255, 0.94);
@@ -176,10 +176,10 @@
 </head>
 <body class="relative min-h-screen text-zinc-900 dark:text-zinc-100">
 
-  <!-- ================= TOP READING PROGRESS BAR ================= -->
+  <!-- Top reading progress bar -->
   <span data-sc-progress class="fixed top-0 left-0 right-0 h-[3px] bg-zinc-900 dark:bg-white z-50 origin-left scale-x-0 transition-transform duration-75"></span>
 
-  <!-- ================= TOP THEME TOGGLE CAPSULE (FLOATING & ACCESSIBLE) ================= -->
+  <!-- Top theme toggle capsule -->
   <aside class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-zinc-200 dark:border-white/10 bg-white/85 dark:bg-zinc-900/80 p-1.5 backdrop-blur-xl shadow-sm dark:shadow-2xl transition-colors duration-300" aria-label="Pengalih Mode Tampilan">
     <button id="theme-btn-light" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Terang">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -191,14 +191,15 @@
     </button>
   </aside>
 
-  <!-- ================= TOP NAV CHROME ================= -->
+  <!-- Top nav chrome -->
   <header class="fixed top-5 left-5 right-5 sm:left-8 sm:right-8 z-40 flex items-center justify-between pointer-events-none">
     <div class="pointer-events-auto flex items-center gap-2">
       <a href="index.html" class="flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
-        <span>⬡ HELLO PROJECT</span>
+        <span>HELLO PROJECT</span>
       </a>
-      <span class="text-[10px] font-mono font-bold tracking-wider uppercase text-amber-300 bg-amber-950/70 border border-amber-500/40 px-2.5 py-1 rounded-full backdrop-blur-md shadow-sm">
-        🧪 SANDBOX / TESTING
+      <span class="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold tracking-wider uppercase text-amber-300 bg-amber-950/70 border border-amber-500/40 px-2.5 py-1 rounded-full backdrop-blur-md shadow-sm">
+        <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.52 16h12.96"/></svg>
+        <span>SANDBOX / TESTING</span>
       </span>
     </div>
     <a href="daftarModul.html" class="pointer-events-auto text-xs font-mono font-medium text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
@@ -208,7 +209,7 @@
 
   <main id="top" class="w-full flex flex-col">
 
-    <!-- ================= ACT 01 · RECOGNITION: DIMENSIONAL SCRUB HERO ================= -->
+    <!-- Act 01: Dimensional scrub hero -->
     <section data-sc-act="scrub" data-sc-span="2.5" data-sc-dwell="0.32" class="relative">
       <div data-sc-stage class="sc-stage">
         <!-- Live Poster Fallback -->
@@ -238,7 +239,7 @@
       </div>
     </section>
 
-    <!-- ================= ACT 02 · TENSION: THE ARCHITECTURAL DILEMMA (PINNED) ================= -->
+    <!-- Act 02: Architectural dilemma (pinned) -->
     <section data-sc-act="pin" data-sc-span="2.8" class="relative">
       <div data-sc-stage class="sc-stage flex items-center justify-center px-6 sm:px-12">
         <div class="w-full max-w-2xl mx-auto flex flex-col justify-center relative min-h-[360px]">
@@ -286,7 +287,7 @@
       </div>
     </section>
 
-    <!-- ================= ACT 03 · THE TURN: SIGNATURE MOVE (LIVE BLUEPRINT STROKE-BUILD) ================= -->
+    <!-- Act 03: Live blueprint stroke-build -->
     <section data-sc-act="pin" data-sc-span="3.4" id="act-signature-move" class="relative">
       <div data-sc-stage class="sc-stage flex flex-col justify-center px-4 sm:px-8 py-12">
         <div class="w-full max-w-4xl mx-auto flex flex-col">
@@ -382,7 +383,7 @@
               <text x="458" y="228" class="fill-zinc-500 font-mono text-[10px]">&bull; Mode: Append ke file data/penjualan.txt</text>
               <text x="458" y="242" class="fill-zinc-500 font-mono text-[10px]">&bull; Tidak menduplikasi field nama atau kategori</text>
 
-              <!-- ================= LAYER 6: CONNECTING ARROWS ================= -->
+              <!-- Layer 6: Connecting arrows -->
               <!-- 1. Category -> Product Downward Arrow -->
               <path id="arrow-down-cat-prod"
                     d="M 175 118 L 175 128" 
@@ -404,7 +405,7 @@
                     fill="none"
                     marker-end="url(#scArrowHead)"/>
 
-              <!-- ================= LAYER 7: SOLID CIRCULAR PIN BADGES (IMAGE 2 STANDARD) ================= -->
+              <!-- Layer 7: Solid circular pin badges -->
               <!-- Pin 1 Badge (inside Category card, top-right) -->
               <g id="pin-1-group">
                 <circle id="pin-1-circle" cx="346" cy="74" r="10" class="fill-blue-600 dark:fill-blue-500 shadow-sm transition-all duration-300"/>
@@ -456,7 +457,7 @@
       </div>
     </section>
 
-    <!-- ================= ACT 04 · SUBSTANCE: THE 9 SYSTEMATIC CHAPTERS (FLOW) ================= -->
+    <!-- Act 04: The 9 systematic chapters -->
     <section class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300" data-sc-act="flow">
       <div class="w-full max-w-4xl mx-auto">
         
@@ -485,7 +486,7 @@
               SDLC menggambarkan siklus pengembangan project, bukan urutan membaca modul. Tahap pengujian bisa mengembalikan pekerjaan ke implementasi.
             </p>
             <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
-              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
               <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti merancang, membuat, mencoba, dan merawat sebuah rak.</p>
             </div>
             <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
@@ -515,7 +516,7 @@
               Mulai dari masalah nyata. KasirKita membantu toko alat tulis mencatat produk, penjualan, dan nota.
             </p>
             <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
-              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
               <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti memilih tujuan perjalanan sebelum menentukan kendaraan.</p>
             </div>
             <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
@@ -536,7 +537,7 @@
               Program latihan berjalan di console Windows; website Hello Project menjadi buku panduannya.
             </p>
             <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
-              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
               <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Buku di meja dan buku yang dibuka lewat browser sama-sama menyampaikan isi dengan cara berbeda.</p>
             </div>
           </article>
@@ -568,7 +569,7 @@
               Scope membatasi apa yang akan dikerjakan dan apa yang ditunda untuk menjaga fokus tim.
             </p>
             <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
-              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
               <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Daftar pesanan membantu menghindari pekerjaan yang terus bertambah liar.</p>
             </div>
           </article>
@@ -579,7 +580,7 @@
               <span class="font-mono text-xs uppercase tracking-wider text-zinc-800 dark:text-zinc-200 font-bold bg-zinc-200/70 dark:bg-white/10 px-2.5 py-1 rounded">
                 LANGKAH 06 / 09 · PILAR UTAMA
               </span>
-              <span class="text-xs font-mono text-blue-600 dark:text-blue-400 font-semibold">★ Core Concept</span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono text-blue-600 dark:text-blue-400 font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg><span>Core Concept</span></span>
             </div>
             <h3 class="text-2xl sm:text-3xl font-bold text-zinc-950 dark:text-white tracking-tight">Pisahkan master dan transaksi</h3>
             <p class="text-zinc-700 dark:text-zinc-300 text-base leading-relaxed mt-3">
@@ -587,7 +588,7 @@
             </p>
             
             <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
-              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
               <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">
                 Empat kotak di meja: kotak kategori, barang, dan pelanggan adalah master yang datanya jarang berubah; kotak transaksi berisi nota belanja yang isinya pasti berubah-ubah setiap menit.
               </p>
@@ -605,7 +606,7 @@
                 </thead>
                 <tbody class="divide-y divide-zinc-200 dark:divide-white/5 text-zinc-600 dark:text-zinc-400">
                   <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Sifat Data</td><td>Jarang Berubah (statis, acuan paten)</td><td>Pasti Berubah-Ubah (dinamis, bertambah terus)</td></tr>
-                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Relasi</td><td>Bisa saling terhubung (Kategori ➔ Produk)</td><td>Meminjam ID produk dari master (Foreign Key)</td></tr>
+                  <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Relasi</td><td>Bisa saling terhubung (Kategori &rarr; Produk)</td><td>Meminjam ID produk dari master (Foreign Key)</td></tr>
                   <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Aktor Pengubah</td><td>Pemilik toko / admin katalog</td><td>Kasir yang melayani pembeli di mesin kasir</td></tr>
                   <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Operasi File C</td><td>Dibaca ("r"/"rb"), diperbarui saat mutasi</td><td>Ditambah di akhir file mode append ("a"/"ab")</td></tr>
                 </tbody>
@@ -658,7 +659,7 @@
             </p>
             <div class="mt-4">
               <a href="probis.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-xs font-medium hover:opacity-90 transition-opacity">
-                Buka Materi Probis Lengkap ➔
+                <span>Buka Materi Probis Lengkap</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </a>
             </div>
           </article>
@@ -677,7 +678,7 @@
               Activity Plan merencanakan kegiatan, penanggung jawab, waktu, hasil, dan status project sebelum memulai coding.
             </p>
             <div class="mt-5 p-4 rounded-xl bg-zinc-100/70 dark:bg-white/5 border border-zinc-200 dark:border-white/10">
-              <span class="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 tracking-wider">💡 BAYANGKAN BEGINI</span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-zinc-700 dark:text-zinc-300 tracking-wider"><svg class="w-4 h-4 shrink-0 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>BAYANGKAN BEGINI</span></span>
               <p class="text-sm text-zinc-700 dark:text-zinc-300 mt-1">Seperti jadwal kerja toko yang menetapkan pekerjaan, petugas, dan waktu.</p>
             </div>
           </article>
@@ -687,7 +688,7 @@
       </div>
     </section>
 
-    <!-- ================= ACT 05 · COMMITMENT: RESOLVED CLOSE (PINNED + SPOTLIGHT) ================= -->
+    <!-- Act 05: Resolved close (pinned and spotlight) -->
     <section id="close-section" data-sc-act="pin" data-sc-span="1.25" class="relative">
       <div data-sc-stage class="sc-stage flex items-center justify-center px-6" data-sc-spotlight>
         <div class="w-full max-w-xl mx-auto flex flex-col items-center text-center p-8 rounded-3xl border border-zinc-300 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-2xl">
@@ -701,9 +702,9 @@
               <span class="text-[11px] text-zinc-500 ml-2">kasirkita-audit.exe</span>
             </div>
             <div class="space-y-1 text-emerald-400">
-              <p>✔ [SDLC] Scope &amp; Probis Toko: Terverifikasi</p>
-              <p>✔ [MASTER] Relasi Kategori &amp; Produk P001: Siap</p>
-              <p>✔ [TRANSAKSI] Append-only Nota Belanja: Valid</p>
+              <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[SDLC] Scope &amp; Probis Toko: Terverifikasi</span></p>
+              <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[MASTER] Relasi Kategori &amp; Produk P001: Siap</span></p>
+              <p class="flex items-center gap-2"><svg class="w-3.5 h-3.5 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>[TRANSAKSI] Append-only Nota Belanja: Valid</span></p>
               <p class="text-zinc-400 mt-2">&gt; Status Modul 01: LULUS. Siap melanjutkan ke Modul 02.</p>
             </div>
           </div>
@@ -758,7 +759,7 @@
 
   </main>
 
-  <!-- ================= SCRIPTS ================= -->
+  <!-- Scripts -->
   <!-- 1. Scroll-Craft Runtime Engine -->
   <script src="assets/scrollcraft/scrollcraft.js"></script>
 

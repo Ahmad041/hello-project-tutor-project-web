@@ -6,12 +6,8 @@ const ICON_ARROW_RIGHT = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" 
 
 function renderMarkup(el, html) {
   if (!el) return;
-  if ('innerHTML' in el || typeof el.innerHTML === 'string') {
-    el.innerHTML = html;
-  } else {
-    el.innerHTML = html;
-    el.textContent = html;
-  }
+  if (!('innerHTML' in el)) el.textContent = html;
+  el.innerHTML = html;
 }
 
 const map = document.querySelector('.callout-map');
@@ -110,7 +106,7 @@ if (map) {
     links.forEach((link, idx) => {
       const arrow = link.querySelector('.callout-arrow');
       if (idx < unlockedCount) {
-        link.classList.remove('is-locked', 'shake');
+        link.classList.remove('is-locked');
         link.classList.add('is-unlocked');
         link.removeAttribute('aria-disabled');
         renderMarkup(arrow, ICON_ARROW_UP_RIGHT);
@@ -258,7 +254,7 @@ if (map) {
 
         calloutTarget?.classList.add('is-attention');
         if (lockHint) {
-          renderMarkup(lockHint, `${ICON_LOCK}<span>Terkunci — Klik START di tengah</span>`);
+          renderMarkup(lockHint, `${ICON_LOCK}<span>Terkunci: Klik START di tengah</span>`);
         }
         startBtn?.focus();
 

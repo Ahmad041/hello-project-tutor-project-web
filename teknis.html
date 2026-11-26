@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Modul 03 — Pustaka Grafis lib.h | Hello Project</title>
+  <title>Modul 03: Pustaka Grafis lib.h | Hello Project</title>
   <meta name="description" content="Modul 03 KasirKita: Manipulasi console Windows, fungsi gotoxy, border visual, kursor, dan input buffer dengan arsitektur UI Modul 01.">
 
   <!-- Google Fonts: Inter & Space Grotesk -->
@@ -48,7 +48,7 @@
   </script>
 
   <style>
-    /* ================= DUAL-THEME TOKENS (1:1 MODUL 01 PARITY) ================= */
+    /* Dual-theme tokens (1:1 Modul 01 parity) */
     :root {
       --sc-canvas: #fcfcfd;
       --sc-surface: rgba(255, 255, 255, 0.94);
@@ -151,10 +151,10 @@
 </head>
 <body class="relative min-h-screen text-zinc-900 dark:text-zinc-100 bg-[#fcfcfd] dark:bg-[#09090b]" data-page="teknis.html">
 
-  <!-- ================= TOP READING PROGRESS BAR ================= -->
+  <!-- Top reading progress bar -->
   <span data-sc-progress class="fixed top-0 left-0 right-0 h-[3px] bg-zinc-900 dark:bg-white z-50 origin-left scale-x-0 transition-transform duration-75"></span>
 
-  <!-- ================= TOP THEME TOGGLE CAPSULE (FLOATING & ACCESSIBLE) ================= -->
+  <!-- Top theme toggle capsule -->
   <aside class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 rounded-full border border-zinc-200 dark:border-white/10 bg-white/85 dark:bg-zinc-900/80 p-1.5 backdrop-blur-xl shadow-sm dark:shadow-2xl transition-colors duration-300" aria-label="Pengalih Mode Tampilan">
     <button id="theme-btn-light" type="button" class="flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-all focus:outline-none focus:ring-1 focus:ring-zinc-400" aria-label="Beralih ke Mode Terang">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -166,7 +166,7 @@
     </button>
   </aside>
 
-  <!-- ================= TOP NAV CHROME ================= -->
+  <!-- Top nav chrome -->
   <header class="fixed top-5 left-5 right-5 sm:left-8 sm:right-8 z-40 flex items-center justify-between pointer-events-none">
     <a href="index.html" class="pointer-events-auto flex items-center gap-2 text-xs font-mono font-bold tracking-widest uppercase text-white/90 bg-black/40 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 hover:border-white/30 transition-colors">
       <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><span>HELLO PROJECT</span>
@@ -178,7 +178,7 @@
 
   <main id="top" class="w-full flex flex-col">
 
-    <!-- ================= HERO SECTION (ATMOSPHERIC GRADIENT BENCHMARK) ================= -->
+    <!-- Hero section -->
     <section class="relative bg-zinc-950 text-white pt-32 pb-24 px-5 sm:px-8 overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-zinc-950/80 to-zinc-950 pointer-events-none"></div>
       
@@ -205,7 +205,7 @@
       </div>
     </section>
 
-    <!-- ================= SUBSTANCE: THE 7 SYSTEMATIC CHAPTERS ================= -->
+    <!-- Substance: the 7 systematic chapters -->
     <section class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-16 sm:py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300">
       <div class="w-full max-w-4xl mx-auto">
 
@@ -413,6 +413,30 @@
               <strong>Coba sekarang:</strong> Buka header dan temukan fungsi untuk memindahkan kursor: <code>gotoxy(x, y)</code>.
             </div>
 
+            <div class="mt-4 flex flex-wrap items-center gap-3">
+              <a href="dokumentasi-lib.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 text-xs font-medium hover:opacity-90 transition-opacity">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                <span>Dokumentasi lib.h</span>
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+              <a href="https://astrapolytechnic-my.sharepoint.com/personal/0320240065_polytechnic_astra_ac_id/_layouts/15/stream.aspx?id=%2Fpersonal%2F0320240065%5Fpolytechnic%5Fastra%5Fac%5Fid%2FDocuments%2FKepanitiaan%2FHello%20Project%2FTutorial%20Design%20%2D%20Hello%20Project%2Emp4&amp;nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&amp;ga=1&amp;referrer=StreamWebApp%2EWeb&amp;referrerScenario=AddressBarCopied%2Eview%2Ee3f7d5c8%2Dc981%2D4f66%2D87da%2D19285b013b00" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-colors shadow-sm">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                <span>Tutorial Penggunaan</span>
+              </a>
+              <a href="files/lib.h" download class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-800/60 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-semibold transition-colors shadow-sm">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Unduh lib.h</span>
+              </a>
+              <a href="files/lib-beta.h" download class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-sky-500/40 bg-sky-50/70 dark:bg-sky-950/30 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/40 text-xs font-semibold transition-colors shadow-sm">
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Unduh lib-beta.h (Beta)</span>
+              </a>
+            </div>
+
+            <div class="mt-4 p-3.5 rounded-xl bg-sky-50/70 dark:bg-sky-950/20 border border-sky-200 dark:border-sky-800/40 text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              <strong>Pilihan Versi Header:</strong> <code>lib.h</code> adalah versi standar sesuai video tutorial resmi. <code>lib-beta.h</code> kompatibel penuh dengan <code>lib.h</code> sekaligus membawa perbaikan bug Backspace/<code>fopen</code> dan fitur tambahan: warna konsol (<code>setColor</code>), cetak Rupiah (<code>gotoPrintMoney</code>), perataan teks (<code>gotoPrintCenter</code>/<code>gotoPrintRight</code>), garis tabel (<code>horizontalLine</code>/<code>verticalLine</code>), pembaca panah aman (<code>readKey</code>), input desimal (<code>scanInputFloat</code>), serta animasi teks dan loading bar (<code>typeText</code>/<code>loadingBar</code>).
+            </div>
+
             <details class="arch-details mt-6">
               <summary>Lihat diagram, contoh, dan materi lengkap</summary>
               <div class="p-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-4">
@@ -428,21 +452,31 @@
                   </div>
                   <a href="https://astrapolytechnic-my.sharepoint.com/personal/0320240065_polytechnic_astra_ac_id/_layouts/15/stream.aspx?id=%2Fpersonal%2F0320240065%5Fpolytechnic%5Fastra%5Fac%5Fid%2FDocuments%2FKepanitiaan%2FHello%20Project%2FTutorial%20Design%20%2D%20Hello%20Project%2Emp4&amp;nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&amp;ga=1&amp;referrer=StreamWebApp%2EWeb&amp;referrerScenario=AddressBarCopied%2Eview%2Ee3f7d5c8%2Dc981%2D4f66%2D87da%2D19285b013b00" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 font-semibold text-xs transition-colors shrink-0 shadow-sm">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <span>Tonton Video Tutorial</span>
+                    <span>Tutorial Penggunaan</span>
                     <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
                   </a>
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900/60 shadow-sm">
                   <div>
-                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">BAHAN DOWNLOAD</span>
-                    <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">Library lib.h</h4>
-                    <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Header C berisi fungsi bantuan untuk tampilan dan input console Windows.</p>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">BAHAN DOWNLOAD &amp; REFERENSI</span>
+                    <h4 class="font-bold text-zinc-900 dark:text-white text-sm mt-0.5">Library lib.h &amp; lib-beta.h</h4>
+                    <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1">Pilih <code>lib.h</code> (standar video tutorial) atau <code>lib-beta.h</code> (perbaikan + fitur warna, tabel, format Rupiah, panah, float, serta animasi <code>typeText</code>/<code>loadingBar</code>).</p>
                   </div>
-                  <a href="files/lib.h" download class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold text-xs hover:opacity-90 transition-opacity shrink-0 shadow-sm">
-                    <span>Unduh Library lib.h</span>
-                    <span>↓</span>
-                  </a>
+                  <div class="flex flex-wrap items-center gap-2 shrink-0">
+                    <a href="dokumentasi-lib.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-800/60 text-zinc-700 dark:text-zinc-200 font-semibold text-xs hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors shrink-0 shadow-sm">
+                      <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                      <span>Dokumentasi lib.h</span>
+                    </a>
+                    <a href="files/lib.h" download class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-white dark:text-zinc-950 font-semibold text-xs hover:opacity-90 transition-opacity shrink-0 shadow-sm">
+                      <span>Unduh Library lib.h</span>
+                      <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </a>
+                    <a href="files/lib-beta.h" download class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-sky-500/40 bg-sky-50/70 dark:bg-sky-950/30 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/40 font-semibold text-xs transition-colors shrink-0 shadow-sm">
+                      <span>Unduh lib-beta.h (Beta)</span>
+                      <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </a>
+                  </div>
                 </div>
 
                 <div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 shadow-sm">
@@ -458,7 +492,8 @@
                       <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Posisi &amp; Teks</td><td class="p-3 font-mono text-zinc-800 dark:text-zinc-200">gotoxy, gotoPrintString, gotoPrintChar</td><td class="p-3">Menempatkan teks atau karakter pada koordinat (x, y)</td></tr>
                       <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Bingkai</td><td class="p-3 font-mono text-zinc-800 dark:text-zinc-200">borderLine, borderDoubleLine, borderClear</td><td class="p-3">Menggambar atau menghapus garis tepi kotak menu</td></tr>
                       <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Area &amp; Kursor</td><td class="p-3 font-mono text-zinc-800 dark:text-zinc-200">clearArea, hideCursor, showCursor</td><td class="p-3">Membersihkan area teks dan mengatur visibilitas kursor</td></tr>
-                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Input Buffer</td><td class="p-3 font-mono text-zinc-800 dark:text-zinc-200">scanInputString, scanInputInt, scanInputFormatPrice</td><td class="p-3">Membaca teks, bilangan bulat, dan nominal rupiah berformat</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Input Buffer</td><td class="p-3 font-mono text-zinc-800 dark:text-zinc-200">scanInputString, scanInputText, scanInputPassword, scanInputNumber, scanInputMoney</td><td class="p-3">Membaca teks, alfabet, password bintang, bilangan bulat, dan nominal rupiah berformat</td></tr>
+                      <tr><td class="p-3 font-semibold text-zinc-900 dark:text-zinc-200">Fitur Tambahan (lib-beta.h)</td><td class="p-3 font-mono text-zinc-800 dark:text-zinc-200">setColor, gotoPrintCenter, gotoPrintMoney, horizontalLine, readKey, scanInputFloat</td><td class="p-3">Pewarnaan konsol, perataan teks, format Rupiah, garis tabel, tombol panah aman, dan input desimal</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -507,7 +542,7 @@
                 </div>
 
                 <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
-                  <strong>Penting untuk Ujian Sidang:</strong> Empat fungsi input (<code>scanInputString</code>, <code>scanInputInt</code>, <code>scanInputFloat</code>, <code>scanInputFormatPrice</code>) harus menerapkan penanganan backspace yang sama agar terminal tidak mencetak karakter sampah saat pengguna salah ketik.
+                  <strong>Penting untuk Ujian Sidang:</strong> Empat fungsi input pada <code>lib.h</code> (<code>scanInputString</code>, <code>scanInputText</code>, <code>scanInputPassword</code>, <code>scanInputNumber</code>) wajib diperbaiki penanganan backspace-nya (<code>text[i] = '\0';</code>), sedangkan <code>scanInputMoney</code> memakai buffer terpisah. Jika memakai <code>lib-beta.h</code>, seluruh fungsi tersebut beserta <code>scanInputFloat</code> sudah aman dari bug backspace dan bebas warning GCC.
                 </div>
               </div>
             </details>
@@ -618,12 +653,12 @@
         <!-- Axis X (Horizontal) -->
         <line x1="65" y1="20" x2="650" y2="20" stroke="#71717a" stroke-width="1.5"/>
         <path d="M 650 20 L 640 16 L 640 24 Z" fill="#71717a"/>
-        <text x="230" y="16" fill="#a1a1aa" font-size="11" font-weight="700" font-family="monospace">SUMBU X (KOLOM: 0 s.d. 79) ➔ KE KANAN</text>
+        <text x="230" y="16" fill="#a1a1aa" font-size="11" font-weight="700" font-family="monospace">SUMBU X (KOLOM: 0 s.d. 79) &rarr; KE KANAN</text>
 
         <!-- Axis Y (Vertical) - Positioned and centered so text does not bleed offside -->
         <line x1="26" y1="70" x2="26" y2="220" stroke="#71717a" stroke-width="1.5"/>
         <path d="M 26 220 L 22 210 L 30 210 Z" fill="#71717a"/>
-        <text x="16" y="145" text-anchor="middle" fill="#a1a1aa" font-size="9" font-weight="700" font-family="monospace" transform="rotate(-90, 16, 145)">SUMBU Y (BARIS: 0..24) ➔ KE BAWAH</text>
+        <text x="16" y="145" text-anchor="middle" fill="#a1a1aa" font-size="9" font-weight="700" font-family="monospace" transform="rotate(-90, 16, 145)">SUMBU Y (BARIS: 0..24) &rarr; KE BAWAH</text>
 
         <!-- Pin 1: Origin Point Badge (Marker Blue) -->
         <circle cx="185" cy="70" r="9.5" fill="#2563eb" stroke="#60a5fa" stroke-width="1.2"/>
@@ -770,7 +805,7 @@ showCursor();</code></pre>
             </div>
 
             <div class="mt-4 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 text-xs text-zinc-800 dark:text-zinc-200">
-              <strong>Coba sekarang:</strong> Gunakan <code>scanInputString</code> untuk nama barang dan <code>scanInputInt</code> untuk kuantitas stok.
+              <strong>Coba sekarang:</strong> Gunakan <code>scanInputString</code> untuk nama barang, <code>scanInputNumber</code> untuk kuantitas stok, <code>scanInputMoney</code> untuk harga, atau <code>scanInputFloat</code> (pada <code>lib-beta.h</code>) untuk diskon desimal.
             </div>
 
             <!-- Fig 3.7 Diagram -->
@@ -864,7 +899,7 @@ showCursor();</code></pre>
         <!-- Guard Danger Card -->
         <rect x="390" y="130" width="345" height="116" rx="6" fill="#180a0e" stroke="rgba(239, 68, 68, 0.4)" stroke-width="1"/>
         <text x="404" y="152" fill="#f87171" font-size="11" font-weight="700" font-family="monospace">2. BAHAYA BUFFER OVERFLOW</text>
-        <text x="404" y="172" fill="#fca5a5" font-size="10" font-family="monospace">⚠️ Jika maxChar &gt;= kapasitas buffer:</text>
+        <text x="404" y="172" fill="#fca5a5" font-size="10" font-family="monospace">PERINGATAN: Jika maxChar &gt;= kapasitas buffer:</text>
         <text x="404" y="190" fill="#fca5a5" font-size="10" font-family="monospace">Karakter akan menimpa memori stack variabel lain!</text>
         <text x="404" y="208" fill="#94a3b8" font-size="10" font-family="monospace">• Tanpa '\0', printf membaca memori liar (sampah)</text>
         <text x="404" y="226" fill="#f87171" font-size="10" font-family="monospace">• Selalu cadangkan 1 byte mutlak untuk NUL</text>
@@ -921,7 +956,7 @@ showCursor();</code></pre>
                   <pre><code><span class="text-blue-400">char</span> namaBarang[<span class="text-amber-400">50</span>];
 gotoxy(<span class="text-amber-400">4</span>, <span class="text-amber-400">10</span>);
 printf(<span class="text-emerald-400">"Masukkan Nama: "</span>);
-scanInputString(namaBarang, <span class="text-amber-400">49</span>); <span class="text-zinc-500">// Maks 49 char, byte ke-50 otomatis didedikasikan untuk '\0'</span></code></pre>
+scanInputString(<span class="text-amber-400">19</span>, <span class="text-amber-400">10</span>, namaBarang, <span class="text-amber-400">49</span>); <span class="text-zinc-500">// Maks 49 char, byte ke-50 otomatis didedikasikan untuk '\0'</span></code></pre>
                 </div>
               </div>
             </details>
@@ -932,7 +967,7 @@ scanInputString(namaBarang, <span class="text-amber-400">49</span>); <span class
       </div>
     </section>
 
-    <!-- ================= ACT 05 · COMMITMENT: RESOLVED CLOSE ================= -->
+    <!-- Act 05: Resolved close -->
     <section id="close-section" class="w-full bg-[#fcfcfd] dark:bg-[#09090b] py-20 px-5 sm:px-8 border-t border-zinc-200 dark:border-white/10 transition-colors duration-300">
       <div class="w-full max-w-xl mx-auto flex flex-col items-center text-center p-8 rounded-3xl border border-zinc-300 dark:border-white/10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-2xl">
         
@@ -959,12 +994,34 @@ scanInputString(namaBarang, <span class="text-amber-400">49</span>); <span class
           Anda telah menguasai pengaturan kursor, bingkai, dan input buffer aman. Lanjutkan ke kanvas tampilan ASCII Art pada Modul 04.
         </p>
 
+        <div class="w-full max-w-md mt-6 p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-lg bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center shrink-0 mt-0.5 text-zinc-700 dark:text-zinc-300" aria-hidden="true">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-mono font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-900/60 px-2 py-0.5 rounded">Referensi Cepat</span>
+                <h3 class="text-xs font-semibold text-zinc-900 dark:text-white">Dokumentasi lib.h</h3>
+              </div>
+              <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed">
+                Daftar signature fungsi, parameter, contoh C, dan catatan perbaikan console Windows.
+              </p>
+            </div>
+          </div>
+          <a href="dokumentasi-lib.html" class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 text-xs font-semibold text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors shrink-0 shadow-sm self-start sm:self-center">
+            <span>Dokumentasi lib.h</span>
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+
         <div class="flex flex-wrap items-center justify-center gap-4 mt-6">
-          <a href="testing.html" class="inline-flex items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 px-6 py-3 text-sm font-semibold hover:opacity-90 transition-opacity shadow-md">
+          <a href="testing.html" class="inline-flex items-center justify-center gap-2 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 px-6 py-3 text-sm font-semibold hover:opacity-90 transition-opacity shadow-md">
             <span>Lanjut ke Modul 04 (ASCII Art)</span><svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
-          <a href="daftarModul.html" class="inline-flex items-center justify-center rounded-full border border-zinc-300 dark:border-white/20 bg-white/60 dark:bg-zinc-800/60 px-6 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors">
-            Buka Daftar Modul ↗
+          <a href="daftarModul.html" class="inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 dark:border-white/20 bg-white/60 dark:bg-zinc-800/60 px-6 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors">
+            <span>Buka Daftar Modul</span>
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" x2="17" y1="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </a>
         </div>
 
@@ -973,7 +1030,7 @@ scanInputString(namaBarang, <span class="text-amber-400">49</span>); <span class
 
   </main>
 
-  <!-- ================= SCRIPTS ================= -->
+  <!-- Scripts -->
   <!-- 1. Surgical Anatomy Scrollytelling Engine -->
   <script src="assets/js/anatomy-scroll.js"></script>
 

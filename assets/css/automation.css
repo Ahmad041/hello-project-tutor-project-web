@@ -27,14 +27,6 @@ body.automation-page { margin: 0; background: #02060f; font-family: 'Helvetica N
 .map-callout.is-unlocked { border-color: rgba(235, 209, 161, 0.65); }
 .map-callout.is-locked { opacity: 0.52; border-color: rgba(255, 255, 255, 0.22); background: rgba(7, 16, 27, 0.58); cursor: not-allowed; }
 .map-callout.is-locked:hover, .map-callout.is-locked:focus-visible { border-color: rgba(235, 209, 161, 0.48); background: rgba(13, 24, 40, 0.72); }
-@keyframes lockedShake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-}
-.map-callout.is-locked.shake { animation: lockedShake 0.3s ease; }
 .callout-number { color: #ebd1a1; font-size: 11px; }
 .callout-arrow { margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
 
@@ -86,7 +78,6 @@ body.automation-page { margin: 0; background: #02060f; font-family: 'Helvetica N
   .target-dot.pulse { animation: targetDotPulse 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .map-callout.is-locked.shake,
   .callout-target.is-attention .callout-start-btn { animation: none; }
 }
 .contents-section { height: auto; min-height: 100vh; }

@@ -1,5 +1,5 @@
 /**
- * terminal-studio-engine.js — Engine Simulasi Terminal Console 80x25
+ * terminal-studio-engine.js: Engine Simulasi Terminal Console 80x25
  * Mendukung pengujian koordinat gotoxy, border box, dan ASCII art staging untuk lib.h
  */
 (function (root, factory) {
@@ -112,10 +112,8 @@ KEMBALIAN:                    Rp   6.000
       },
 
       generateC(commands) {
-        let code = '// ========================================================\n';
-        code += '// KASIRKITA - Generated C UI Code with lib.h\n';
+        let code = '// KasirKita: Generated C UI Code with lib.h\n';
         code += '// Salin fungsi ini ke dalam proyek IntelliJ IDEA Anda\n';
-        code += '// ========================================================\n';
         code += '#include <stdio.h>\n#include <windows.h>\n#include "lib.h"\n\n';
         code += 'void renderKasirScreen() {\n';
         code += '    system("cls");\n';

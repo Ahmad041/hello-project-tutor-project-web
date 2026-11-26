@@ -1,15 +1,6 @@
-/* ==========================================================================
-   Analogi 3D Kotak Kardus Terbuka & Bola: Master vs Transaksi (KasirKita)
-   Gaya visual sesuai referensi:
-   - Sisi Kiri: Panggung lantai studio terang dengan kotak kardus 3D terbuka,
-     lengkap dengan tutup (flaps) terbuka dan bola warna 3D di dalamnya.
-   - Sisi Kanan: Transisi gradien dari transparan ke gelap (#0b0f19) dengan
-     judul tebal menyala ("Judul") dan teks penjelasan lengkap.
-   ========================================================================== */
+/* Analogi 3D kotak kardus terbuka & bola: master vs transaksi (KasirKita) */
 
-/* ==========================================================================
-   Full Width (100%) Layout untuk Halaman 3D & 2D Boxes Analogy
-   ========================================================================== */
+/* Full width (100%) layout untuk halaman 3D & 2D Boxes Analogy */
 body[data-page="game/boxes-analogy.html"] .layout.module-content,
 body[data-page="game/boxes-analogy.html"] .bar,
 body[data-page="game/boxes-2d.html"] .layout.module-content,
@@ -68,9 +59,7 @@ body[data-page="game/boxes-2d.html"] .boxes-analogy-container {
   }
 }
 
-/* ==========================================================================
-   SISI KIRI: Panggung Lingkungan 3D WebGL (Three.js) & Kotak Kardus 3D
-   ========================================================================== */
+/* Sisi kiri: panggung lingkungan 3D WebGL (Three.js) & kotak kardus 3D */
 .boxes-stage-open3d {
   position: relative;
   width: 100%;
@@ -88,9 +77,7 @@ body[data-page="game/boxes-2d.html"] .boxes-analogy-container {
   }
 }
 
-/* ==========================================================================
-   SISI KIRI: Panggung Lingkungan 2D Vektor & Kotak Kardus
-   ========================================================================== */
+/* Sisi kiri: panggung lingkungan 2D vektor & kotak kardus */
 .boxes-stage-open2d {
   position: relative;
   width: 100%;
@@ -478,9 +465,7 @@ body[data-page="game/boxes-2d.html"] .boxes-analogy-container {
   gap: 6px;
 }
 
-/* ==========================================================================
-   Visualisasi Kardus 3D Terbuka (SVG + Rongga Bola)
-   ========================================================================== */
+/* Visualisasi kardus 3D terbuka (SVG + rongga bola) */
 .box-3d-visual {
   position: relative;
   width: 220px;
@@ -547,9 +532,7 @@ body[data-page="game/boxes-2d.html"] .boxes-analogy-container {
   100% { transform: scale(1); }
 }
 
-/* ==========================================================================
-   Bola 3D Mengilap (Spheres) di Dalam Kardus
-   ========================================================================== */
+/* Bola 3D mengilap (spheres) di dalam kardus */
 .ball-item {
   width: 40px;
   height: 40px;
@@ -650,9 +633,7 @@ body[data-page="game/boxes-2d.html"] .boxes-analogy-container {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* ==========================================================================
-   SISI KANAN: Transisi Gradien Dark to Transparent & Penjelasan
-   ========================================================================== */
+/* Sisi kanan: transisi gradien dark to transparent & penjelasan */
 .boxes-hero-content-panel {
   background: linear-gradient(
     to right,
@@ -963,9 +944,7 @@ body[data-page="game/boxes-2d.html"] .boxes-analogy-container {
   to { transform: scale(1); opacity: 1; }
 }
 
-/* ==========================================================================
-   Switcher Representasi Mode 2D vs Mode 3D di Probis & Boxes Lab
-   ========================================================================== */
+/* Switcher representasi mode 2D vs mode 3D di Probis & Boxes Lab */
 .representation-mode-bar {
   width: 100%;
   max-width: 100%;

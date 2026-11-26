@@ -205,7 +205,7 @@
 
     questCard.classList.toggle('quest-positive', isPositive);
     questBadge.textContent = isPositive ? 'Kasus Positif (Happy Path)' : 'Kasus Negatif (Uji Validasi)';
-    questTitle.textContent = `${scenario.id} — ${scenario.testType}`;
+    questTitle.textContent = `${scenario.id}: ${scenario.testType}`;
 
     let desc = scenario.procedure.replace(/\n/g, ' · ');
     if (isPassed) {

@@ -1,5 +1,5 @@
 /**
- * step-nav.js — KasirKita Floating Minimal Step Navigator (HUD)
+ * step-nav.js: KasirKita Floating Minimal Step Navigator (HUD)
  * Memberikan navigasi cepat, indikator langkah aktif, pintasan keyboard,
  * serta sinkronisasi progres buka-kunci langkah ke localStorage untuk Daftar Isi.
  */
@@ -30,7 +30,7 @@
     try {
       const existingUnlocked = parseInt(localStorage.getItem(key) || '0', 10) || 0;
       const nextUnlock = Math.max(existingUnlocked, idx + 2);
-      localStorage.setItem(key, String(Math.min(totalSteps, nextUnlock)));
+      localStorage.setItem(key, String(nextUnlock));
     } catch (_) {}
   }
 

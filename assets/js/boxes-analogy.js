@@ -111,9 +111,7 @@
     return texture;
   }
 
-  // ==========================================================================
   // Kelas Three.js 3D WebGL Experience
-  // ==========================================================================
   class Boxes3DExperience {
     constructor(containerEl, api) {
       this.container = containerEl;
@@ -830,9 +828,7 @@
     }
   }
 
-  // ==========================================================================
   // Inisialisasi Simulasi Master & Transaksi
-  // ==========================================================================
   function initBoxesSimulation(rootEl) {
     if (!rootEl || rootEl.__boxesInitialized) return;
     rootEl.__boxesInitialized = true;

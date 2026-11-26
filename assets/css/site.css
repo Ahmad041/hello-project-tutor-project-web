@@ -901,9 +901,7 @@ code {
 .story-action { padding: 20px 24px; background: #ffffff05; border: 1px solid #34465e; border-radius: 6px; margin: 28px 0; }
 .story-action p { margin-bottom: 0; }
 
-/* ==========================================================================
-   BEDAH ANATOMI (ANATOMY CARDS) — High-Affordance Technical Blueprints
-   ========================================================================== */
+/* Bedah anatomi (anatomy cards): high-affordance technical blueprints */
 .story-anatomy {
   margin: 28px 0;
   background: radial-gradient(circle at 10% 20%, rgba(14, 27, 46, 0.96), rgba(8, 14, 26, 0.98));
@@ -1304,9 +1302,7 @@ body.opening-playing { overflow: hidden; }
   .checkout-controls button { min-height:44px; }
 }
 
-/* ========================================================
-   Floating Step Navigator (HUD)
-   ======================================================== */
+/* Floating step navigator (HUD) */
 .floating-step-hud {
   position: fixed;
   bottom: 24px;

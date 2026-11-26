@@ -1,5 +1,5 @@
 /**
- * terminal-studio-game.js — DOM Controller untuk Terminal Studio
+ * terminal-studio-game.js: DOM Controller untuk Terminal Studio
  */
 document.addEventListener('DOMContentLoaded', () => {
   const engine = window.TerminalStudioEngine;

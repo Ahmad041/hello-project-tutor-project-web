@@ -3,9 +3,7 @@
 
   // Definisi PDM Spesifik & Berbeda Tiap Level (Level 1 - 5)
   const LEVELS = [
-    // ==========================================
-    // LEVEL 1: PDM TOKO KELONTONG (2 ENTITAS)
-    // ==========================================
+    // Level 1: PDM Toko Kelontong (2 entitas)
     {
       level: 1,
       name: 'Level 1: PDM Toko Kelontong',
@@ -47,9 +45,7 @@
       demoCables: [{ from: 'KATEGORI.id_kategori', to: 'PRODUK.id_kategori' }]
     },
 
-    // ==========================================
-    // LEVEL 2: PDM MEMBERSHIP & KARTU POIN (2 ENTITAS)
-    // ==========================================
+    // Level 2: PDM Membership & Kartu Poin (2 entitas)
     {
       level: 2,
       name: 'Level 2: PDM Membership & Loyalitas',
@@ -91,9 +87,7 @@
       demoCables: [{ from: 'PELANGGAN.id_pelanggan', to: 'KARTU_MEMBER.id_pelanggan' }]
     },
 
-    // ==========================================
-    // LEVEL 3: PDM PENGADAAN & SUPPLIER (3 ENTITAS)
-    // ==========================================
+    // Level 3: PDM Pengadaan & Supplier (3 entitas)
     {
       level: 3,
       name: 'Level 3: PDM Pengadaan Distributor',
@@ -157,9 +151,7 @@
       ]
     },
 
-    // ==========================================
-    // LEVEL 4: PDM KASIR NORMALISASI 3NF (4 ENTITAS)
-    // ==========================================
+    // Level 4: PDM Kasir Normalisasi 3NF (4 entitas)
     {
       level: 4,
       name: 'Level 4: PDM Kasir Normalisasi 3NF',
@@ -243,9 +235,7 @@
       ]
     },
 
-    // ==========================================
-    // LEVEL 5: PDM KASIRKITA LENGKAP & DENORMALISASI (5 ENTITAS)
-    // ==========================================
+    // Level 5: PDM KasirKita Lengkap & Denormalisasi (5 entitas)
     {
       level: 5,
       name: 'Level 5: Master Arsitektur KasirKita',
@@ -461,7 +451,7 @@
       }
     }
 
-    // ==================== LEVEL 1: PDM TOKO KELONTONG ====================
+    // Level 1: PDM Toko Kelontong
     if (levelNum === 1) {
       trace.push({
         step: 1,
@@ -505,7 +495,7 @@
       };
     }
 
-    // ==================== LEVEL 2: PDM MEMBERSHIP & LOYALITAS ====================
+    // Level 2: PDM Membership & Loyalitas
     if (levelNum === 2) {
       trace.push({
         step: 1,
@@ -549,7 +539,7 @@
       };
     }
 
-    // ==================== LEVEL 3: PDM PENGADAAN & SUPPLIER ====================
+    // Level 3: PDM Pengadaan & Supplier
     if (levelNum === 3) {
       trace.push({
         step: 1,
@@ -612,7 +602,7 @@
       };
     }
 
-    // ==================== LEVEL 4: PDM KASIR NORMALISASI 3NF ====================
+    // Level 4: PDM Kasir Normalisasi 3NF
     if (levelNum === 4) {
       trace.push({
         step: 1,
@@ -687,7 +677,7 @@
       };
     }
 
-    // ==================== LEVEL 5: PDM KASIRKITA LENGKAP & DENORMALISASI ====================
+    // Level 5: PDM KasirKita Lengkap & Denormalisasi
     trace.push({
       step: 1,
       entity: 'CATEGORY',
