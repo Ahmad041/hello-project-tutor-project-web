@@ -1,14 +1,78 @@
+const ICON_ARROW_UP_RIGHT = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>';
+const ICON_LOCK = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+const ICON_PLAY = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
+const ICON_ROTATE_CCW = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
+const ICON_ARROW_RIGHT = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
+function renderMarkup(el, html) {
+  if (!el) return;
+  if ('innerHTML' in el || typeof el.innerHTML === 'string') {
+    el.innerHTML = html;
+  } else {
+    el.innerHTML = html;
+    el.textContent = html;
+  }
+}
+
 const map = document.querySelector('.callout-map');
 if (map) {
   const target = map.querySelector('.target-dot');
+  const calloutTarget = map.querySelector('.callout-target');
+  const startBtn = map.querySelector('.callout-start-btn');
+  const startIcon = startBtn?.querySelector('.start-icon');
+  const startLabel = startBtn?.querySelector('.start-label');
+  const lockHint = map.querySelector('.callout-lock-hint');
   const group = map.querySelector('.callout-lines g');
   const links = [...map.querySelectorAll('.map-callout')];
   const replayBtn = document.querySelector('.replay-boot');
+  const bgVideo = document.querySelector('video.art');
+
+  function getBaseModuleHref() {
+    const rawHref = links[0]?.getAttribute('href') || links[0]?.href || '';
+    return rawHref.split('#')[0];
+  }
+
+  function detectModuleId() {
+    const firstHref = links[0]?.getAttribute('href') || '';
+    const pathname = window.location.pathname || '';
+    const source = `${firstHref} ${pathname}`.toLowerCase();
+    if (/project\.html|modul01\.html|daftarisi\.html/.test(source)) return 'm1';
+    if (/analisis\.html|daftarisi-2\.html/.test(source)) return 'm2';
+    if (/teknis\.html|daftarisi-3\.html/.test(source)) return 'm3';
+    if (/testing\.html|daftarisi-4\.html/.test(source)) return 'm4';
+    return 'm1';
+  }
+
+  const moduleId = detectModuleId();
+  const storageKey = `kasirkita-unlock-${moduleId}`;
+
+  function getUnlockedCount() {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      const parsed = parseInt(raw || '0', 10);
+      if (Number.isNaN(parsed) || parsed < 0) return 0;
+      return Math.min(links.length, parsed);
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  function setUnlockedCount(count) {
+    const safeCount = Math.max(0, Math.min(links.length, count));
+    try {
+      localStorage.setItem(storageKey, String(safeCount));
+    } catch (_) {}
+    return safeCount;
+  }
 
   const paths = links.map(link => {
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     group.append(path);
-    const highlight = () => path.classList.add('active');
+    const highlight = () => {
+      if (!link.classList.contains('is-locked')) {
+        path.classList.add('active');
+      }
+    };
     const reset = () => path.classList.remove('active');
     link.addEventListener('mouseenter', highlight);
     link.addEventListener('mouseleave', reset);
@@ -16,6 +80,16 @@ if (map) {
     link.addEventListener('blur', reset);
     return path;
   });
+
+  // Highlight all circuit paths when hovering/focusing center START button
+  if (startBtn) {
+    const highlightAll = () => paths.forEach(p => p.classList.add('active'));
+    const resetAll = () => paths.forEach(p => p.classList.remove('active'));
+    startBtn.addEventListener('mouseenter', highlightAll);
+    startBtn.addEventListener('mouseleave', resetAll);
+    startBtn.addEventListener('focus', highlightAll);
+    startBtn.addEventListener('blur', resetAll);
+  }
 
   // Spark circles for the traveling nanite effect
   const sparks = links.map(() => {
@@ -25,6 +99,207 @@ if (map) {
     spark.style.opacity = '0';
     group.append(spark);
     return spark;
+  });
+
+  // Progressive Lock Sync
+  let attentionTimeout = null;
+
+  function syncLockState() {
+    const unlockedCount = getUnlockedCount();
+
+    links.forEach((link, idx) => {
+      const arrow = link.querySelector('.callout-arrow');
+      if (idx < unlockedCount) {
+        link.classList.remove('is-locked', 'shake');
+        link.classList.add('is-unlocked');
+        link.removeAttribute('aria-disabled');
+        renderMarkup(arrow, ICON_ARROW_UP_RIGHT);
+      } else {
+        link.classList.remove('is-unlocked');
+        link.classList.add('is-locked');
+        link.setAttribute('aria-disabled', 'true');
+        renderMarkup(arrow, ICON_LOCK);
+      }
+    });
+
+    if (startBtn) {
+      const baseHref = getBaseModuleHref();
+      if (unlockedCount === 0) {
+        renderMarkup(startIcon, ICON_PLAY);
+        if (startLabel) startLabel.textContent = 'START';
+        startBtn.dataset.targetHref = baseHref;
+        startBtn.setAttribute('aria-label', 'Mulai pelajari modul dari langkah pertama');
+        if (lockHint && !calloutTarget?.classList.contains('is-attention')) {
+          lockHint.textContent = 'Selesaikan berurutan';
+        }
+      } else if (unlockedCount >= links.length) {
+        renderMarkup(startIcon, ICON_ROTATE_CCW);
+        if (startLabel) startLabel.textContent = 'ULANGI MODUL';
+        startBtn.dataset.targetHref = baseHref;
+        startBtn.setAttribute('aria-label', 'Ulangi modul dari langkah pertama');
+        if (lockHint && !calloutTarget?.classList.contains('is-attention')) {
+          lockHint.textContent = 'Semua langkah terbuka';
+        }
+      } else {
+        const resumeIdx = Math.min(unlockedCount - 1, links.length - 1);
+        const stepNum = String(resumeIdx + 1).padStart(2, '0');
+        renderMarkup(startIcon, ICON_PLAY);
+        if (startLabel) startLabel.textContent = `LANJUTKAN (${stepNum})`;
+        startBtn.dataset.targetHref = baseHref;
+        startBtn.setAttribute('aria-label', `Lanjutkan materi ke langkah ${stepNum}`);
+        if (lockHint && !calloutTarget?.classList.contains('is-attention')) {
+          lockHint.textContent = `${unlockedCount}/${links.length} langkah terbuka`;
+        }
+      }
+    }
+  }
+
+  // Transition video dialog (DaftarisiToMateri.mp4)
+  let dialog = null;
+  let transVideo = null;
+  let skipBtn = null;
+  let transActive = false;
+  let transLeaving = false;
+  let transTargetUrl = '';
+
+  function finishTransition() {
+    if (!transActive || transLeaving) return;
+    transLeaving = true;
+    if (transVideo) transVideo.pause();
+    window.location.assign(transTargetUrl);
+  }
+
+  if (typeof HTMLDialogElement !== 'undefined') {
+    dialog = document.createElement('dialog');
+    dialog.className = 'opening-dialog';
+    dialog.setAttribute('aria-label', 'Video transisi daftar isi ke materi');
+
+    transVideo = document.createElement('video');
+    transVideo.src = 'assets/video/DaftarisiToMateri.mp4';
+    transVideo.preload = 'metadata';
+    transVideo.playsInline = true;
+    transVideo.controls = false;
+    transVideo.setAttribute('aria-label', 'Transisi ke Materi Modul');
+
+    skipBtn = document.createElement('button');
+    skipBtn.type = 'button';
+    skipBtn.className = 'opening-skip';
+    renderMarkup(skipBtn, `<span>Lewati transisi</span>${ICON_ARROW_RIGHT}`);
+
+    dialog.append(transVideo, skipBtn);
+    document.body.append(dialog);
+
+    transVideo.addEventListener('ended', finishTransition);
+    transVideo.addEventListener('error', finishTransition);
+    skipBtn.addEventListener('click', finishTransition);
+    dialog.addEventListener('cancel', event => {
+      event.preventDefault();
+      finishTransition();
+    });
+  }
+
+  function preloadTransitionVideo() {
+    if (transVideo && transVideo.preload !== 'auto') {
+      transVideo.preload = 'auto';
+    }
+  }
+
+  function playTransitionAndNavigate(url) {
+    if (!url) return;
+    if (transActive) return;
+    if (!dialog || !transVideo) {
+      window.location.assign(url);
+      return;
+    }
+
+    transActive = true;
+    transLeaving = false;
+    transTargetUrl = url;
+
+    bgVideo?.pause();
+    document.body.classList.add('opening-playing');
+    try {
+      dialog.showModal();
+    } catch (_) {
+      window.location.assign(url);
+      return;
+    }
+    skipBtn?.focus();
+
+    transVideo.currentTime = 0;
+    transVideo.play().catch(() => {
+      transVideo.muted = true;
+      transVideo.play().catch(finishTransition);
+    });
+  }
+
+  // Intent-based preloading only on START button
+  if (startBtn) {
+    ['mouseenter', 'focus', 'touchstart'].forEach(evt => {
+      startBtn.addEventListener(evt, preloadTransitionVideo, { passive: true });
+    });
+
+    startBtn.addEventListener('click', () => {
+      if (getUnlockedCount() === 0) {
+        setUnlockedCount(1);
+        syncLockState();
+      }
+
+      playTransitionAndNavigate(getBaseModuleHref());
+    });
+  }
+
+  // Card interactions (locked feedback vs direct unlocked navigation without video transition)
+  links.forEach((link, idx) => {
+    link.addEventListener('click', event => {
+      if (link.classList.contains('is-locked')) {
+        event.preventDefault();
+        if (attentionTimeout) clearTimeout(attentionTimeout);
+
+        calloutTarget?.classList.add('is-attention');
+        if (lockHint) {
+          renderMarkup(lockHint, `${ICON_LOCK}<span>Terkunci — Klik START di tengah</span>`);
+        }
+        startBtn?.focus();
+
+        attentionTimeout = setTimeout(() => {
+          calloutTarget?.classList.remove('is-attention');
+          attentionTimeout = null;
+        }, 600);
+        return;
+      }
+
+      // Unlocked card: unlock next step too and navigate directly without transition video
+      const nextUnlock = Math.max(getUnlockedCount(), idx + 2);
+      setUnlockedCount(nextUnlock);
+      syncLockState();
+
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+      event.preventDefault();
+      window.location.assign(link.href);
+    });
+  });
+
+  window.addEventListener('pageshow', () => {
+    transActive = false;
+    transLeaving = false;
+    transTargetUrl = '';
+    if (transVideo) {
+      transVideo.pause();
+      try {
+        transVideo.currentTime = 0;
+      } catch (_) {}
+    }
+    if (dialog && dialog.open) {
+      try {
+        dialog.close();
+      } catch (_) {}
+    }
+    document.body.classList.remove('opening-playing');
+    bgVideo?.play().catch(() => {});
+    syncLockState();
   });
 
   let booted = false;
@@ -211,6 +486,8 @@ if (map) {
       runCircuitBoot(true);
     });
   }
+
+  syncLockState();
 
   if ('ResizeObserver' in window) new ResizeObserver(drawConnections).observe(map);
   window.addEventListener('resize', drawConnections);

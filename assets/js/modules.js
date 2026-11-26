@@ -1,10 +1,16 @@
+const ICON_PLAY = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
+const ICON_PAUSE = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>';
+const ICON_ARROW_RIGHT = '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
 const bgVideo = document.querySelector('.module-video');
 const toggle = document.querySelector('.module-video-toggle');
 if (bgVideo && toggle) {
   bgVideo.muted = true;
   bgVideo.play().catch(() => {});
   function updateLabel() {
-    toggle.textContent = bgVideo.paused ? 'Putar video ▷' : 'Jeda video Ⅱ';
+    toggle.innerHTML = bgVideo.paused
+      ? `<span>Putar video</span>${ICON_PLAY}`
+      : `<span>Jeda video</span>${ICON_PAUSE}`;
     toggle.setAttribute('aria-label', bgVideo.paused ? 'Putar video latar' : 'Jeda video latar');
   }
   bgVideo.addEventListener('play', updateLabel);
@@ -43,7 +49,7 @@ document.querySelectorAll('.module-callout').forEach(link => {
   const skip = document.createElement('button');
   skip.type = 'button';
   skip.className = 'opening-skip';
-  skip.textContent = 'Lewati transisi →';
+  skip.innerHTML = `<span>Lewati transisi</span>${ICON_ARROW_RIGHT}`;
 
   dialog.append(transVideo, skip);
   document.body.append(dialog);
